@@ -16,7 +16,10 @@ public class Name {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
+
+    public static final String ALTERNATIVE_VALIDATION_REGEX = "^[a-zA-Z\\s\\.]*";
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+
 
     public static final boolean IS_BLANK_VALUE_ALLOWED = false;
     public static final String DEFAULT_VALUE = "";

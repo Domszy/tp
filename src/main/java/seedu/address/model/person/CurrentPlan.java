@@ -22,7 +22,9 @@ public class CurrentPlan {
      * @param currentPlan valid current plan.
      */
     public CurrentPlan(String currentPlan) {
-        requireNonNull(currentPlan);
+        if (!IS_BLANK_VALUE_ALLOWED){
+            requireNonNull(currentPlan);
+        }
         value = currentPlan;
     }
 

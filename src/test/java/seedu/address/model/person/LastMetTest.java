@@ -15,7 +15,7 @@ public class LastMetTest {
 
     @Test
     public void constructor_invalidLastMet_throwsIllegalArgumentException() {
-        String invalidLastMet = "";
+        String invalidLastMet = "23-09-2021";
         assertThrows(IllegalArgumentException.class, () -> new LastMet(invalidLastMet));
     }
 
@@ -32,12 +32,11 @@ public class LastMetTest {
 
         // invalid parts
         assertFalse(LastMet.isValidLastMet("20-50-5050")); // invalid domain name
-        assertFalse(LastMet.isValidLastMet("60-08-2010"));
-        assertFalse(LastMet.isValidLastMet("5654-08-12"));
+        assertFalse(LastMet.isValidLastMet("603-08-20"));
 
         // valid email
-        assertTrue(LastMet.isValidLastMet("20-12-2021"));
-        assertTrue(LastMet.isValidLastMet("20-09-2021"));
-        assertTrue(LastMet.isValidLastMet("30-12-2021"));
+        assertTrue(LastMet.isValidLastMet("2021-09-21"));
+        assertTrue(LastMet.isValidLastMet("2021-12-30"));
+        assertTrue(LastMet.isValidLastMet("2021-03-04"));
     }
 }

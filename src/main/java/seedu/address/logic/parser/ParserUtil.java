@@ -122,6 +122,9 @@ public class ParserUtil {
     public static LastMet parseLastMet(String lastMet) throws ParseException {
         requireNonNull(lastMet);
         String trimmedLastMet = lastMet.trim();
+        if (!LastMet.isValidLastMet(trimmedLastMet)) {
+            throw new ParseException(LastMet.MESSAGE_CONSTRAINTS);
+        }
         return new LastMet(trimmedLastMet);
     }
 

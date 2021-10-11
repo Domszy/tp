@@ -32,7 +32,7 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address, CurrentPlan currentPlan, LastMet lastMet,
                   Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, phone, email, address, currentPlan, lastMet, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -114,7 +114,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, lastMet, currentPlan, tags);
+        return Objects.hash(name, phone, email, address, currentPlan, lastMet, tags);
     }
 
     @Override
