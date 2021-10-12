@@ -25,7 +25,9 @@ public class LastMet {
      */
     public LastMet(String lastMetDate) {
 
-        requireNonNull(lastMetDate);
+        if (!IS_BLANK_VALUE_ALLOWED) {
+            requireNonNull(lastMetDate);
+        }
         checkArgument(isValidLastMet(lastMetDate), MESSAGE_CONSTRAINTS);
         dateInString = lastMetDate;
 
