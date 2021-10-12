@@ -17,8 +17,8 @@ import seedu.address.model.person.PersonContainsKeywordsPredicate;
 public class SearchCommandParser implements Parser<SearchCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns a FindCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the SearchCommand
+     * and returns a SearchCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public SearchCommand parse(String args) throws ParseException {
@@ -28,8 +28,10 @@ public class SearchCommandParser implements Parser<SearchCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
 
+        // appends " " in front as Search Command can accept arguments without a preamble
+        String preparedArgs = " ".concat(trimmedArgs);
         ArgumentMultimap argMultimap = ArgumentTokenizer
-                .tokenize(trimmedArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                .tokenize(preparedArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
         return new SearchCommand(new PersonContainsKeywordsPredicate(argMultimap));
     }
 

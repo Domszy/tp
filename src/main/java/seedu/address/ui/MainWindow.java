@@ -126,7 +126,7 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        sideBar = new SideBar();
+        sideBar = new SideBar(logic.getPersonToView());
         sideBarPlaceHolder.getChildren().add(sideBar.getRoot());
     }
 
@@ -184,10 +184,6 @@ public class MainWindow extends UiPart<Stage> {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
-
-            if (commandResult.isView()) {
-                sideBar.updatePersonViewPanel(commandResult.getPersonToView());
-            }
 
             if (commandResult.isShowHelp()) {
                 handleHelp();

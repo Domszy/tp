@@ -7,6 +7,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,7 +16,9 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.person.ClientId;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PersonHasId;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -94,6 +97,26 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void getPersonToView_viewFirstClient_returnsTrue() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        modelManager = new ModelManager(addressBook, userPrefs);
+        modelManager.updatePersonToView(new PersonHasId(ALICE.getClientId()));
+        assertTrue(modelManager.isPersonExistToView());
+        assertEquals(Arrays.asList(ALICE), modelManager.getPersonToView());
+        assertEquals(ALICE.getName().toString(), modelManager.getNameOfPersonToView());
+    }
+
+    @Test
+    public void getPersonToView_viewNonExistingClient_returnsFalse() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        modelManager = new ModelManager(addressBook, userPrefs);
+        modelManager.updatePersonToView(new PersonHasId(CARL.getClientId()));
+        assertFalse(modelManager.isPersonExistToView());
+    }
+
+    @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();
@@ -128,5 +151,10 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+
+        // different personToView -> returns false
+        ClientId clientId = ALICE.getClientId();
+        modelManager.updatePersonToView(new PersonHasId(clientId));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
     }
 }

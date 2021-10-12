@@ -45,6 +45,40 @@ public class StringUtilTest {
         assertTrue(StringUtil.isNonZeroUnsignedInteger("10"));
     }
 
+    //---------------- Tests for isNonNegativedInteger --------------------------------------
+
+    @Test
+    public void isNonNegativeInteger() {
+
+        // EP: empty strings
+        assertFalse(StringUtil.isNonNegativeInteger("")); // Boundary value
+        assertFalse(StringUtil.isNonNegativeInteger("  "));
+
+        // EP: not a number
+        assertFalse(StringUtil.isNonNegativeInteger("a"));
+        assertFalse(StringUtil.isNonNegativeInteger("aaa"));
+
+        // EP: zero
+        assertTrue(StringUtil.isNonNegativeInteger("0"));
+
+        // EP: zero as prefix
+        assertTrue(StringUtil.isNonNegativeInteger("01"));
+
+        // EP: signed numbers
+        assertFalse(StringUtil.isNonNegativeInteger("-1"));
+        assertFalse(StringUtil.isNonNegativeInteger("+1"));
+
+        // EP: numbers with white space
+        assertFalse(StringUtil.isNonNegativeInteger(" 10 ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isNonNegativeInteger("1 0")); // Spaces in the middle
+
+        // EP: number larger than Integer.MAX_VALUE
+        assertFalse(StringUtil.isNonNegativeInteger(Long.toString(Integer.MAX_VALUE + 1)));
+
+        // EP: valid numbers, should return true
+        assertTrue(StringUtil.isNonNegativeInteger("1")); // Boundary value
+        assertTrue(StringUtil.isNonNegativeInteger("10"));
+    }
 
     //---------------- Tests for containsWordIgnoreCase --------------------------------------
 

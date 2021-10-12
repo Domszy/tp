@@ -3,9 +3,10 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.ClientId;
+import seedu.address.model.person.PersonHasId;
 
 /**
  * Parses input arguments and creates a new ViewCommand object
@@ -22,14 +23,14 @@ public class ViewCommandParser implements Parser<ViewCommand> {
     public ViewCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        Index index;
+        ClientId clientId;
 
         try {
-            index = ParserUtil.parseIndex(args);
+            clientId = ParserUtil.parseClientId(args);
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE), pe);
         }
 
-        return new ViewCommand(index);
+        return new ViewCommand(clientId, new PersonHasId(clientId));
     }
 }

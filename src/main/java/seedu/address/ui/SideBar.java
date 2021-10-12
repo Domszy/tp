@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -20,14 +21,11 @@ public class SideBar extends UiPart<Region> {
     /**
      * Creates a {@code SideBar} with panels initiated.
      */
-    public SideBar() {
+    public SideBar(ObservableList<Person> personToView) {
         super(FXML);
 
-        personViewPanel = new PersonViewPanel();
+        personViewPanel = new PersonViewPanel(personToView);
         personViewPanelPlaceholder.getChildren().add(personViewPanel.getRoot());
     }
 
-    public void updatePersonViewPanel(Person personToView) {
-        personViewPanel.setClientInfo(personToView);
-    }
 }

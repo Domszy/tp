@@ -29,6 +29,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private Label clientId;
+    @FXML
     private Label name;
     @FXML
     private Label id;
@@ -38,6 +40,10 @@ public class PersonCard extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
+    @FXML
+    private Label riskAppetite;
+    @FXML
+    private Label disposableIncome;
     @FXML
     private Label lastMet;
     @FXML
@@ -52,10 +58,14 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        clientId.setText(person.getClientId().value);
         name.setText(person.getName().fullName);
+        email.setText(person.getEmail().value);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
+        riskAppetite.setText(person.getRiskAppetite().value);
+        disposableIncome.setText(person.getDisposableIncome().value);
+        currentPlan.setText(person.getCurrentPlan().toString());
         lastMet.setText(person.getLastMet().toString());
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))

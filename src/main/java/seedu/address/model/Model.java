@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -64,6 +65,12 @@ public interface Model {
     void deletePerson(Person target);
 
     /**
+     * Deletes the person with the matching Client ID and Email and returns the deleted person
+     *
+     */
+    Person deletePersonByFields(ArrayList<Predicate> predicates);
+
+    /**
      * Adds the given person.
      * {@code person} must not already exist in the address book.
      */
@@ -84,4 +91,25 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Updates the filter of the filtered person list to filter by current predicate and the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void filterFilteredPersonList(Predicate<Person> predicate);
+
+    /** Returns an unmodifiable view of the person to view */
+    ObservableList<Person> getPersonToView();
+
+    /** Checks and returns if there is person to view */
+    boolean isPersonExistToView();
+
+    /** Returns the name of the person to view */
+    String getNameOfPersonToView();
+
+    /**
+     * Updates the filter of the filtered person to view list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updatePersonToView(Predicate<Person> predicate);
 }

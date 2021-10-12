@@ -4,19 +4,21 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ClientId;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonHasEmail;
+import seedu.address.model.person.PersonHasId;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -27,9 +29,13 @@ public class DeleteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndexUnfilteredList_success() {
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
+    public void execute_validClientIdUnfilteredList_success() {
+        Person personToDelete = model.getFilteredPersonList().get(2);
+        ArrayList<Predicate> predicates = new ArrayList<>();
+        ClientId clientId = new ClientId(personToDelete.getClientId().value);
+        predicates.add(new PersonHasId(clientId));
+
+        DeleteCommand deleteCommand = new DeleteCommand(predicates);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
@@ -40,52 +46,71 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
+    public void execute_validEmailUnfilteredList_success() {
+        Person personToDelete = model.getFilteredPersonList().get(3);
+        ArrayList<Predicate> predicates = new ArrayList<>();
+        Email email = new Email(personToDelete.getEmail().value);
+        predicates.add(new PersonHasEmail(email));
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
+        DeleteCommand deleteCommand = new DeleteCommand(predicates);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
-        showNoPerson(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+    public void execute_validEmailAndClientIdUnfilteredList_success() {
+        Person personToDelete = model.getFilteredPersonList().get(3);
+        ArrayList<Predicate> predicates = new ArrayList<>();
+        Email email = new Email(personToDelete.getEmail().value);
+        predicates.add(new PersonHasEmail(email));
+        ClientId clientId = new ClientId(personToDelete.getClientId().value);
+        predicates.add(new PersonHasId(clientId));
 
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        DeleteCommand deleteCommand = new DeleteCommand(predicates);
 
-        DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
+    public void execute_invalidClientIdUnfilteredList_throwsCommandException() {
+        ArrayList<Predicate> predicates = new ArrayList<>();
+        ClientId clientId = new ClientId("20");
+        predicates.add(new PersonHasId(clientId));
+        DeleteCommand deleteCommand = new DeleteCommand(predicates);
+
+        assertCommandFailure(deleteCommand, model, DeleteCommand.MESSAGE_DELETE_PERSON_FAILURE);
+    }
+
+
+    @Test
     public void equals() {
-        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PERSON);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON);
+        ArrayList<Predicate> predicatesOne = new ArrayList<>();
+        ClientId clientIdOne = new ClientId("1");
+        predicatesOne.add(new PersonHasId(clientIdOne));
+        DeleteCommand deleteFirstCommand = new DeleteCommand(predicatesOne);
+        ArrayList<Predicate> predicatesTwo = new ArrayList<>();
+        ClientId clientIdTwo = new ClientId("2");
+        predicatesTwo.add(new PersonHasId(clientIdTwo));
+        DeleteCommand deleteSecondCommand = new DeleteCommand(predicatesTwo);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_PERSON);
+        ArrayList<Predicate> predicatesTest = new ArrayList<>();
+        ClientId clientIdTest = new ClientId("1");
+        predicatesTest.add(new PersonHasId(clientIdTest));
+        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(predicatesTest);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -98,12 +123,4 @@ public class DeleteCommandTest {
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
-
-        assertTrue(model.getFilteredPersonList().isEmpty());
-    }
 }

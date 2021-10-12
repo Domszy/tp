@@ -10,11 +10,14 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.ClientId;
 import seedu.address.model.person.CurrentPlan;
+import seedu.address.model.person.DisposableIncome;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.LastMet;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.RiskAppetite;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -23,6 +26,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_CLIENT_ID = "Client ID is not a non-negative unsigned integer.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -36,6 +40,33 @@ public class ParserUtil {
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses {@code clientId} into an {@code ClientId} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     *
+     * @throws ParseException if the specified index is invalid (not non-negative integer).
+     */
+    public static ClientId parseClientId(String clientId) throws ParseException {
+        String trimmedId = clientId.trim();
+        if (!StringUtil.isNonNegativeInteger(trimmedId)) {
+            throw new ParseException(MESSAGE_INVALID_CLIENT_ID);
+        }
+        return new ClientId(trimmedId);
+    }
+    /**
+     * Parses {@code clientId} into an {@code Index} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     *
+     * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static Index parseClientIndex(String clientId) throws ParseException {
+        String trimmedIndex = clientId.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
+            throw new ParseException(MESSAGE_INVALID_INDEX);
+        }
+        return Index.fromZeroBased(Integer.parseInt(trimmedIndex));
     }
 
     /**
@@ -126,6 +157,35 @@ public class ParserUtil {
             throw new ParseException(LastMet.MESSAGE_CONSTRAINTS);
         }
         return new LastMet(trimmedLastMet);
+    }
+
+    /** Parses a {@code String RiskAppetite} into an {@code RiskAppetite}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code RiskAppetite} is invalid.
+     */
+    public static RiskAppetite parseRiskAppetite(String riskAppetite) throws ParseException {
+        requireNonNull(riskAppetite);
+        String trimmedRiskAppetite = riskAppetite.trim();
+        if (!RiskAppetite.isValidRiskAppetite(trimmedRiskAppetite)) {
+            throw new ParseException(RiskAppetite.MESSAGE_CONSTRAINTS);
+        }
+        return new RiskAppetite(trimmedRiskAppetite);
+    }
+
+    /**
+     * Parses a {@code String disposableIncome} into an {@code disposableIncome}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code DisposableIncome} is invalid.
+     */
+    public static DisposableIncome parseDisposableIncome(String disposableIncome) throws ParseException {
+        requireNonNull(disposableIncome);
+        String trimmedDisposableIncome = disposableIncome.trim();
+        if (!DisposableIncome.isValidDisposableIncome(trimmedDisposableIncome)) {
+            throw new ParseException(DisposableIncome.MESSAGE_CONSTRAINTS);
+        }
+        return new DisposableIncome(trimmedDisposableIncome);
     }
 
     /**

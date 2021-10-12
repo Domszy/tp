@@ -3,11 +3,14 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -77,6 +80,25 @@ public class UniquePersonList implements Iterable<Person> {
         if (!internalList.remove(toRemove)) {
             throw new PersonNotFoundException();
         }
+    }
+
+    /**
+     * Removes the equivalent person with matching client id and/or email from the list.
+     * The person must exist in the list.
+     */
+    public Person removeByFields(ArrayList<Predicate> predicates) {
+        requireAllNonNull(predicates);
+        Predicate<Person> predicate = predicates.stream().reduce(x -> true, Predicate::and);
+        FilteredList<Person> filteredList = internalList.filtered(predicate);
+        if (filteredList.size() < 1) {
+            throw new PersonNotFoundException();
+        } else {
+            Person personToDelete = filteredList.get(0);
+            internalList.remove(personToDelete);
+            return personToDelete;
+        }
+
+
     }
 
     public void setPersons(UniquePersonList replacement) {

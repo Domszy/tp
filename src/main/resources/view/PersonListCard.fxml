@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Tooltip?>
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
@@ -36,6 +36,10 @@
             </Label>
       </HBox>
       <FlowPane fx:id="tags" />
+       <Label fx:id="clientId" styleClass="cell_small_label" text="\$clientId">
+            <tooltip>
+                <Tooltip text="Client Id" />
+            </tooltip></Label>
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
             <tooltip>
                <Tooltip text="Phone" />
@@ -49,6 +53,18 @@
       <Label fx:id="email" styleClass="cell_small_label" text="\$email">
             <tooltip>
                <Tooltip text="Email" />
+            </tooltip></Label>
+      <Label fx:id="riskAppetite" styleClass="cell_small_label" text="\$riskAppetite">
+            <tooltip>
+                <Tooltip text="Risk Appetite" />
+            </tooltip></Label>
+      <Label fx:id="disposableIncome" styleClass="cell_small_label" text="\$disposableIncome">
+            <tooltip>
+                <Tooltip text="Disposable Income" />
+            </tooltip></Label>
+      <Label fx:id="currentPlan" styleClass="cell_small_label" text="\$currentPlan">
+            <tooltip>
+                <Tooltip text="Current Plan" />
             </tooltip></Label>
       <Label fx:id="lastMet" prefHeight="17.0" prefWidth="103.0" styleClass="cell_small_label" text="\$lastMet">
             <tooltip>

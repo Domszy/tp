@@ -9,11 +9,6 @@ import org.junit.jupiter.api.Test;
 public class LastMetTest {
 
     @Test
-    public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new LastMet(null));
-    }
-
-    @Test
     public void constructor_invalidLastMet_throwsIllegalArgumentException() {
         String invalidLastMet = "23-09-2021";
         assertThrows(IllegalArgumentException.class, () -> new LastMet(invalidLastMet));

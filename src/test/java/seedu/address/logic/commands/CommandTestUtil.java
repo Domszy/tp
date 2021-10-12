@@ -4,10 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CURRENTPLAN;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DISPOSABLEINCOME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LASTMET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RISKAPPETITE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -28,6 +30,8 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
  */
 public class CommandTestUtil {
 
+    public static final String VALID_CLIENTID_AMY = "9";
+    public static final String VALID_CLIENTID_BOB = "10";
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
     public static final String VALID_PHONE_AMY = "11111111";
@@ -40,6 +44,10 @@ public class CommandTestUtil {
     public static final String VALID_LASTMET_BOB = "2021-09-15";
     public static final String VALID_CURRENTPLAN_AMY = "Prudential PRUwealth";
     public static final String VALID_CURRENTPLAN_BOB = "AIA PRO LIFETIME PROTECTOR";
+    public static final String VALID_RISKAPPETITE_AMY = "3";
+    public static final String VALID_RISKAPPETITE_BOB = "4";
+    public static final String VALID_DISPOSABLEINCOME_AMY = "300";
+    public static final String VALID_DISPOSABLEINCOME_BOB = "400";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -51,6 +59,10 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    public static final String RISKAPPETITE_DESC_AMY = " " + PREFIX_RISKAPPETITE + VALID_RISKAPPETITE_AMY;
+    public static final String RISKAPPETITE_DESC_BOB = " " + PREFIX_RISKAPPETITE + VALID_RISKAPPETITE_BOB;
+    public static final String DISPOSABLEINCOME_DESC_AMY = " " + PREFIX_DISPOSABLEINCOME + VALID_DISPOSABLEINCOME_AMY;
+    public static final String DISPOSABLEINCOME_DESC_BOB = " " + PREFIX_DISPOSABLEINCOME + VALID_DISPOSABLEINCOME_BOB;
     public static final String LASTMET_DESC_AMY = " " + PREFIX_LASTMET + VALID_LASTMET_AMY;
     public static final String LASTMET_DESC_BOB = " " + PREFIX_LASTMET + VALID_LASTMET_BOB;
     public static final String CURRENTPLAN_DESC_AMY = " " + PREFIX_CURRENTPLAN + VALID_CURRENTPLAN_AMY;
@@ -62,6 +74,9 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_LASTMET_DESC = " " + PREFIX_LASTMET + "2021-09-50";
+    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS + " "; // empty string not allowed
+    public static final String INVALID_RISKAPPETITE_DESC = " " + PREFIX_RISKAPPETITE + "6"; // beyond RA range
+    public static final String INVALID_DISPOSABLEINCOME_DESC = " " + PREFIX_DISPOSABLEINCOME + "-2"; // negative integer
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
@@ -71,14 +86,16 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
+        DESC_AMY = new EditPersonDescriptorBuilder().withClientId(VALID_CLIENTID_AMY).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_FRIEND).withLastMet(VALID_LASTMET_AMY)
-                .withCurrentPlan(VALID_CURRENTPLAN_AMY).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
+                .withRiskAppetite(VALID_RISKAPPETITE_AMY).withDisposableIncome(VALID_DISPOSABLEINCOME_AMY)
+                .withCurrentPlan(VALID_CURRENTPLAN_AMY).withLastMet(VALID_LASTMET_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        DESC_BOB = new EditPersonDescriptorBuilder().withClientId(VALID_CLIENTID_BOB).withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withLastMet(VALID_LASTMET_BOB)
-                .withCurrentPlan(VALID_CURRENTPLAN_BOB).build();
+                .withRiskAppetite(VALID_RISKAPPETITE_BOB).withDisposableIncome(VALID_DISPOSABLEINCOME_BOB)
+                .withCurrentPlan(VALID_CURRENTPLAN_BOB).withLastMet(VALID_LASTMET_BOB)
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**

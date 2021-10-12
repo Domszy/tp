@@ -7,13 +7,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
-public class Address {
+public class Address implements OptionalPersonStringField {
 
     public static final String MESSAGE_CONSTRAINTS = "Addresses can take any values, and it can be blank";
-
-    // TODO: implement Field interface to encapsulate these parameters
-    public static final boolean IS_BLANK_VALUE_ALLOWED = true;
-    public static final String DEFAULT_VALUE = "";
 
     /*
      * The first character of the address must not be a whitespace,

@@ -9,7 +9,6 @@ import java.util.Set;
 
 import seedu.address.model.tag.Tag;
 
-
 /**
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -17,29 +16,40 @@ import seedu.address.model.tag.Tag;
 public class Person {
 
     // Identity fields
+    private final ClientId clientId;
     private final Name name;
-    private final Phone phone;
     private final Email email;
 
     // Data fields
+    private final Phone phone;
     private final Address address;
-    private final Set<Tag> tags = new HashSet<>();
+    private final RiskAppetite riskAppetite;
+    private final DisposableIncome disposableIncome;
     private final CurrentPlan currentPlan;
     private final LastMet lastMet;
+    private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, CurrentPlan currentPlan, LastMet lastMet,
-                  Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, currentPlan, lastMet, tags);
+
+    public Person(ClientId clientId, Name name, Phone phone, Email email, Address address, RiskAppetite riskAppetite,
+        DisposableIncome disposableIncome, CurrentPlan currentPlan, LastMet lastMet, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.clientId = clientId;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.riskAppetite = riskAppetite;
+        this.disposableIncome = disposableIncome;
         this.currentPlan = currentPlan;
         this.lastMet = lastMet;
         this.tags.addAll(tags);
+    }
+
+    public ClientId getClientId() {
+        return clientId;
     }
 
     public Name getName() {
@@ -47,6 +57,7 @@ public class Person {
     }
 
     public Phone getPhone() {
+
         return phone;
     }
 
@@ -66,6 +77,14 @@ public class Person {
         return currentPlan;
     }
 
+    public RiskAppetite getRiskAppetite() {
+        return riskAppetite;
+    }
+
+    public DisposableIncome getDisposableIncome() {
+        return disposableIncome;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -79,12 +98,18 @@ public class Person {
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
+        if (otherPerson == null) {
+            return false;
+
+        }
+
         if (otherPerson == this) {
             return true;
         }
 
         return otherPerson != null
-            && otherPerson.getName().equals(getName());
+                && otherPerson.getName().equals(getName())
+                    || otherPerson.getEmail().equals(getEmail());
     }
 
     /**
@@ -102,13 +127,17 @@ public class Person {
         }
 
         Person otherPerson = (Person) other;
-        return otherPerson.getName().equals(getName())
-            && otherPerson.getCurrentPlan().equals(getCurrentPlan())
-            && otherPerson.getLastMet().equals(getLastMet())
-            && otherPerson.getPhone().equals(getPhone())
-            && otherPerson.getEmail().equals(getEmail())
-            && otherPerson.getAddress().equals(getAddress())
-            && otherPerson.getTags().equals(getTags());
+        return otherPerson.getClientId().equals(getClientId())
+                && otherPerson.getName().equals(getName())
+                && otherPerson.getPhone().equals(getPhone())
+                && otherPerson.getEmail().equals(getEmail())
+                && otherPerson.getAddress().equals(getAddress())
+                && otherPerson.getRiskAppetite().equals(getRiskAppetite())
+                && otherPerson.getDisposableIncome().equals(getDisposableIncome())
+                && otherPerson.getCurrentPlan().equals(getCurrentPlan())
+                && otherPerson.getLastMet().equals(getLastMet())
+                && otherPerson.getTags().equals(getTags());
+
     }
 
     @Override
@@ -120,17 +149,24 @@ public class Person {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-            .append("; Last Met: ")
-            .append(getLastMet())
-            .append("; current plans: ")
-            .append(getCurrentPlan())
-            .append("; Phone: ")
-            .append(getPhone())
-            .append("; Email: ")
-            .append(getEmail())
-            .append("; Address: ")
-            .append(getAddress());
+        builder.append("Client ID: ")
+                .append(getClientId())
+                .append("; Name: ")
+                .append(getName())
+                .append("; Email: ")
+                .append(getEmail())
+                .append("; Phone: ")
+                .append(getPhone())
+                .append("; Address: ")
+                .append(getAddress())
+                .append("; Risk Appetite: ")
+                .append(getRiskAppetite())
+                .append("; Disposable Income: ")
+                .append(getDisposableIncome())
+                .append("; current plans: ")
+                .append(getCurrentPlan())
+                .append("; Last Met: ")
+                .append(getLastMet());
 
         Set<Tag> tags = getTags();
         if (!tags.isEmpty()) {

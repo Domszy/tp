@@ -14,6 +14,7 @@ public class LastMet {
     public static final boolean IS_BLANK_VALUE_ALLOWED = true;
     public static final String DEFAULT_VALUE = "";
 
+
     public final LocalDate value;
     public final String dateInString;
 
@@ -31,7 +32,7 @@ public class LastMet {
         if (lastMetDate.isEmpty()) {
             value = null;
         } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             value = LocalDate.parse(lastMetDate, formatter);
         }
     }
@@ -45,7 +46,13 @@ public class LastMet {
 
     @Override
     public String toString() {
-        return this.dateInString;
+
+        if (value == null) {
+            return DEFAULT_VALUE;
+        } else {
+            return this.dateInString;
+        }
+
     }
 
     @Override

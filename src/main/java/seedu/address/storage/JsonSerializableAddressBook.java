@@ -23,12 +23,16 @@ class JsonSerializableAddressBook {
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
 
+    private String clientCounter;
+
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
+    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
+                                       @JsonProperty("clientCounter") String clientCounter) {
         this.persons.addAll(persons);
+        this.clientCounter = clientCounter;
     }
 
     /**
@@ -38,6 +42,18 @@ class JsonSerializableAddressBook {
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        this.clientCounter = source.getClientCounter();
+    }
+
+    /**
+     * Returns the clientCounter stored in the addressbook json
+     *
+     * @return String clientCounter that is stored in the addressbook json
+     */
+    public String getClientCounter() {
+
+        return this.clientCounter;
+
     }
 
     /**
@@ -54,6 +70,7 @@ class JsonSerializableAddressBook {
             }
             addressBook.addPerson(person);
         }
+        addressBook.setClientCounter(getClientCounter());
         return addressBook;
     }
 

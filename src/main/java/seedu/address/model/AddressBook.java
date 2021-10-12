@@ -2,7 +2,9 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
@@ -15,6 +17,8 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+
+    private String clientCounter;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -48,12 +52,45 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the clientCounter of the address book with {@code clientCounter}.
+     *
+     */
+    @Override
+    public void setClientCounter(String clientCounter) {
+        this.clientCounter = clientCounter;
+    }
+
+    /**
+     * Increments the clientCounter of the address book by 1 {@code clientCounter}.
+     *
+     */
+    @Override
+    public void incrementClientCounter() {
+        try {
+            int clientCounterInt = Integer.parseInt(this.clientCounter) + 1;
+            this.clientCounter = String.valueOf(clientCounterInt);
+        } catch (NumberFormatException e) {
+            this.clientCounter = "1";
+        }
+    }
+
+    /**
+     * Gets the clientCounter of the address book.
+     *
+     */
+    @Override
+    public String getClientCounter() {
+        return this.clientCounter;
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setClientCounter(newData.getClientCounter());
     }
 
     //// person-level operations
@@ -91,6 +128,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removePerson(Person key) {
         persons.remove(key);
+    }
+
+    /**
+     * Removes person with matching {@code clientId} and {@code email} from this {@code AddressBook}.
+     * Person with {@code clientId} and {@code email} must exist in the address book.
+     */
+    public Person removePersonByFields(ArrayList<Predicate> predicates) {
+        return persons.removeByFields(predicates);
     }
 
     //// util methods
