@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_CLIENT_ID;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalClientId.CLIENTID_ZERO_PERSON;
+import static seedu.address.testutil.TypicalClientId.CLIENTID_ZERO_CLIENT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,16 +17,16 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddCommandTest;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.CurrentPlan;
-import seedu.address.model.person.DisposableIncome;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.LastMet;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.NextMeeting;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.RiskAppetite;
-import seedu.address.model.person.SortDirection;
+import seedu.address.model.client.Address;
+import seedu.address.model.client.CurrentPlan;
+import seedu.address.model.client.DisposableIncome;
+import seedu.address.model.client.Email;
+import seedu.address.model.client.LastMet;
+import seedu.address.model.client.Name;
+import seedu.address.model.client.NextMeeting;
+import seedu.address.model.client.Phone;
+import seedu.address.model.client.RiskAppetite;
+import seedu.address.model.client.SortDirection;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -65,16 +65,16 @@ public class ParserUtilTest {
     @Test
     public void parseClientId_outOfRangeInput_throwsParseException() {
         assertThrows(ParseException.class,
-            MESSAGE_INVALID_CLIENT_ID, () -> ParserUtil.parseClientId(Long.toString(Integer.MAX_VALUE + 1)));
+                MESSAGE_INVALID_CLIENT_ID, () -> ParserUtil.parseClientId(Long.toString(Integer.MAX_VALUE + 1)));
     }
 
     @Test
     public void parseClientId_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(CLIENTID_ZERO_PERSON, ParserUtil.parseClientId("0"));
+        assertEquals(CLIENTID_ZERO_CLIENT, ParserUtil.parseClientId("0"));
 
         // Leading and trailing whitespaces
-        assertEquals(CLIENTID_ZERO_PERSON, ParserUtil.parseClientId("  0  "));
+        assertEquals(CLIENTID_ZERO_CLIENT, ParserUtil.parseClientId("  0  "));
     }
 
     @Test
@@ -282,7 +282,7 @@ public class ParserUtilTest {
     @Test
     public void parseNextMeeting_validValueWithoutWhitespace_returnsNextMeeting() throws Exception {
         NextMeeting expectedNextMeeting = new NextMeeting("24-09-2021", "10:00", "12:00",
-            "Starbucks @ UTown");
+                "Starbucks @ UTown");
         assertEquals(expectedNextMeeting, ParserUtil.parseNextMeeting(VALID_NEXTMEETING));
     }
 
@@ -290,7 +290,7 @@ public class ParserUtilTest {
     public void parseNextMeeting_validValueWithWhitespace_returnsTrimmedNextMeeting() throws Exception {
         String nextMeetingWithWhitespace = WHITESPACE + VALID_NEXTMEETING + WHITESPACE;
         NextMeeting expectedNextMeeting = new NextMeeting("24-09-2021", "10:00", "12:00",
-            "Starbucks @ UTown");
+                "Starbucks @ UTown");
         assertEquals(expectedNextMeeting, ParserUtil.parseNextMeeting(nextMeetingWithWhitespace));
     }
 
@@ -336,7 +336,7 @@ public class ParserUtilTest {
     public void parseTags_collectionWithInvalidTags_throwsParseException() {
         AddCommandTest.ModelStub modelStub = new ModelStubAcceptingTags();
         assertThrows(ParseException.class, () ->
-            ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG), modelStub));
+                ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG), modelStub));
     }
 
     @Test

@@ -3,11 +3,11 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalClients.ALICE;
+import static seedu.address.testutil.TypicalClients.BENSON;
+import static seedu.address.testutil.TypicalClients.CARL;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,9 +18,9 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.model.person.ClientId;
-import seedu.address.model.person.PersonContainsKeywordsPredicate;
-import seedu.address.model.person.PersonHasId;
+import seedu.address.model.client.ClientContainsKeywordsPredicate;
+import seedu.address.model.client.ClientHasId;
+import seedu.address.model.client.ClientId;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -78,63 +78,63 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasPerson_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.hasPerson(null));
+    public void hasClient_nullClient_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasClient(null));
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(modelManager.hasPerson(ALICE));
+    public void hasClient_clientNotInAddressBook_returnsFalse() {
+        assertFalse(modelManager.hasClient(ALICE));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
-        modelManager.addPerson(ALICE);
-        assertTrue(modelManager.hasPerson(ALICE));
+    public void hasClient_clientInAddressBook_returnsTrue() {
+        modelManager.addClient(ALICE);
+        assertTrue(modelManager.hasClient(ALICE));
     }
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
+    public void getFilteredClientList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredClientList().remove(0));
     }
 
     @Test
-    public void test_isPersonExistToView() {
+    public void test_isClientExistToView() {
         // predicate returns empty list -> false
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        AddressBook addressBook = new AddressBookBuilder().withClient(ALICE).withClient(BENSON).build();
         UserPrefs userPrefs = new UserPrefs();
         modelManager = new ModelManager(addressBook, userPrefs);
-        modelManager.updatePersonToView(new PersonHasId(CARL.getClientId()));
-        assertFalse(modelManager.isPersonExistToView());
+        modelManager.updateClientToView(new ClientHasId(CARL.getClientId()));
+        assertFalse(modelManager.isClientExistToView());
 
-        // predicate returns 1 person in list -> true
-        modelManager.updatePersonToView(new PersonHasId(ALICE.getClientId()));
-        assertTrue(modelManager.isPersonExistToView());
+        // predicate returns 1 client in list -> true
+        modelManager.updateClientToView(new ClientHasId(ALICE.getClientId()));
+        assertTrue(modelManager.isClientExistToView());
     }
 
     @Test
-    public void getPersonToView_viewFirstClient_returnsTrue() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+    public void getClientToView_viewFirstClient_returnsTrue() {
+        AddressBook addressBook = new AddressBookBuilder().withClient(ALICE).withClient(BENSON).build();
         UserPrefs userPrefs = new UserPrefs();
         modelManager = new ModelManager(addressBook, userPrefs);
-        modelManager.updatePersonToView(new PersonHasId(ALICE.getClientId()));
-        assertTrue(modelManager.isPersonExistToView());
-        assertEquals(Arrays.asList(ALICE), modelManager.getPersonToView());
-        assertEquals(ALICE.getName().toString(), modelManager.getNameOfPersonToView());
+        modelManager.updateClientToView(new ClientHasId(ALICE.getClientId()));
+        assertTrue(modelManager.isClientExistToView());
+        assertEquals(Arrays.asList(ALICE), modelManager.getClientToView());
+        assertEquals(ALICE.getName().toString(), modelManager.getNameOfClientToView());
     }
 
     @Test
-    public void getPersonToView_viewNonExistingClient_returnsFalse() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+    public void getClientToView_viewNonExistingClient_returnsFalse() {
+        AddressBook addressBook = new AddressBookBuilder().withClient(ALICE).withClient(BENSON).build();
         UserPrefs userPrefs = new UserPrefs();
         modelManager = new ModelManager(addressBook, userPrefs);
-        modelManager.updatePersonToView(new PersonHasId(CARL.getClientId()));
-        assertFalse(modelManager.isPersonExistToView());
+        modelManager.updateClientToView(new ClientHasId(CARL.getClientId()));
+        assertFalse(modelManager.isClientExistToView());
     }
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        AddressBook addressBook = new AddressBookBuilder().withClient(ALICE).withClient(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -157,20 +157,20 @@ public class ModelManagerTest {
 
         // different filteredList -> returns false
         ArgumentMultimap aMM = ArgumentTokenizer.tokenize(ALICE.getName().fullName);
-        modelManager.updateFilteredPersonList(new PersonContainsKeywordsPredicate(aMM));
+        modelManager.updateFilteredClientList(new ClientContainsKeywordsPredicate(aMM));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        modelManager.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
 
-        // different personToView -> returns false
+        // different clientToView -> returns false
         ClientId clientId = ALICE.getClientId();
-        modelManager.updatePersonToView(new PersonHasId(clientId));
+        modelManager.updateClientToView(new ClientHasId(clientId));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
     }
 }

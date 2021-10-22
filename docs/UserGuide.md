@@ -4,8 +4,9 @@ title: User Guide
 ---
 
 LeadsForce is a desktop app that is optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI).
-It provides a new way to streamline the process for student financial advisors to find the right clients to contact.
-We aim to help you manage your leads by making it effortless to store information regarding them and retrieving this information seamlessly.
+Catered towards student financial advisors, LeadsForce makes the process of managing client information seamless!
+LeadsForce does this by helping the financial advisors store and retrieve client information effortlessly and seamlessly.
+
 Finding your next lead has never been easier.
 ## Table of Contents
 
@@ -19,9 +20,13 @@ Finding your next lead has never been easier.
     * [List all contacts: list](#list-all-contacts--list)
     * [Clearing all entries: clear](#clearing-all-entries--clear)
     * [Sort Contacts: sort](#sort-contacts--sort)
+    * [Find meeting schedule: schedule](#find-meeting-schedule--schedule)
     * [Locating clients by keywords: search](#locating-clients-by-keywords--search)
     * [Filter current list: filter](#filter-current-list-by-keywords--filter)
     * [Exiting the program: exit](#exiting-the-program--exit)
+    * Create new address book: ab create
+    * Switch to different address book: ab switch
+    * List all address book: ab list
     * [Saving data](#saving-the-data)
     * [Edit data file](#edit-data-file)
 * [FAQ](#faq)
@@ -136,19 +141,19 @@ Example: `view 2` would be used to view client 2's information
 
 ### Update Existing Contact : `edit`
 
-Update the information of existing users by using the “edit” command. This can be used to change the
+Update the information of existing users by using the “edit” command. This can be used to update the
 attributes of a client, using the tag of the client’s attribute.
 
 * Multiple attributes could be changed with one command.
 * Multiple client can be edited at the same time with the provided attributes by indicating multiple client ids.
 
-Format: `edit {CLIENT'S ID}... <attribute>/{CHANGED VALUE OF ATTRIBUTE}...`
+Format:
+`edit {CLIENT'S ID}... <attribute>/{CHANGED VALUE OF ATTRIBUTE}...`
 
 Examples:
 
 * `edit 15 n/Dominic` command changes the name of client 15 to “Dominic”.
-* `edit 3 p/12345678 r/5` command changes the contact number to “12345678” and
-  the risk appetite to 5 for the client who’s id number is 3.
+* `edit 3 p/12345678 r/5` command changes the contact number to “12345678” and the risk appetite to 5 for the client who’s client id is 3.
 * `edit 15 13 r/3` command changes the risk appetite of client 13 & 15 to “3”.
 
 ### Delete particular contact : `delete`
@@ -184,13 +189,23 @@ Examples:
 * `sort r/ASC` will sort the list by ascending risk-appetite
 * `sort i/dsc` will sort the list by descending client id
 
+### Find meeting schedule : `schedule`
+
+Finds the meeting schedule that the user has on a specified date.
+
+Format: `schedule {DATE}`
+
+* `DATE` has to be in the format of Day-Month-Year, where Day, Month and Years are numerical values.
+
+Example: `schedule 22-09-2021` allows the user to view the schedule that the user has on the 22nd September 2021.
+
 ### Locating clients by keywords : `search`
 
 Finds clients whose contacts match with the given keywords.
 
 Format: `search {KEYWORD}... <attribute>/{ATTRIBUTE_KEYWORD}...`
 
-* `KEYWORD` will be used to match with all attribute of the person.
+* `KEYWORD` will be used to match with all attribute of the client.
 * `<attribute>/` refers to the argument tag for the client's attribute.
 * `{ATTRIBUTE_KEYWORD}` refers to the keyword that is to be matched with the corresponding client attribute.
 * If no `KEYWORD` is provided, search will be based on `<attribute>/{ATTRIBUTE_KEYWORD}` only.
@@ -212,7 +227,7 @@ Filter the current list by the given keywords.
 Format: `filter {KEYWORD}... <attribute>/{ATTRIBUTE_KEYWORD}...`
 
 * Works similar to `search` but `filter` works based on the current list shown as opposed to entire lists of contacts.
-* `KEYWORD` will be used to match with all attribute of the person.
+* `KEYWORD` will be used to match with all attribute of the client.
 * If no `KEYWORD` is provided, then filter will be based on `<attribute>/{ATTRIBUTE_KEYWORD}`
 * `<attribute>/` refers to the argument tag for the client's attribute.
 * `{ATTRIBUTE_KEYWORD}` refers to the keyword that is to be matched with the corresponding client attribute.
@@ -238,6 +253,36 @@ Format: `clear`
 Exits the program.
 
 Format: `exit`
+
+### Create new address book: `ab create`
+
+Create a new address book by the name provided and switch to it.
+
+Format: `ab create {ADDRESSBOOK_NAME}`
+
+* `{ADDRESSBOOK_NAME}` refers to the name to be given to the new address book.
+* The name of the addressbook cannot be the same as an existing address book.
+
+Examples:
+* 'ab create vip clients' will create a new address book named `vip clients`
+
+### Switch to different address book: `ab switch`
+
+Switch to a different address book that currently exists.
+
+Format: `ab create {ADDRESSBOOK_NAME}`
+
+* `{ADDRESSBOOK_NAME}` refers to the name of the address book to switched to .
+
+Examples:
+* 'ab switch other' will switch over to the address book named `other`
+
+
+### List all address book: `ab list`
+
+List all the name of all the existing address books
+
+Format: `ab list`
 
 ### Saving the data
 
@@ -272,4 +317,7 @@ Action | Format | Examples
 **Search** | `search {KEYWORD}... <attribute>/{ATTRIBUTE_KEYWORD}...` | search * e/doe@gmail.com r/5 |
 **Filter** | `filter {KEYWORD}... <attribute>/{ATTRIBUTE_KEYWORD}...` | filter * e/doe@gmail.com p/9 |
 **Sort** | `sort <attribute>/{ASC/DESC}` | sort r/asc |
+**Create Address Book** | `ab create {ADDRESSBOOK_NAME}` | ab create vip
+**Switch Address Book** | `ab switch {ADDRESSBOOK_NAME}` | ab switch another
+**List Address Book** | `ab list` | -
 **Exit** | `exit` | - |

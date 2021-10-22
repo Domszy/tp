@@ -1,0 +1,27 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+Interface Field <<Interface>>
+Interface OptionalStringBasedField <<Interface>>
+Interface OptionalNonStringBasedField <<Interface>>
+Interface RequiredField <<Interface>>
+
+OptionalStringBasedField -up-|> Field
+OptionalNonStringBasedField -up-|> Field
+RequiredField -up-|> Field
+
+Name .up.|> RequiredField
+Email .up.|> RequiredField
+Address .up.|> OptionalStringBasedField
+Phone .up.|> OptionalStringBasedField
+ClientId .up.|> OptionalStringBasedField
+CurrentPlan .up.|> OptionalStringBasedField
+DisposableIncome .up.|> OptionalStringBasedField
+RiskAppetite .up.|> OptionalStringBasedField
+LastMet .up.|> OptionalNonStringBasedField
+NextMeeeting .up.|> OptionalNonStringBasedField
+
+@enduml

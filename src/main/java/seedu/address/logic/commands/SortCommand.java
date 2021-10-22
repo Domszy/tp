@@ -4,10 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.person.SortByAttribute;
+import seedu.address.model.client.SortByAttribute;
 
 /**
- * Sorts all persons in address book whose according to the specified attribute in either ascending or descending
+ * Sorts all clients in address book whose according to the specified attribute in either ascending or descending
  * order.
  */
 public class SortCommand extends Command {
@@ -24,7 +24,7 @@ public class SortCommand extends Command {
     private final SortByAttribute sorter;
 
     /**
-     * @param sorter to sort the persons list with.
+     * @param sorter to sort the clients list with.
      */
     public SortCommand(SortByAttribute sorter) {
         this.sorter = sorter;
@@ -33,7 +33,7 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.sortFilteredPersonList(sorter);
+        model.sortFilteredClientList(sorter);
         return new CommandResult(String.format(Messages.MESSAGE_SORT_SUCCESS, sorter.getPrefixName()));
     }
 

@@ -12,16 +12,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LASTMET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RISKAPPETITE;
-import static seedu.address.model.person.SortDirection.SORT_ASCENDING;
-import static seedu.address.model.person.SortDirection.SORT_DESCENDING;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.GEORGE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.model.client.SortDirection.SORT_ASCENDING;
+import static seedu.address.model.client.SortDirection.SORT_DESCENDING;
+import static seedu.address.testutil.TypicalClients.ALICE;
+import static seedu.address.testutil.TypicalClients.BENSON;
+import static seedu.address.testutil.TypicalClients.CARL;
+import static seedu.address.testutil.TypicalClients.DANIEL;
+import static seedu.address.testutil.TypicalClients.ELLE;
+import static seedu.address.testutil.TypicalClients.FIONA;
+import static seedu.address.testutil.TypicalClients.GEORGE;
+import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
 
 import java.util.Arrays;
 
@@ -31,7 +31,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.SortByAttribute;
+import seedu.address.model.client.SortByAttribute;
 
 public class SortCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -72,9 +72,9 @@ public class SortCommandTest {
         String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Client Id");
         SortByAttribute sorter = new SortByAttribute(PREFIX_CLIENTID, SORT_DESCENDING);
         SortCommand command = new SortCommand(sorter);
-        expectedModel.sortFilteredPersonList(sorter);
+        expectedModel.sortFilteredClientList(sorter);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(GEORGE, FIONA, ELLE, DANIEL, CARL, BENSON, ALICE), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(GEORGE, FIONA, ELLE, DANIEL, CARL, BENSON, ALICE), model.getFilteredClientList());
     }
 
     @Test
@@ -82,9 +82,9 @@ public class SortCommandTest {
         String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Name");
         SortByAttribute sorter = new SortByAttribute(PREFIX_NAME, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
-        expectedModel.sortFilteredPersonList(sorter);
+        expectedModel.sortFilteredClientList(sorter);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE), model.getFilteredClientList());
     }
 
     @Test
@@ -92,9 +92,9 @@ public class SortCommandTest {
         String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Email");
         SortByAttribute sorter = new SortByAttribute(PREFIX_EMAIL, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
-        expectedModel.sortFilteredPersonList(sorter);
+        expectedModel.sortFilteredClientList(sorter);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, GEORGE, DANIEL, CARL, BENSON, FIONA, ELLE), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(ALICE, GEORGE, DANIEL, CARL, BENSON, FIONA, ELLE), model.getFilteredClientList());
     }
 
     @Test
@@ -102,9 +102,9 @@ public class SortCommandTest {
         String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Address");
         SortByAttribute sorter = new SortByAttribute(PREFIX_ADDRESS, SORT_DESCENDING);
         SortCommand command = new SortCommand(sorter);
-        expectedModel.sortFilteredPersonList(sorter);
+        expectedModel.sortFilteredClientList(sorter);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA, GEORGE, BENSON, ALICE, DANIEL), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(CARL, ELLE, FIONA, GEORGE, BENSON, ALICE, DANIEL), model.getFilteredClientList());
     }
 
     @Test
@@ -112,9 +112,9 @@ public class SortCommandTest {
         String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Risk Appetite");
         SortByAttribute sorter = new SortByAttribute(PREFIX_RISKAPPETITE, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
-        expectedModel.sortFilteredPersonList(sorter);
+        expectedModel.sortFilteredClientList(sorter);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(DANIEL, ELLE, ALICE, CARL, FIONA, BENSON, GEORGE), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(DANIEL, ELLE, ALICE, CARL, FIONA, BENSON, GEORGE), model.getFilteredClientList());
     }
 
     @Test
@@ -122,9 +122,9 @@ public class SortCommandTest {
         String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Disposable Income");
         SortByAttribute sorter = new SortByAttribute(PREFIX_DISPOSABLEINCOME, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
-        expectedModel.sortFilteredPersonList(sorter);
+        expectedModel.sortFilteredClientList(sorter);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(GEORGE, CARL, ALICE, FIONA, BENSON, ELLE, DANIEL), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(GEORGE, CARL, ALICE, FIONA, BENSON, ELLE, DANIEL), model.getFilteredClientList());
     }
 
     @Test
@@ -132,9 +132,9 @@ public class SortCommandTest {
         String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Current Plan");
         SortByAttribute sorter = new SortByAttribute(PREFIX_CURRENTPLAN, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
-        expectedModel.sortFilteredPersonList(sorter);
+        expectedModel.sortFilteredClientList(sorter);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ELLE, GEORGE, DANIEL, CARL, BENSON, ALICE, FIONA), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(ELLE, GEORGE, DANIEL, CARL, BENSON, ALICE, FIONA), model.getFilteredClientList());
     }
 
     @Test
@@ -142,9 +142,9 @@ public class SortCommandTest {
         String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Last Met");
         SortByAttribute sorter = new SortByAttribute(PREFIX_LASTMET, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
-        expectedModel.sortFilteredPersonList(sorter);
+        expectedModel.sortFilteredClientList(sorter);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(DANIEL, ELLE, GEORGE, FIONA, CARL, ALICE, BENSON), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(DANIEL, ELLE, GEORGE, FIONA, CARL, ALICE, BENSON), model.getFilteredClientList());
     }
 
 }

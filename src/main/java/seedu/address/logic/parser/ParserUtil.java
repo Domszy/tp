@@ -9,17 +9,17 @@ import java.util.Set;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.ClientId;
-import seedu.address.model.person.CurrentPlan;
-import seedu.address.model.person.DisposableIncome;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.LastMet;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.NextMeeting;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.RiskAppetite;
-import seedu.address.model.person.SortDirection;
+import seedu.address.model.client.Address;
+import seedu.address.model.client.ClientId;
+import seedu.address.model.client.CurrentPlan;
+import seedu.address.model.client.DisposableIncome;
+import seedu.address.model.client.Email;
+import seedu.address.model.client.LastMet;
+import seedu.address.model.client.Name;
+import seedu.address.model.client.NextMeeting;
+import seedu.address.model.client.Phone;
+import seedu.address.model.client.RiskAppetite;
+import seedu.address.model.client.SortDirection;
 import seedu.address.model.tag.Tag;
 
 /**

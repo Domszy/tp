@@ -1,0 +1,36 @@
+{
+  "_comment": "AddressBook save file which contains the same Client values as in TypicalClients#getTypicalAddressBook()",
+  "clients": [
+    {
+      "clientId": "0",
+      "name": "Pauline Alice",
+      "phone": "99998888",
+      "email": "pauline@example.com",
+      "address": "123, Jurong West Ave 6, #08-11",
+      "riskAppetite": "2",
+      "disposableIncome": "200",
+      "last-met": "07-10-2019",
+      "next-meeting": "24-09-2021 (10:00~12:00), Starbucks @ UTown",
+      "current-plan": "Prudential PRUShield",
+      "tagged": [
+        "friends"
+      ]
+    },
+    {
+      "clientId": "1",
+      "name": "Charlie Meier",
+      "phone": "98511111",
+      "email": "charlie@example.com",
+      "address": "31, Clementi Ave 2, #02-25",
+      "riskAppetite": "5",
+      "disposableIncome": "1000",
+      "last-met": "01-05-2021",
+      "next-meeting": "24-09-2021 (10:00~12:00), Starbucks @ UTown",
+      "current-plan": "Prudential PROLife",
+      "tagged": [
+        "owesMoney",
+        "family"
+      ]
+    }
+  ]
+}

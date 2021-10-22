@@ -1,0 +1,45 @@
+@startuml
+!include ../style.puml
+
+box "Logic" #LightBlue
+Participant ":LogicManager" as logic LOGIC_COLOR
+Participant ":AddressBookParser" as abp LOGIC_COLOR
+Participant ":FilterCommandParser" as fcp LOGIC_COLOR
+Participant "command:FilterCommand" as fc LOGIC_COLOR
+Participant "result:CommandResult" as cr LOGIC_COLOR
+Participant "predicate:ClientContainsKeywordPredicate" as pckp LOGIC_COLOR
+end box
+box "Model" #Pink
+Participant "model:Model" as model MODEL_COLOR
+end box
+
+[-> logic : execute
+activate logic
+logic -> abp ++: parseCommand(commandText)
+create fcp
+abp -> fcp
+abp -> fcp ++: parse(arguments)
+create pckp
+fcp -> pckp ++: argMultiMap
+pckp --> fcp --:
+create fc
+fcp -> fc ++: predicate
+fc --> fcp --: command
+fcp --> abp --: command
+abp --> logic --: command
+logic -> fc ++: execute(model)
+fc -> model ++: filterFilteredClientList(predicate)
+loop all client
+    model -> pckp ++: test(client)
+    pckp --> model --
+end
+model --> fc --:
+create cr
+fc -> cr ++:
+cr --> fc --:
+fc --> logic --: result
+logic -->[ --: result
+
+
+
+@enduml

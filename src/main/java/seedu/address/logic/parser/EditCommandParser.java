@@ -17,10 +17,10 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditCommand.EditClientDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.person.ClientId;
+import seedu.address.model.client.ClientId;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -33,6 +33,7 @@ public class EditCommandParser implements Parser<EditCommand> {
      * and returns an EditCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
+     * @return
      */
     @Override
     public EditCommand parse(String args, Model model) throws ParseException {
@@ -54,24 +55,24 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_CHANGE_CLIENTID);
         }
 
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+        EditClientDescriptor editClientDescriptor = new EditClientDescriptor();
 
         Prefix[] prefixes = allPrefixLess(PREFIX_CLIENTID, PREFIX_TAG);
         for (Prefix prefix : prefixes) {
             if (argMultimap.getValue(prefix).isPresent()) {
-                BiConsumer<EditPersonDescriptor, String> parseEditSetFunction = parseAndEditSet(prefix);
+                BiConsumer<EditClientDescriptor, String> parseEditSetFunction = parseAndEditSet(prefix);
                 String toParse = argMultimap.getValue(prefix).get();
-                parseEditSetFunction.accept(editPersonDescriptor, toParse);
+                parseEditSetFunction.accept(editClientDescriptor, toParse);
             }
         }
 
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG), model).ifPresent(editPersonDescriptor::setTags);
+        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG), model).ifPresent(editClientDescriptor::setTags);
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
+        if (!editClientDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(clientIds, editPersonDescriptor);
+        return new EditCommand(clientIds, editClientDescriptor);
     }
 
     /**

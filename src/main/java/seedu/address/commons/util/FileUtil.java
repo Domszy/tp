@@ -13,12 +13,21 @@ public class FileUtil {
 
     private static final String CHARSET = "UTF-8";
 
+    /**
+     * Converts {@code String addressBookName} into a {@code Path}
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String convertToAddressBookPathString(String addressBookName) {
+        String trimmedLowerCase = addressBookName.trim().toLowerCase();
+        return String.format("data/%s.json", trimmedLowerCase);
+    }
+
     public static boolean isFileExists(Path file) {
         return Files.exists(file) && Files.isRegularFile(file);
     }
 
     /**
-     * Returns true if {@code path} can be converted into a {@code Path} via {@link Paths#get(String)},
+     * Returns true if {@code path} can be converted into a {@code Path} via {@link Paths#get(String, String...)},
      * otherwise returns false.
      * @param path A string representing the file path. Cannot be null.
      */

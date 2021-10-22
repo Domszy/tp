@@ -50,12 +50,12 @@
                                         <Insets bottom="5" left="10" right="10" top="5"/>
                                     </padding>
                                 </StackPane>
-                                <VBox fx:id="personList" minWidth="340" prefWidth="340" styleClass="pane-with-border"
+                                <VBox fx:id="clientList" minWidth="340" prefWidth="340" styleClass="pane-with-border"
                                       VBox.vgrow="ALWAYS">
                                     <padding>
                                         <Insets bottom="10" left="10" right="10" top="10"/>
                                     </padding>
-                                    <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                                    <StackPane fx:id="clientListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
                                 </VBox>
                             </children>
                         </VBox>

@@ -11,7 +11,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.person.ClientId;
+import seedu.address.model.client.ClientId;
 
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -24,6 +24,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      * and returns a DeleteCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
+     * @return
      */
     @Override
     public DeleteCommand parse(String args, Model model) throws ParseException {

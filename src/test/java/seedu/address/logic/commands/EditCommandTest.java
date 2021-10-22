@@ -10,12 +10,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalClientId.CLIENTID_FIRST_PERSON;
+import static seedu.address.testutil.TypicalClientId.CLIENTID_FIRST_CLIENT;
 import static seedu.address.testutil.TypicalClientId.CLIENTID_OUTOFBOUND;
-import static seedu.address.testutil.TypicalClientId.CLIENTID_SECOND_PERSON;
-import static seedu.address.testutil.TypicalClientId.CLIENTID_THIRD_PERSON;
-import static seedu.address.testutil.TypicalClientId.CLIENTID_ZERO_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalClientId.CLIENTID_SECOND_CLIENT;
+import static seedu.address.testutil.TypicalClientId.CLIENTID_THIRD_CLIENT;
+import static seedu.address.testutil.TypicalClientId.CLIENTID_ZERO_CLIENT;
+import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
 
 import java.util.List;
 
@@ -23,15 +23,15 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditCommand.EditClientDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ClientId;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.client.Client;
+import seedu.address.model.client.ClientId;
+import seedu.address.testutil.ClientBuilder;
+import seedu.address.testutil.EditClientDescriptorBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -42,48 +42,48 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecified_success() {
-        ClientId clientId = CLIENTID_ZERO_PERSON;
-        Person editedPerson = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        ClientId clientId = CLIENTID_ZERO_CLIENT;
+        Client editedClient = new ClientBuilder().build();
+        EditClientDescriptor descriptor = new EditClientDescriptorBuilder(editedClient).build();
         EditCommand editCommand = new EditCommand(List.of(clientId), descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CLIENT_SUCCESS, editedClient);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
-        expectedModel.setPersonByClientIds(List.of(clientId), descriptor);
+        expectedModel.setClientByClientIds(List.of(clientId), descriptor);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_someFieldsSpecified_success() {
-        ClientId clientId = CLIENTID_THIRD_PERSON;
-        Person thirdPerson = model.getPerson(clientId);
+        ClientId clientId = CLIENTID_THIRD_CLIENT;
+        Client thirdClient = model.getClient(clientId);
 
-        PersonBuilder personInList = new PersonBuilder(thirdPerson);
-        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        ClientBuilder clientInList = new ClientBuilder(thirdClient);
+        Client editedClient = clientInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withTags(VALID_TAG_HUSBAND).build();
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
+        EditClientDescriptor descriptor = new EditClientDescriptorBuilder().withName(VALID_NAME_BOB)
             .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = new EditCommand(List.of(clientId), descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CLIENT_SUCCESS, editedClient);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPersonByClientIds(List.of(clientId), descriptor);
+        expectedModel.setClientByClientIds(List.of(clientId), descriptor);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_noFieldSpecified_success() {
-        ClientId clientId = CLIENTID_FIRST_PERSON;
-        EditCommand editCommand = new EditCommand(List.of(clientId), new EditPersonDescriptor());
-        Person editedPerson = model.getPerson(clientId);
+        ClientId clientId = CLIENTID_FIRST_CLIENT;
+        EditCommand editCommand = new EditCommand(List.of(clientId), new EditClientDescriptor());
+        Client editedClient = model.getClient(clientId);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CLIENT_SUCCESS, editedClient);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -92,53 +92,53 @@ public class EditCommandTest {
 
     @Test
     public void execute_batchEdit_success() {
-        ClientId clientId1 = CLIENTID_FIRST_PERSON;
-        ClientId clientId2 = CLIENTID_THIRD_PERSON;
-        ClientId clientId3 = CLIENTID_SECOND_PERSON;
+        ClientId clientId1 = CLIENTID_FIRST_CLIENT;
+        ClientId clientId2 = CLIENTID_THIRD_CLIENT;
+        ClientId clientId3 = CLIENTID_SECOND_CLIENT;
         List<ClientId> clientIdList = List.of(clientId1, clientId2, clientId3);
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptorBuilder()
+        EditClientDescriptor editClientDescriptor = new EditClientDescriptorBuilder()
             .withAddress(VALID_ADDRESS_AMY).withPhone(VALID_PHONE_BOB).build();
 
-        EditCommand editCommand = new EditCommand(clientIdList, editPersonDescriptor);
-        Person person1 = model.getPerson(clientId1);
-        Person person2 = model.getPerson(clientId2);
-        Person person3 = model.getPerson(clientId3);
+        EditCommand editCommand = new EditCommand(clientIdList, editClientDescriptor);
+        Client client1 = model.getClient(clientId1);
+        Client client2 = model.getClient(clientId2);
+        Client client3 = model.getClient(clientId3);
 
-        Person editedPerson1 = new PersonBuilder(person1).withAddress(VALID_ADDRESS_AMY)
+        Client editedClient1 = new ClientBuilder(client1).withAddress(VALID_ADDRESS_AMY)
             .withPhone(VALID_PHONE_BOB).build();
-        Person editedPerson2 = new PersonBuilder(person2).withAddress(VALID_ADDRESS_AMY)
+        Client editedClient2 = new ClientBuilder(client2).withAddress(VALID_ADDRESS_AMY)
             .withPhone(VALID_PHONE_BOB).build();
-        Person editedPerson3 = new PersonBuilder(person3).withAddress(VALID_ADDRESS_AMY)
+        Client editedClient3 = new ClientBuilder(client3).withAddress(VALID_ADDRESS_AMY)
             .withPhone(VALID_PHONE_BOB).build();
 
         List<ClientId> clientIdlist = List.of(clientId1, clientId2, clientId3);
-        List<Person> editPersonList = List.of(editedPerson1, editedPerson2, editedPerson3);
+        List<Client> editClientList = List.of(editedClient1, editedClient2, editedClient3);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
-            StringUtil.joinListToString(editPersonList, "\n"));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CLIENT_SUCCESS,
+            StringUtil.joinListToString(editClientList, "\n"));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPersonByClientIds(clientIdlist, editPersonDescriptor);
+        expectedModel.setClientByClientIds(clientIdlist, editClientDescriptor);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
 
     @Test
-    public void execute_duplicatePerson_failure() {
-        ClientId clientId = CLIENTID_FIRST_PERSON;
-        Person firstPerson = model.getPerson(clientId);
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
-        EditCommand editCommand = new EditCommand(List.of(CLIENTID_THIRD_PERSON), descriptor);
+    public void execute_duplicateClient_failure() {
+        ClientId clientId = CLIENTID_FIRST_CLIENT;
+        Client firstClient = model.getClient(clientId);
+        EditClientDescriptor descriptor = new EditClientDescriptorBuilder(firstClient).build();
+        EditCommand editCommand = new EditCommand(List.of(CLIENTID_THIRD_CLIENT), descriptor);
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_CLIENT);
     }
 
 
     @Test
-    public void execute_invalidPerson_failure() {
+    public void execute_invalidClient_failure() {
         ClientId outOfBound = CLIENTID_OUTOFBOUND;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditClientDescriptor descriptor = new EditClientDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(List.of(outOfBound), descriptor);
 
         assertCommandFailure(editCommand, model,
@@ -148,11 +148,11 @@ public class EditCommandTest {
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(List.of(CLIENTID_THIRD_PERSON), DESC_AMY);
+        final EditCommand standardCommand = new EditCommand(List.of(CLIENTID_THIRD_CLIENT), DESC_AMY);
 
         // same values -> returns true
-        EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(DESC_AMY);
-        EditCommand commandWithSameValues = new EditCommand(List.of(CLIENTID_THIRD_PERSON), copyDescriptor);
+        EditClientDescriptor copyDescriptor = new EditClientDescriptor(DESC_AMY);
+        EditCommand commandWithSameValues = new EditCommand(List.of(CLIENTID_THIRD_CLIENT), copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -165,10 +165,10 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(List.of(CLIENTID_SECOND_PERSON), DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(List.of(CLIENTID_SECOND_CLIENT), DESC_AMY)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(List.of(CLIENTID_FIRST_PERSON), DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(List.of(CLIENTID_FIRST_CLIENT), DESC_BOB)));
     }
 
 }

@@ -1,0 +1,103 @@
+{
+  "_comment": "AddressBook save file which contains the same Client values as in TypicalClients#getTypicalAddressBook()",
+  "clients": [
+    {
+      "clientId": "0",
+      "name": "Alice Pauline",
+      "phone": "94351253",
+      "email": "alice@example.com",
+      "address": "123, Jurong West Ave 6, #08-111",
+      "riskAppetite": "2",
+      "disposableIncome": "200",
+      "last-met": "07-10-2021",
+      "next-meeting": "24-09-2021 (10:00~12:00), Starbucks @ UTown",
+      "current-plan": "Prudential PRUShield",
+      "tagged": [
+        "friends"
+      ]
+    },
+    {
+      "clientId": "1",
+      "name": "Benson Meier",
+      "phone": "98765432",
+      "email": "johnd@example.com",
+      "address": "311, Clementi Ave 2, #02-25",
+      "riskAppetite": "4",
+      "disposableIncome": "300",
+      "last-met": "08-10-2021",
+      "next-meeting": "24-09-2021 (10:00~12:00), Starbucks @ UTown",
+      "current-plan": "Prudential PROLife",
+      "tagged": [
+        "owesMoney",
+        "friends"
+      ]
+    },
+    {
+      "clientId": "2",
+      "name": "Carl Kurz",
+      "phone": "95352563",
+      "email": "heinz@example.com",
+      "address": "wall street",
+      "riskAppetite": "3",
+      "disposableIncome": "100",
+      "last-met": "06-10-2021",
+      "next-meeting": "24-09-2021 (10:00~12:00), Starbucks @ UTown",
+      "current-plan": "Aviva Shield",
+      "tagged": []
+    },
+    {
+      "clientId": "3",
+      "name": "Daniel Meier",
+      "phone": "87652533",
+      "email": "cornelia@example.com",
+      "address": "10th street",
+      "riskAppetite": "1",
+      "disposableIncome": "50000",
+      "last-met": "02-10-2021",
+      "next-meeting": "24-09-2021 (10:00~12:00), Starbucks @ UTown",
+      "current-plan": "Aviva Ace",
+      "tagged": [
+        "friends"
+      ]
+    },
+    {
+      "clientId": "4",
+      "name": "Elle Meyer",
+      "phone": "9482224",
+      "email": "werner@example.com",
+      "address": "michegan ave",
+      "riskAppetite": "1",
+      "disposableIncome": "4000",
+      "last-met": "03-10-2021",
+      "next-meeting": "24-09-2021 (10:00~12:00), Starbucks @ UTown",
+      "current-plan": "AIA Gold",
+      "tagged": []
+    },
+    {
+      "clientId": "5",
+      "name": "Fiona Kunz",
+      "phone": "9482427",
+      "email": "lydia@example.com",
+      "address": "little tokyo",
+      "riskAppetite": "3",
+      "disposableIncome": "200",
+      "last-met": "04-10-2021",
+      "next-meeting": "24-09-2021 (10:00~12:00), Starbucks @ UTown",
+      "current-plan": "Prudential PRUShield",
+      "tagged": []
+    },
+    {
+      "clientId": "6",
+      "name": "George Best",
+      "phone": "9482442",
+      "email": "anna@example.com",
+      "address": "4th street",
+      "riskAppetite": "5",
+      "disposableIncome": "1",
+      "last-met": "03-10-2021",
+      "next-meeting": "24-09-2021 (10:00~12:00), Starbucks @ UTown",
+      "current-plan": "AIA Zero",
+      "tagged": []
+    }
+  ]
+}

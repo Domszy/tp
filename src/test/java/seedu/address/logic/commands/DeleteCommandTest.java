@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_NONEXISTENT_CLIENT_ID;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ClientId;
-import seedu.address.model.person.Person;
+import seedu.address.model.client.Client;
+import seedu.address.model.client.ClientId;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -27,15 +27,15 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validClientIdUnfilteredList_success() {
-        Person personToDelete = model.getFilteredPersonList().get(2);
-        ClientId clientId = new ClientId(personToDelete.getClientId().value);
+        Client clientToDelete = model.getFilteredClientList().get(2);
+        ClientId clientId = new ClientId(clientToDelete.getClientId().value);
 
         DeleteCommand deleteCommand = new DeleteCommand(List.of(clientId));
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_CLIENT_SUCCESS, clientToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePersonByClientIds(List.of(clientId));
+        expectedModel.deleteClientByClientIds(List.of(clientId));
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
@@ -72,7 +72,7 @@ public class DeleteCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different client -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 

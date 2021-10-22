@@ -1,0 +1,83 @@
+@startuml
+!include style.puml
+
+Actor User as user USER_COLOR
+Participant ":UI" as ui UI_COLOR
+
+box "Logic" #LightBlue
+Participant ":LogicManager" as logic LOGIC_COLOR
+Participant ":AddressBookParser" as abp LOGIC_COLOR
+Participant ":ViewCommandParser" as fcp LOGIC_COLOR
+Participant "command:ViewCommand" as fc LOGIC_COLOR
+Participant "result:CommandResult" as cr LOGIC_COLOR
+Participant "predicate:ClientHasId" as pckp LOGIC_COLOR
+end box
+box "Model" #Pink
+Participant "model:Model" as model MODEL_COLOR
+end box
+
+user -[USER_COLOR]> ui : "view 1"
+activate ui UI_COLOR
+
+ui -[UI_COLOR]> logic : execute("delete 1")
+activate logic LOGIC_COLOR
+
+logic -> abp ++: parseCommand(commandText)
+activate abp LOGIC_COLOR
+
+create fcp
+abp -> fcp
+activate fcp LOGIC_COLOR
+fcp -> abp
+deactivate fcp
+
+abp -> fcp ++: parse(arguments)
+activate fcp LOGIC_COLOR
+
+create pckp
+fcp -> pckp ++: clientId
+activate pckp LOGIC_COLOR
+pckp --> fcp --:
+deactivate pckp
+
+create fc
+fcp -> fc ++: clientId, predicate
+activate fc LOGIC_COLOR
+fc --> fcp --
+deactivate fc
+
+fcp --> abp --
+deactivate fcp
+
+abp --> logic --
+deactivate abp
+
+logic -> fc ++: execute(model)
+activate fc LOGIC_COLOR
+
+fc -> model ++: updateClientToView(predicate)
+activate model MODEL_COLOR
+model --> fc --:
+deactivate model
+
+fc -> model ++: isClientExistToView()
+activate model MODEL_COLOR
+model --> fc --:
+deactivate model
+
+create cr
+fc -> cr ++:
+activate cr LOGIC_COLOR
+cr --> fc --:
+deactivate cr
+
+fc --> logic --
+deactivate fc
+
+logic --> ui
+deactivate logic
+
+ui--[UI_COLOR]> user: shows Client Info
+deactivate ui
+
+@enduml

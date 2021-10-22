@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.person.Person;
+import seedu.address.model.client.Client;
 
 /**
  * Represents a Tag in the address book.
@@ -20,7 +20,7 @@ public class Tag {
 
     // TODO: tag color + FXML
     private final String tagName;
-    private final Set<Person> persons = new HashSet<>();
+    private final Set<Client> clients = new HashSet<>();
 
     /**
      * Constructs a {@code Tag}.
@@ -42,12 +42,12 @@ public class Tag {
 
 
     /**
-     * Returns a list of persons that have this tag.
+     * Returns a list of clients that have this tag.
      *
-     * @return A list of persons that have this tag.
+     * @return A list of clients that have this tag.
      */
-    public Set<Person> getPersons() {
-        return Collections.unmodifiableSet(persons);
+    public Set<Client> getClients() {
+        return Collections.unmodifiableSet(clients);
     }
 
     /**
@@ -60,22 +60,22 @@ public class Tag {
     }
 
     /**
-     * Adds {@code Person} to the list of persons this tag is assigned to.
+     * Adds {@code Client} to the list of clients this tag is assigned to.
      *
-     * @param person The person to be added to the list.
+     * @param client The client to be added to the list.
      */
-    public void addPerson(Person person) {
-        requireNonNull(person);
-        persons.add(person);
+    public void addClient(Client client) {
+        requireNonNull(client);
+        clients.add(client);
     }
 
     /**
-     * Removes {@code Person} from the list of persons this tag is assigned to.
+     * Removes {@code Client} from the list of clients this tag is assigned to.
      *
-     * @param person The person to be removed from the list.
+     * @param client The client to be removed from the list.
      */
-    public void removePerson(Person person) {
-        persons.remove(person);
+    public void removeClient(Client client) {
+        clients.remove(client);
     }
 
     /**
@@ -93,8 +93,8 @@ public class Tag {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-            || (other instanceof Tag // instanceof handles nulls
-            && tagName.equals(((Tag) other).tagName)); // state check
+                || (other instanceof Tag // instanceof handles nulls
+                && tagName.equals(((Tag) other).tagName)); // state check
     }
 
     @Override

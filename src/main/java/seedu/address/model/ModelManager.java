@@ -4,19 +4,21 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.ClientId;
-import seedu.address.model.person.Person;
+import seedu.address.logic.commands.EditCommand.EditClientDescriptor;
+import seedu.address.model.client.Client;
+import seedu.address.model.client.ClientId;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -27,9 +29,9 @@ public class ModelManager implements Model {
 
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
-    private final SortedList<Person> sortedPersons;
-    private final FilteredList<Person> filteredPersons;
-    private final FilteredList<Person> personToView;
+    private final SortedList<Client> sortedClients;
+    private final FilteredList<Client> filteredClients;
+    private final FilteredList<Client> clientToView;
     private final FilteredList<Tag> filteredTags;
 
     /**
@@ -43,10 +45,10 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        sortedPersons = new SortedList<>(this.addressBook.getPersonList());
-        filteredPersons = new FilteredList<>(sortedPersons);
+        sortedClients = new SortedList<>(this.addressBook.getClientList());
+        filteredClients = new FilteredList<>(sortedClients);
         filteredTags = new FilteredList<>(this.addressBook.getTagList());
-        personToView = new FilteredList<>(this.addressBook.getPersonList());
+        clientToView = new FilteredList<>(this.addressBook.getClientList());
     }
 
     public ModelManager() {
@@ -83,6 +85,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableValue<Path> getAddressBookFilePathObject() {
+        return userPrefs.getAddressBookFilePathObject();
+    }
+
+    @Override
     public void setAddressBookFilePath(Path addressBookFilePath) {
         requireNonNull(addressBookFilePath);
         userPrefs.setAddressBookFilePath(addressBookFilePath);
@@ -101,9 +108,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return addressBook.hasPerson(person);
+    public boolean hasClient(Client client) {
+        requireNonNull(client);
+        return addressBook.hasClient(client);
     }
 
     @Override
@@ -113,27 +120,27 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public List<Person> deletePersonByClientIds(List<ClientId> clientIds) {
-        return addressBook.deletePersonByClientIds(clientIds);
+    public List<Client> deleteClientByClientIds(List<ClientId> clientIds) {
+        return addressBook.deleteClientByClientIds(clientIds);
     }
 
     @Override
-    public void addPerson(Person person) {
-        addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public void addClient(Client client) {
+        addressBook.addClient(client);
+        updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
     }
 
     @Override
-    public List<Person> setPersonByClientIds(List<ClientId> clientIds, EditPersonDescriptor editedPersonDescriptor) {
-        requireAllNonNull(clientIds, editedPersonDescriptor);
+    public List<Client> setClientByClientIds(List<ClientId> clientIds, EditClientDescriptor editedClientDescriptor) {
+        requireAllNonNull(clientIds, editedClientDescriptor);
 
-        return addressBook.setPersonByClientIds(clientIds, editedPersonDescriptor);
+        return addressBook.setClientByClientIds(clientIds, editedClientDescriptor);
     }
 
     @Override
-    public Person getPerson(ClientId clientId) {
+    public Client getClient(ClientId clientId) {
         requireNonNull(clientId);
-        return addressBook.getPerson(clientId);
+        return addressBook.getClient(clientId);
     }
 
     @Override
@@ -161,63 +168,68 @@ public class ModelManager implements Model {
         filteredTags.setPredicate(predicate);
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Client List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * Returns an unmodifiable view of the list of {@code Client} backed by the internal list of
      * {@code versionedAddressBook}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
+    public ObservableList<Client> getFilteredClientList() {
+        return filteredClients;
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredClientList(Predicate<Client> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredClients.setPredicate(predicate);
     }
 
     @Override
-    public void filterFilteredPersonList(Predicate<Person> predicate) {
+    public void filterFilteredClientList(Predicate<Client> predicate) {
         requireNonNull(predicate);
-        Predicate<? super Person> currentPredicate = filteredPersons.getPredicate();
+        Predicate<? super Client> currentPredicate = filteredClients.getPredicate();
         if (currentPredicate == null) {
-            currentPredicate = PREDICATE_SHOW_ALL_PERSONS;
+            currentPredicate = PREDICATE_SHOW_ALL_CLIENTS;
         }
-        filteredPersons.setPredicate(predicate.and(currentPredicate));
+        filteredClients.setPredicate(predicate.and(currentPredicate));
     }
 
     @Override
-    public void sortFilteredPersonList(Comparator<Person> sorter) {
-        sortedPersons.setComparator(sorter);
+    public void sortFilteredClientList(Comparator<Client> sorter) {
+        sortedClients.setComparator(sorter);
     }
 
-    //=========== Person To View List Accessors =============================================================
+    //=========== Client To View List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * Returns an unmodifiable view of the list of {@code Client} backed by the internal list of
      * {@code versionedAddressBook}
      */
     @Override
-    public ObservableList<Person> getPersonToView() {
-        return personToView;
+    public ObservableList<Client> getClientToView() {
+        return clientToView;
     }
 
     @Override
-    public boolean isPersonExistToView() {
-        return personToView.size() == 1;
+    public boolean isClientExistToView() {
+        return clientToView.size() == 1;
     }
 
     @Override
-    public String getNameOfPersonToView() {
-        return personToView.get(0).getName().toString();
+    public String getNameOfClientToView() {
+        return clientToView.get(0).getName().toString();
     }
 
     @Override
-    public void updatePersonToView(Predicate<Person> predicate) {
+    public void updateClientToView(Predicate<Client> predicate) {
         requireNonNull(predicate);
-        personToView.setPredicate(predicate);
+        clientToView.setPredicate(predicate);
+    }
+
+    @Override
+    public List<Client> retrieveSchedule(LocalDate date) {
+        return addressBook.retrieveLastMeetings(date);
     }
 
     @Override
@@ -236,8 +248,8 @@ public class ModelManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
             && userPrefs.equals(other.userPrefs)
-            && filteredPersons.equals(other.filteredPersons)
+            && filteredClients.equals(other.filteredClients)
             && filteredTags.equals(other.filteredTags)
-            && personToView.equals(other.personToView);
+            && clientToView.equals(other.clientToView);
     }
 }

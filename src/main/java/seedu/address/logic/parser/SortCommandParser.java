@@ -15,8 +15,8 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.person.SortByAttribute;
-import seedu.address.model.person.SortDirection;
+import seedu.address.model.client.SortByAttribute;
+import seedu.address.model.client.SortDirection;
 
 public class SortCommandParser implements Parser<SortCommand> {
     /**
@@ -24,6 +24,7 @@ public class SortCommandParser implements Parser<SortCommand> {
      * and returns a SortCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
+     * @return
      */
     @Override
     public SortCommand parse(String args, Model model) throws ParseException {

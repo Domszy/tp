@@ -1,15 +1,17 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.ClientId;
-import seedu.address.model.person.Person;
+import seedu.address.logic.commands.EditCommand.EditClientDescriptor;
+import seedu.address.model.client.Client;
+import seedu.address.model.client.ClientId;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -19,7 +21,7 @@ public interface Model {
     /**
      * {@code Predicate} that always evaluate to true
      */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Client> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
 
     /**
      * {@code Predicate} that always evaluate to true
@@ -53,6 +55,11 @@ public interface Model {
     Path getAddressBookFilePath();
 
     /**
+     * Returns the user prefs' address book file path wrapped object.
+     */
+    ObservableValue<Path> getAddressBookFilePathObject();
+
+    /**
      * Sets the user prefs' address book file path.
      */
     void setAddressBookFilePath(Path addressBookFilePath);
@@ -68,40 +75,40 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a client with the same identity as {@code client} exists in the address book.
      */
-    boolean hasPerson(Person person);
+    boolean hasClient(Client client);
 
     /**
-     * Returns true if a person with the same identity as {@code clientId} exists in the address book.
+     * Returns true if a client with the same identity as {@code clientId} exists in the address book.
      */
     boolean hasClientId(ClientId clientId);
 
     /**
-     * Deletes the person with the matching Client ID and Email and returns the deleted person
+     * Deletes the client with the matching Client ID and Email and returns the deleted client
      */
-    List<Person> deletePersonByClientIds(List<ClientId> clientIds);
+    List<Client> deleteClientByClientIds(List<ClientId> clientIds);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Adds the given client.
+     * {@code client} must not already exist in the address book.
      */
-    void addPerson(Person person);
+    void addClient(Client client);
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Replaces the given client {@code target} with {@code editedClient}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The client identity of {@code editedClient} must not be the same as another existing client in the address book.
      */
-    List<Person> setPersonByClientIds(List<ClientId> clientIds, EditPersonDescriptor editedPersonDescriptor);
+    List<Client> setClientByClientIds(List<ClientId> clientIds, EditClientDescriptor editedClientDescriptor);
 
     /**
-     * Returns person with corresponding clientId.
+     * Returns client with corresponding clientId.
      *
-     * @param clientId clientId of client
+     * @param clientId of client
      * @return client with given clientId
      */
-    Person getPerson(ClientId clientId);
+    Client getClient(ClientId clientId);
 
     /**
      * Returns true if a tag with the same identity as {@code tagName} exists in the address book.
@@ -131,51 +138,58 @@ public interface Model {
 
 
     /**
-     * Returns an unmodifiable view of the filtered person list
+     * Returns an unmodifiable view of the filtered client list
      */
-    ObservableList<Person> getFilteredPersonList();
+    ObservableList<Client> getFilteredClientList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered client list to filter by the given {@code predicate}.
      *
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredClientList(Predicate<Client> predicate);
 
     /**
-     * Updates the filter of the filtered person list to filter by current predicate and the given {@code predicate}.
+     * Updates the filter of the filtered client list to filter by current predicate and the given {@code predicate}.
      *
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void filterFilteredPersonList(Predicate<Person> predicate);
+    void filterFilteredClientList(Predicate<Client> predicate);
 
     /**
-     * Sorts the filtered person list to sort by the given {@code sorter}.
+     * Sorts the filtered client list to sort by the given {@code sorter}.
      *
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void sortFilteredPersonList(Comparator<Person> sorter);
+    void sortFilteredClientList(Comparator<Client> sorter);
 
     /**
-     * Returns an unmodifiable view of the person to view
+     * Returns an unmodifiable view of the client to view
      */
-    ObservableList<Person> getPersonToView();
+    ObservableList<Client> getClientToView();
 
     /**
-     * Checks and returns if there is person to view
+     * Checks and returns if there is client to view
      */
-    boolean isPersonExistToView();
+    boolean isClientExistToView();
 
     /**
-     * Returns the name of the person to view
+     * Returns the name of the client to view
      */
-    String getNameOfPersonToView();
+    String getNameOfClientToView();
 
     /**
-     * Updates the filter of the filtered person to view list to filter by the given {@code predicate}.
+     * returns a list of NextMeeting that are on the given {@code date}.
+     * Updates the filter of the filtered client to view list to filter by the given {@code predicate}.
      *
+     * @param date of the schedule
+     * @return the list of NextMeetings with the given {@code date}.
+     */
+    List<Client> retrieveSchedule(LocalDate date);
+
+    /**
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updatePersonToView(Predicate<Person> predicate);
+    void updateClientToView(Predicate<Client> predicate);
 
 }

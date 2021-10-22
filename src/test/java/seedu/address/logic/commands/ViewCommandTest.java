@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_NONEXISTENT_CLIENT_ID;
 import static seedu.address.commons.core.Messages.MESSAGE_VIEW_SUCCESS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalClients.ALICE;
+import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ClientId;
-import seedu.address.model.person.PersonHasId;
+import seedu.address.model.client.ClientHasId;
+import seedu.address.model.client.ClientId;
 
 class ViewCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -29,8 +29,8 @@ class ViewCommandTest {
         ClientId firstClientId = new ClientId("0");
         ClientId secondClientId = new ClientId("1");
 
-        PersonHasId firstPredicate = new PersonHasId(firstClientId);
-        PersonHasId secondPredicate = new PersonHasId(secondClientId);
+        ClientHasId firstPredicate = new ClientHasId(firstClientId);
+        ClientHasId secondPredicate = new ClientHasId(secondClientId);
 
         ViewCommand viewFirstCommand = new ViewCommand(firstClientId, firstPredicate);
         ViewCommand viewSecondCommand = new ViewCommand(secondClientId, secondPredicate);
@@ -48,7 +48,7 @@ class ViewCommandTest {
         // null -> returns false
         assertFalse(viewFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different client -> returns false
         assertFalse(viewFirstCommand.equals(viewSecondCommand));
     }
 
@@ -56,25 +56,25 @@ class ViewCommandTest {
     public void execute_validClientId_success() {
         String userInput = "0";
         String expectedMessage = String.format(MESSAGE_VIEW_SUCCESS, ALICE.getName());
-        PersonHasId predicate = preparePredicate(userInput);
+        ClientHasId predicate = preparePredicate(userInput);
         ViewCommand command = new ViewCommand(new ClientId(userInput), predicate);
-        expectedModel.updatePersonToView(predicate);
+        expectedModel.updateClientToView(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE), model.getPersonToView());
+        assertEquals(Arrays.asList(ALICE), model.getClientToView());
     }
 
     @Test
     public void execute_invalidClientId_failure() {
         String userInput = "10";
         String expectedMessage = String.format(MESSAGE_NONEXISTENT_CLIENT_ID, userInput);
-        PersonHasId predicate = preparePredicate(userInput);
+        ClientHasId predicate = preparePredicate(userInput);
         ViewCommand command = new ViewCommand(new ClientId(userInput), predicate);
-        expectedModel.updatePersonToView(predicate);
+        expectedModel.updateClientToView(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getPersonToView());
+        assertEquals(Collections.emptyList(), model.getClientToView());
     }
 
-    private PersonHasId preparePredicate(String s) {
-        return new PersonHasId(new ClientId(s));
+    private ClientHasId preparePredicate(String s) {
+        return new ClientHasId(new ClientId(s));
     }
 }

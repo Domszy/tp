@@ -12,7 +12,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.SearchCommand;
-import seedu.address.model.person.PersonContainsKeywordsPredicate;
+import seedu.address.model.client.ClientContainsKeywordsPredicate;
 
 public class SearchCommandParserTest {
 
@@ -28,7 +28,7 @@ public class SearchCommandParserTest {
     public void parse_validArgs_returnsSearchCommand() {
         // no leading and trailing whitespaces
         SearchCommand expectedSearchCommand =
-                new SearchCommand(new PersonContainsKeywordsPredicate(
+                new SearchCommand(new ClientContainsKeywordsPredicate(
                         ArgumentTokenizer.tokenize("Alice Bob e/example.com a/Blk 30",
                                 PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG)
                 ));

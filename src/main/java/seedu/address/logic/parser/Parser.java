@@ -14,5 +14,5 @@ public interface Parser<T extends Command> {
      *
      * @throws ParseException if {@code userInput} does not conform the expected format
      */
-    T parse(String userInput, Model model) throws ParseException;
+    Command parse(String userInput, Model model) throws ParseException;
 }

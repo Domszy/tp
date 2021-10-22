@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.model.person.ClientId;
+import seedu.address.model.client.ClientId;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations

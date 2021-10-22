@@ -10,8 +10,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalClientId.CLIENTID_ZERO_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalClientId.CLIENTID_ZERO_CLIENT;
+import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
 
 import java.util.List;
 import java.util.function.Function;
@@ -23,23 +23,25 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditCommand.EditClientDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.ViewCommand;
+import seedu.address.logic.commands.abcommand.AbCommand;
+import seedu.address.logic.commands.abcommand.AbListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ClientId;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.PersonContainsKeywordsPredicate;
-import seedu.address.model.person.PersonHasId;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.model.client.Client;
+import seedu.address.model.client.ClientContainsKeywordsPredicate;
+import seedu.address.model.client.ClientHasId;
+import seedu.address.model.client.ClientId;
+import seedu.address.testutil.ClientBuilder;
+import seedu.address.testutil.ClientUtil;
+import seedu.address.testutil.EditClientDescriptorBuilder;
 
 public class AddressBookParserTest {
 
@@ -53,10 +55,10 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Function<ClientId, Person> personFunction = new PersonBuilder().buildFunction();
-        Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
-        assertEquals(new AddCommand(personFunction), command);
+        Function<ClientId, Client> clientFunction = new ClientBuilder().buildFunction();
+        Client client = new ClientBuilder().build();
+        AddCommand command = (AddCommand) parser.parseCommand(ClientUtil.getAddCommand(client));
+        assertEquals(new AddCommand(clientFunction), command);
     }
 
     @Test
@@ -68,19 +70,19 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " 1");
+            DeleteCommand.COMMAND_WORD + " 1");
         ClientId clientId = new ClientId("1");
         assertEquals(new DeleteCommand(List.of(clientId)), command);
     }
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
+        Client client = new ClientBuilder().build();
+        EditClientDescriptor descriptor = new EditClientDescriptorBuilder(client).build();
 
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + CLIENTID_ZERO_PERSON.value + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        List<ClientId> clientIds = List.of(new ClientId(CLIENTID_ZERO_PERSON.value));
+            + CLIENTID_ZERO_CLIENT.value + " " + ClientUtil.getEditClientDescriptorDetails(descriptor));
+        List<ClientId> clientIds = List.of(new ClientId(CLIENTID_ZERO_CLIENT.value));
         assertEquals(new EditCommand(clientIds, descriptor), command);
     }
 
@@ -94,20 +96,20 @@ public class AddressBookParserTest {
     public void parseCommand_search() throws Exception {
         String keywords = "do t/friends e/example.com";
         ArgumentMultimap aMM = ArgumentTokenizer.tokenize(keywords,
-                PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+            PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
         SearchCommand command = (SearchCommand) parser.parseCommand(
-                SearchCommand.COMMAND_WORD + " " + keywords);
-        assertEquals(new SearchCommand(new PersonContainsKeywordsPredicate(aMM)), command);
+            SearchCommand.COMMAND_WORD + " " + keywords);
+        assertEquals(new SearchCommand(new ClientContainsKeywordsPredicate(aMM)), command);
     }
 
     @Test
     public void parseCommand_filter() throws Exception {
         String keywords = "do t/friends e/example.com";
         ArgumentMultimap aMM = ArgumentTokenizer.tokenize(keywords,
-                PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+            PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
         FilterCommand command = (FilterCommand) parser.parseCommand(
-                FilterCommand.COMMAND_WORD + " " + keywords);
-        assertEquals(new FilterCommand(new PersonContainsKeywordsPredicate(aMM)), command);
+            FilterCommand.COMMAND_WORD + " " + keywords);
+        assertEquals(new FilterCommand(new ClientContainsKeywordsPredicate(aMM)), command);
     }
 
     @Test
@@ -116,7 +118,14 @@ public class AddressBookParserTest {
         ClientId clientId = new ClientId(input);
         ViewCommand command = (ViewCommand) parser.parseCommand(
             ViewCommand.COMMAND_WORD + " " + input);
-        assertEquals(new ViewCommand(clientId, new PersonHasId(clientId)), command);
+        assertEquals(new ViewCommand(clientId, new ClientHasId(clientId)), command);
+    }
+
+    @Test
+    public void parseCommand_ab() throws Exception {
+        String input = AbListCommand.COMMAND_WORD;
+        AbCommand command = (AbCommand) parser.parseCommand(AbCommand.COMMAND_WORD + " " + input);
+        assertTrue(command instanceof AbListCommand);
     }
 
     @Test
