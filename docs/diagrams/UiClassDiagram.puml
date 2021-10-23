@@ -15,6 +15,8 @@ Class ClientCard
 Class StatusBarFooter
 Class SideBar
 Class ClientViewPanel
+Class MeetingsListPanel
+Class NextMeetingCard
 Class CommandBox
 }
 
@@ -40,11 +42,16 @@ MainWindow --> "0..1" HelpWindow
 
 ClientListPanel -down-> "*" ClientCard
 SideBar -down-> "1" ClientViewPanel
+SideBar -down-> "1" MeetingsListPanel
+
+MeetingsListPanel -down-> "*" NextMeetingCard
 
 ClientCard ..> Model
 ClientViewPanel ..> Model
+NextMeetingCard ..> Model
 ClientCard ..> Model
 ClientViewPanel ..> Model
+NextMeetingCard ..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
 

@@ -92,6 +92,8 @@ LeadsForce's GUI is primarily adapted from `AddressBook3`, with the addition of 
 
 Our `SideBar` has a `ClientViewPanel`, which like the `ClientCard`, has a dependency on the `Model` class to fully display the information of the `Client` of interest to the user.
 
+The `SideBar` also has a `MeetingListPanel`, which holds a list of `NextMeetingCard`. `NextMeetingCard` has a dependency on the `Model` class to fully display all scheduled meetings of the user.
+
 ### 3.3 Logic component
 
 **API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
@@ -130,13 +132,12 @@ How the parsing works:
 The `Model` component,
 
 * stores the address book data i.e., all `Client` objects (which are contained in a `UniqueClientList` object).
+* has a `UniqueNextMeetingList` in `AddressBook` , which contains all `NextMeeting` objects belonging to all `Client` objects in the `UniqueClientList` object.
 * has a `UniqueTagList` in `AddressBook` , which contains `Tag`(s) that a `Client` can reference. This allows `AddressBook` to only require one `Tag` object per unique tag.
 * stores the currently 'selected' `Client` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Client>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
     * this `ObservableList<Client>` is used for to get the `Client` object to display in `ClientListPanel` and `ClientViewPanel`
-* stores the address book data i.e., all `Client` objects (which are contained in a `UniqueClientList` object).
-* has a `UniqueTagList` in `AddressBook` , which contains `Tag`(s) that a `Client` can reference. This allows `AddressBook` to only require one `Tag` object per unique tag.
-* stores the currently 'selected' `Client` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Client>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-    * this `ObservableList<Client>` is used for to get the `Client` object to display in `ClientListPanel` and `ClientViewPanel`
+* stores all `NextMeeting` objects belonging to all `Client` objects as a separate _sorted_ list which is exposed to outsiders as an unmodifiable `ObservableList<NextMeeting>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+    * this `ObservableList<NextMeeting>` is used for to get the `NextMeeting` object to display in `NextMeetingCard` in `MeetingsListPanel`
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
@@ -297,15 +298,36 @@ Below is the sequence diagram for view clients.
 
 `ClientHasId` implements `Predicate<Client>` and allow filtering of a list of `Client` based on `ClientId` objects. `ClientHasId` contains a list which holds these 'ClientId'. This allows the `Model` to use this list of `ClientId` objects to filter for `Client`(s) that contain the given `ClientId`(s).
 
-### 4.4 \[Proposed\] Multiple Address Book
+### 4.4 Sort Clients
 
-#### 4.4.1 Proposed Implementation
+#### Description
+
+LeadsForce allows the user to `sort` clients according to client fields. LeadsForce give clients the option to sort it in ascending or descending order.
+
+#### Implementation
+1. The `LogicManager` starts to parses the given input text using `AddressBookParser`
+2. The `AddressBookParser` invoke the respective `Parser` based on the first word of the input text.
+3. The remaining input text will be passed to the `SortCommandParser` to parse.
+4. The `SortCommandParser` will tokenize the remaining input text using the `ArgumentTokenizer` into an `ArgumentMultiMap`.
+5. The `SortCommandParser` will then create a new `SortByAttribute` based off the parsed field with the corresponding `SortDirection` using the `ArgumentMultiMap`.
+6. The `SortCommandParser` will then create a `SortCommand` with the `SortByAttribute`
+7. The `LogicManger` will call the execute method of `SortCommand`.
+8. The `SortCommand` wil then call the `sortFilteredClientList` method of the provided `Model` with it’s `SortByAttribute`.
+9. The `SortCommand` will finally create a new `CommandResult` which will be returned to `LogicManager`.
+
+Below is the sequence diagram for sort clients.
+
+<img src="images/SortCommandSequenceDiagram.png" />
+
+### 4.5 \[Proposed\] Multiple Address Book
+
+#### 4.5.1 Proposed Implementation
 
 To be included
 
-### 4.5 \[Proposed\] Undo/redo feature
+### 4.6 \[Proposed\] Undo/redo feature
 
-#### 4.5.1 Proposed Implementation
+#### 4.6.1 Proposed Implementation
 
 The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
@@ -368,7 +390,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 <img src="images/CommitActivityDiagram.png" width="250" />
 
-#### 4.5.2 Design considerations:
+#### 4.6.2 Design considerations:
 
 **Aspect: How undo & redo executes:**
 
@@ -383,7 +405,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### 4.6 \[Proposed\] Data archiving
+### 4.7 \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
 
@@ -443,7 +465,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `LeadsForce` and the **Actor** is the `user`, unless specified otherwise)
 
 **6.3.1 Use case: Add a client**
-**6.3.1 Use case: Add a client**
 
 **MSS**
 
@@ -461,7 +482,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes at step 2.
 
 
-**6.3.2 Use case: Delete a client**
 **6.3.2 Use case: Delete a client**
 
 **MSS2**
@@ -485,7 +505,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-**6.3.3 Use case: Search for a client**
 **6.3.3 Use case: Search for a client**
 
 **MSS3**
@@ -558,7 +577,6 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### 7.2 Deleting a client
 ### 7.2 Deleting a client
 
 1. Deleting a client while all clients are being shown

@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.ClearCommand.MESSAGE_CONFIRMATION_FAIL;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -157,7 +158,7 @@ public class ParserUtil {
         String endTime = trimmedNextMeeting.substring(trimmedNextMeeting.indexOf("~") + 1,
             trimmedNextMeeting.indexOf(")"));
         String location = trimmedNextMeeting.split(",", 2)[1].trim();
-        return new NextMeeting(date, startTime, endTime, location);
+        return new NextMeeting(date, startTime, endTime, location, "");
     }
 
     /**
@@ -239,5 +240,23 @@ public class ParserUtil {
         }
 
         return tagSet;
+    }
+
+    /**
+     * Parses {@code input} to true for yes and false for no, {@code ParseException} is thrown otherwise.
+     * {@code input} will be trimmed and converted to lower case before checking;
+     */
+    public static boolean parseConfirmation(String input) throws ParseException {
+        String formattedInput = input.trim().toLowerCase();
+        switch (formattedInput) {
+        case "yes":
+            return true;
+
+        case "no":
+            return false;
+
+        default:
+            throw new ParseException(MESSAGE_CONFIRMATION_FAIL);
+        }
     }
 }

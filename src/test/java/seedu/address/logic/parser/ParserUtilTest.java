@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_CLIENT_ID;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -282,7 +283,7 @@ public class ParserUtilTest {
     @Test
     public void parseNextMeeting_validValueWithoutWhitespace_returnsNextMeeting() throws Exception {
         NextMeeting expectedNextMeeting = new NextMeeting("24-09-2021", "10:00", "12:00",
-                "Starbucks @ UTown");
+            "Starbucks @ UTown", "");
         assertEquals(expectedNextMeeting, ParserUtil.parseNextMeeting(VALID_NEXTMEETING));
     }
 
@@ -290,7 +291,7 @@ public class ParserUtilTest {
     public void parseNextMeeting_validValueWithWhitespace_returnsTrimmedNextMeeting() throws Exception {
         String nextMeetingWithWhitespace = WHITESPACE + VALID_NEXTMEETING + WHITESPACE;
         NextMeeting expectedNextMeeting = new NextMeeting("24-09-2021", "10:00", "12:00",
-                "Starbucks @ UTown");
+            "Starbucks @ UTown", "");
         assertEquals(expectedNextMeeting, ParserUtil.parseNextMeeting(nextMeetingWithWhitespace));
     }
 
@@ -352,6 +353,36 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseConfirmation_throwsNullPointerException() throws Exception {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseConfirmation(null));
+    }
+
+    @Test
+    public void parseConfirmation_returnsTrue() throws Exception {
+        assertTrue(ParserUtil.parseConfirmation("Yes"));
+    }
+
+    @Test
+    public void parseConfirmation_returnsFalse() throws Exception {
+        assertFalse(ParserUtil.parseConfirmation("No"));
+    }
+
+    @Test
+    public void parseConfirmation_returnsTrue_inputWithSpaces() throws Exception {
+        assertTrue(ParserUtil.parseConfirmation(" yes "));
+    }
+
+    @Test
+    public void parseConfirmation_returnsTrue_inputWithNonLowerCase() throws Exception {
+        assertTrue(ParserUtil.parseConfirmation("yES"));
+    }
+
+    @Test
+    public void parseConfirmation_throwsParserException() throws Exception {
+        assertThrows(ParseException.class, () -> ParserUtil.parseConfirmation("not yes not no"));
     }
 
     /**

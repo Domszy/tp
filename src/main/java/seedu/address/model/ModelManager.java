@@ -19,6 +19,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.EditCommand.EditClientDescriptor;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.ClientId;
+import seedu.address.model.client.NextMeeting;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,6 +33,7 @@ public class ModelManager implements Model {
     private final SortedList<Client> sortedClients;
     private final FilteredList<Client> filteredClients;
     private final FilteredList<Client> clientToView;
+    private final SortedList<NextMeeting> sortedNextMeetings;
     private final FilteredList<Tag> filteredTags;
 
     /**
@@ -47,8 +49,10 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         sortedClients = new SortedList<>(this.addressBook.getClientList());
         filteredClients = new FilteredList<>(sortedClients);
+        sortedNextMeetings = new SortedList<>(this.addressBook.getSortedNextMeetingsList());
         filteredTags = new FilteredList<>(this.addressBook.getTagList());
         clientToView = new FilteredList<>(this.addressBook.getClientList());
+        clientToView.setPredicate(PREDICATE_SHOW_ALL_CLIENTS.negate());
     }
 
     public ModelManager() {
@@ -124,6 +128,10 @@ public class ModelManager implements Model {
         return addressBook.deleteClientByClientIds(clientIds);
     }
 
+    public void deleteMeetingsByClients(List<Client> toDelete) {
+        addressBook.deleteMeetingsByClients(toDelete);
+    }
+
     @Override
     public void addClient(Client client) {
         addressBook.addClient(client);
@@ -133,8 +141,11 @@ public class ModelManager implements Model {
     @Override
     public List<Client> setClientByClientIds(List<ClientId> clientIds, EditClientDescriptor editedClientDescriptor) {
         requireAllNonNull(clientIds, editedClientDescriptor);
-
         return addressBook.setClientByClientIds(clientIds, editedClientDescriptor);
+    }
+
+    public void addNextMeeting(NextMeeting nextMeeting) {
+        addressBook.addNextMeeting(nextMeeting);
     }
 
     @Override
@@ -177,6 +188,10 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Client> getFilteredClientList() {
         return filteredClients;
+    }
+
+    public ObservableList<NextMeeting> getSortedNextMeetingList() {
+        return sortedNextMeetings;
     }
 
     @Override

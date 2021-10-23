@@ -72,6 +72,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             .orElse(CurrentPlan.DEFAULT_VALUE));
         NextMeeting nextMeeting = ParserUtil.parseNextMeeting(argMultimap.getValue(PREFIX_NEXTMEETING)
             .orElse(NextMeeting.NO_NEXT_MEETING));
+        nextMeeting.setWithWho(name);
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG), model);
 
         Function<ClientId, Client> client = clientId -> new Client(clientId, name, phone, email, address, riskAppetite,

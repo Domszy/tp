@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.CommandResult.SpecialCommandResult.CLEAR;
 import static seedu.address.logic.commands.CommandResult.SpecialCommandResult.CREATE_ADDRESSBOOK;
 import static seedu.address.logic.commands.CommandResult.SpecialCommandResult.EXIT;
 import static seedu.address.logic.commands.CommandResult.SpecialCommandResult.NORMAL;
@@ -53,6 +54,10 @@ public class CommandResult {
         return type.equals(CREATE_ADDRESSBOOK);
     }
 
+    public boolean isClearing() {
+        return type.equals(CLEAR);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -84,6 +89,8 @@ public class CommandResult {
         SHOW_HELP,
         /** The application should exit. */
         EXIT,
+        /** The current AddressBook is started to clear */
+        CLEAR,
         /** The application is switching AddressBook **/
         SWITCH_ADDRESSBOOK,
         /** The application is creating AddressBook **/

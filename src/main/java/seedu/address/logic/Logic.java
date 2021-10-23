@@ -10,6 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.client.Client;
+import seedu.address.model.client.NextMeeting;
 
 /**
  * API of the Logic component
@@ -23,7 +24,15 @@ public interface Logic {
      * @throws CommandException If an error occurs during command execution.
      * @throws ParseException   If an error occurs during parsing.
      */
-    CommandResult execute(String commandText) throws CommandException, ParseException;
+    CommandResult normalExecute(String commandText) throws CommandException, ParseException;
+
+    /**
+     * Executes the command in context of clearing AddressBook.
+     *
+     * @param commandText The command as entered by the user.
+     * @return the result of the command execution.
+     */
+    CommandResult clearExecute(String commandText) throws CommandException, ParseException;
 
     /**
      * Returns the AddressBook.
@@ -37,9 +46,10 @@ public interface Logic {
      */
     ObservableList<Client> getFilteredClientList();
 
-    /**
-     * Returns an unmodifiable view of the client to view
-     */
+    /** Returns an unmodifiable view of the filtered meetings */
+    ObservableList<NextMeeting> getSortedNextMeetingList();
+
+    /** Returns an unmodifiable view of the client to view */
     ObservableList<Client> getClientToView();
 
     /**
@@ -68,5 +78,9 @@ public interface Logic {
      */
     void switchAddressBook();
 
+    /**
+     * Creates the AddressBook at the specified {@code Path filePath}
+     * @throws CommandException If an error occurs during command execution.
+     */
     void createAddressBook() throws CommandException;
 }

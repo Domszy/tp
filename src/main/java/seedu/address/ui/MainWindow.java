@@ -35,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private SideBar sideBar;
     private HelpWindow helpWindow;
+    private CommandBox commandBox;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -52,7 +53,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane sideBarPlaceHolder;
 
     @FXML
-    private StackPane statusbarPlaceholder;
+    private StackPane statusBarPlaceholder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -122,12 +123,11 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePathObject());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        statusBarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(this::executeCommand);
+        commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-
-        sideBar = new SideBar(logic.getClientToView());
+        sideBar = new SideBar(logic.getClientToView(), logic.getSortedNextMeetingList());
         sideBarPlaceHolder.getChildren().add(sideBar.getRoot());
     }
 
@@ -171,15 +171,35 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
+    private void handleClear() {
+        commandBox.setCommandExecutor(this::warnClearCommand);
+    }
+
+    /**
+     * Executes the clear command and returns the result.
+     *
+     * @see seedu.address.logic.Logic#clearExecute(String)
+     */
+    private CommandResult warnClearCommand(String commandText) throws CommandException, ParseException {
+        CommandResult commandResult;
+        try {
+            commandResult = logic.clearExecute(commandText);
+            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            commandBox.setCommandExecutor(this::executeCommand);
+        } catch (CommandException | ParseException e) {
+            resultDisplay.setFeedbackToUser(e.getMessage());
+            throw e;
+        }
+
+        return commandResult;
+    }
+
     /**
      * Switches the Address Book.
      */
     private void handleSwitchAddressBook() {
         this.logic.switchAddressBook();
-    }
-
-    public ClientListPanel getClientListPanel() {
-        return clientListPanel;
     }
 
     /**
@@ -192,11 +212,11 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Executes the command and returns the result.
      *
-     * @see seedu.address.logic.Logic#execute(String)
+     * @see seedu.address.logic.Logic#normalExecute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
-            CommandResult commandResult = logic.execute(commandText);
+            CommandResult commandResult = logic.normalExecute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
@@ -206,6 +226,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.isClearing()) {
+                handleClear();
             }
 
             if (commandResult.isSwitchAddressBook()) {

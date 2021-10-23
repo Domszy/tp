@@ -79,9 +79,15 @@ public class AddCommand extends Command {
         model.addClient(client);
         // TODO: model.incrementClientCounter should not be exposed, instead increment directly within addClient
         model.getAddressBook().incrementClientCounter();
+
+        if (client.hasNextMeeting()) {
+            model.addNextMeeting(client.getNextMeeting());
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, client));
     }
-
+    /**
+     * Returns an unmodifiable view of the filtered person list
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

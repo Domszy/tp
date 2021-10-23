@@ -62,9 +62,10 @@ public class ClientBuilder {
         lastMet = new LastMet(DEFAULT_LASTMET);
         try {
             nextMeeting = ParserUtil.parseNextMeeting(DEFAULT_NEXTMEETING);
+            nextMeeting.setWithWho(name);
         } catch (ParseException pe) {
             nextMeeting = new NextMeeting("24-09-2021", "10:00", "12:00",
-                "Starbucks @ UTown");
+                "Starbucks @ UTown", name.fullName);
         }
 
         currentPlan = new CurrentPlan(DEFAULT_CURRENTPLAN);
@@ -166,9 +167,10 @@ public class ClientBuilder {
     public ClientBuilder withNextMeeting(String nextMeeting) {
         try {
             this.nextMeeting = ParserUtil.parseNextMeeting(nextMeeting);
+            this.nextMeeting.setWithWho(name);
         } catch (ParseException pe) {
             this.nextMeeting = new NextMeeting("24-09-2021", "10:00", "12:00",
-                "Starbucks @ UTown");
+                "Starbucks @ UTown", name.fullName);
         }
         return this;
     }

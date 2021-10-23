@@ -12,6 +12,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.EditCommand.EditClientDescriptor;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.ClientId;
+import seedu.address.model.client.NextMeeting;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -22,6 +23,11 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<Client> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
+
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
+    Predicate<Client> PREDICATE_SHOW_ALL_MEETINGS = unused -> true;
 
     /**
      * {@code Predicate} that always evaluate to true
@@ -90,7 +96,12 @@ public interface Model {
     List<Client> deleteClientByClientIds(List<ClientId> clientIds);
 
     /**
-     * Adds the given client.
+     * Deletes the meetings from the belonging to the deleted persons
+     */
+    void deleteMeetingsByClients(List<Client> toDelete);
+
+    /**
+     * Adds the given client..
      * {@code client} must not already exist in the address book.
      */
     void addClient(Client client);
@@ -141,6 +152,16 @@ public interface Model {
      * Returns an unmodifiable view of the filtered client list
      */
     ObservableList<Client> getFilteredClientList();
+
+    /**
+     * Adds a meeting to the current meeting list
+     */
+    void addNextMeeting(NextMeeting nextMeeting);
+
+    /**
+     * Returns an unmodifiable view of the meetings for current user.
+     */
+    ObservableList<NextMeeting> getSortedNextMeetingList();
 
     /**
      * Updates the filter of the filtered client list to filter by the given {@code predicate}.

@@ -18,15 +18,15 @@ Finding your next lead has never been easier.
     * [Update existing contact: edit](#update-existing-contact--edit)
     * [Delete particular contact: delete](#delete-particular-contact--delete)
     * [List all contacts: list](#list-all-contacts--list)
-    * [Clearing all entries: clear](#clearing-all-entries--clear)
     * [Sort Contacts: sort](#sort-contacts--sort)
     * [Find meeting schedule: schedule](#find-meeting-schedule--schedule)
     * [Locating clients by keywords: search](#locating-clients-by-keywords--search)
     * [Filter current list: filter](#filter-current-list-by-keywords--filter)
+    * [Clearing all entries: clear](#clearing-all-entries--clear)
     * [Exiting the program: exit](#exiting-the-program--exit)
-    * Create new address book: ab create
-    * Switch to different address book: ab switch
-    * List all address book: ab list
+    * [Create new address book: ab create](#create-new-address-book--ab-create)
+    * [Switch to different address book: ab switch](#switch-to-different-address-book--ab-switch)
+    * [List all address book: ab list](#list-all-address-book--ab-list)
     * [Saving data](#saving-the-data)
     * [Edit data file](#edit-data-file)
 * [FAQ](#faq)
@@ -248,13 +248,18 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+* After inputting `clear`, another prompt will appear requesting for confirmation to clear the address book.
+* The input required for the confirmation will either be:
+  * `yes`: to confirm and proceed with the clear command.
+  * `no`: to cancel the clear command.
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
-### Create new address book: `ab create`
+### Create new address book : `ab create`
 
 Create a new address book by the name provided and switch to it.
 
@@ -266,7 +271,7 @@ Format: `ab create {ADDRESSBOOK_NAME}`
 Examples:
 * 'ab create vip clients' will create a new address book named `vip clients`
 
-### Switch to different address book: `ab switch`
+### Switch to different address book : `ab switch`
 
 Switch to a different address book that currently exists.
 
@@ -278,7 +283,7 @@ Examples:
 * 'ab switch other' will switch over to the address book named `other`
 
 
-### List all address book: `ab list`
+### List all address book : `ab list`
 
 List all the name of all the existing address books
 
@@ -311,13 +316,16 @@ Action | Format | Examples
 --------|---------|---------
 **Create** | `add <name>/{CLIENT'S NAME} <email>/{EMAIL} <phone-no>/{PHONE NUMBER} <risk-appetite>/{RISK-APPETITE} ...`| add n/benedict e/benedict@gmail.com p/90909898 r/3 |
 **View** | `view {CLIENT'S ID}` | view 123 |
-**Delete** | `delete {CLIENT'S ID}...` | delete 4  |
 **Edit** | `edit {CLIENT'S ID}... <attribute>/{CHANGED VALUE OF ATTRIBUTE}...` | edit 1234 n/Dominic p/12345678 |
+**Delete** | `delete {CLIENT'S ID}...` | delete 4  |
 **List** | `list` | - |
+**Sort** | `sort <attribute>/{ASC/DESC}` | sort r/asc |
+**Schedule** | `schedule {DATE}` | schedule 22-09-2021 |
 **Search** | `search {KEYWORD}... <attribute>/{ATTRIBUTE_KEYWORD}...` | search * e/doe@gmail.com r/5 |
 **Filter** | `filter {KEYWORD}... <attribute>/{ATTRIBUTE_KEYWORD}...` | filter * e/doe@gmail.com p/9 |
-**Sort** | `sort <attribute>/{ASC/DESC}` | sort r/asc |
+**Clear** | `clear` | - |
+**Exit** | `exit` | - |
 **Create Address Book** | `ab create {ADDRESSBOOK_NAME}` | ab create vip
 **Switch Address Book** | `ab switch {ADDRESSBOOK_NAME}` | ab switch another
 **List Address Book** | `ab list` | -
-**Exit** | `exit` | - |
+

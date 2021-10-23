@@ -1,0 +1,51 @@
+@startuml
+!include ../style.puml
+
+box "Logic" #LightBlue
+Participant ":LogicManager" as logic LOGIC_COLOR
+Participant ":AddressBookParser" as abp LOGIC_COLOR
+Participant ":SortCommandParser" as scp LOGIC_COLOR
+Participant "command:SortCommand" as sc LOGIC_COLOR
+Participant "result:CommandResult" as cr LOGIC_COLOR
+Participant "sortDirection:SortDirection" as sd LOGIC_COLOR
+Participant "sorter:SortByAttribute" as sba LOGIC_COLOR
+end box
+box "Model" #Pink
+Participant "model:Model" as model MODEL_COLOR
+end box
+
+[-> logic : execute
+activate logic
+logic -> abp ++: parseCommand(commandText)
+create scp
+abp -> scp
+abp -> scp ++: parse(arguments)
+scp -> scp ++: getPrefix(argMultimap, ALL_PREFIXES)
+scp -> scp --: prefix
+create sd
+scp -> sd ++: sortDirection
+sd --> scp --:
+create sba
+scp -> sba ++: prefix, sortDirection
+sba --> scp --:
+create sc
+scp -> sc ++: sorter
+sc --> scp --: command
+scp --> abp --: command
+abp --> logic --: command
+logic -> sc ++: execute(model)
+sc -> model ++: sortFilteredClientList(predicate)
+loop all client
+    model -> sba ++: compare(client1, client2)
+    sba --> model --
+end
+model --> sc --:
+create cr
+sc -> cr ++:
+cr --> sc --:
+sc --> logic --: result
+logic -->[ --: result
+
+
+
+@enduml

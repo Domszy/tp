@@ -95,13 +95,11 @@ public class AbCreateCommandTest {
     }
 
     @Test
-    public void execute_duplicate_failure() {
+    public void execute_duplicate_failure() throws CommandException {
         AbCreateCommand abCreateCommand1 = new AbCreateCommand(addressBookFilePathName, addressBookFilePath);
         model.setAddressBookFilePath(addressBookFilePath);
         String result = String.format(MESSAGE_ADDRESSBOOK_EXISTS, addressBookFilePathName);
         assertCommandFailure(abCreateCommand1, model, result);
-        logic.switchAddressBook();
-        assertEquals(logic.getAddressBook(), expectedModel.getAddressBook());
     }
 
     private Path getPath(String s) {

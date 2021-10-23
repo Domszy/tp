@@ -20,6 +20,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.ClientId;
+import seedu.address.model.client.NextMeeting;
 import seedu.address.model.client.exceptions.DuplicateClientException;
 import seedu.address.testutil.ClientBuilder;
 
@@ -89,6 +90,7 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Client> clients = FXCollections.observableArrayList();
+        private final ObservableList<NextMeeting> nextMeetings = FXCollections.observableArrayList();
         private String clientCounter = "0";
 
         AddressBookStub(Collection<Client> clients) {
@@ -105,6 +107,11 @@ public class AddressBookTest {
         }
 
         @Override
+        public ObservableList<NextMeeting> getNextMeetingsList() {
+            return nextMeetings;
+        }
+
+        @Override
         public String getClientCounter() {
             return clientCounter;
         }
@@ -112,6 +119,11 @@ public class AddressBookTest {
         @Override
         public void setClientCounter(String clientCounter) {
             this.clientCounter = clientCounter;
+        }
+
+        @Override
+        public ObservableList<NextMeeting> getSortedNextMeetingsList() {
+            return nextMeetings;
         }
 
         @Override

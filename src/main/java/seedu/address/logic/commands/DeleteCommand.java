@@ -49,8 +49,11 @@ public class DeleteCommand extends Command {
             throw new CommandException(String.format(MESSAGE_NONEXISTENT_CLIENT_ID, e.getMessage()));
         }
 
-        String clientString = StringUtil.joinListToString(clientToDelete, CLIENT_DELIMITER);
-        return new CommandResult(String.format(MESSAGE_DELETE_CLIENT_SUCCESS, clientString));
+        if (clientToDelete.size() > 0) {
+            model.deleteMeetingsByClients(clientToDelete);
+        }
+        String personString = StringUtil.joinListToString(clientToDelete, CLIENT_DELIMITER);
+        return new CommandResult(String.format(MESSAGE_DELETE_CLIENT_SUCCESS, personString));
     }
 
     @Override

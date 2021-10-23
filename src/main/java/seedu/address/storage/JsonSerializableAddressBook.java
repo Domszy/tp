@@ -69,6 +69,9 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_CLIENT);
             }
             addressBook.addClient(client);
+            if (client.hasNextMeeting()) {
+                addressBook.addNextMeeting(client.getNextMeeting());
+            }
         }
         addressBook.setClientCounter(getClientCounter());
         return addressBook;
