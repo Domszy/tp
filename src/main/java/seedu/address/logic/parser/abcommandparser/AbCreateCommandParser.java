@@ -33,7 +33,7 @@ public class AbCreateCommandParser implements Parser<AbCreateCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AbCreateCommand.MESSAGE_USAGE));
         }
 
-        String filePathName = convertToAddressBookPathString(lowercaseArgs);
+        String filePathName = convertToAddressBookPathString(lowercaseArgs, model.getAddressBookDirectory());
 
         if (!isValidPath(filePathName)) {
             throw new ParseException(String.format(MESSAGE_ADDRESSBOOK_NOT_VALID, trimmedArgs));

@@ -33,7 +33,7 @@ public class ClientBuilder {
     public static final String DEFAULT_RISKAPPETITE = "3";
     public static final String DEFAULT_DISPOSABLEINCOME = "300";
     public static final String DEFAULT_LASTMET = "24-09-2021";
-    public static final String DEFAULT_NEXTMEETING = "24-09-2021 (10:00~12:00), Starbucks @ UTown";
+    public static final String DEFAULT_NEXTMEETING = "24-09-2051 (10:00~12:00), Starbucks @ UTown";
     public static final String DEFAULT_CURRENTPLAN = "Prudential PRUwealth";
 
     private ClientId clientId;
@@ -62,7 +62,6 @@ public class ClientBuilder {
         lastMet = new LastMet(DEFAULT_LASTMET);
         try {
             nextMeeting = ParserUtil.parseNextMeeting(DEFAULT_NEXTMEETING);
-            nextMeeting.setWithWho(name);
         } catch (ParseException pe) {
             nextMeeting = new NextMeeting("24-09-2021", "10:00", "12:00",
                 "Starbucks @ UTown", name.fullName);
@@ -167,10 +166,9 @@ public class ClientBuilder {
     public ClientBuilder withNextMeeting(String nextMeeting) {
         try {
             this.nextMeeting = ParserUtil.parseNextMeeting(nextMeeting);
-            this.nextMeeting.setWithWho(name);
         } catch (ParseException pe) {
             this.nextMeeting = new NextMeeting("24-09-2021", "10:00", "12:00",
-                "Starbucks @ UTown", name.fullName);
+                "Starbucks @ UTown", null);
         }
         return this;
     }

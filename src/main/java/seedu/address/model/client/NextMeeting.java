@@ -1,5 +1,6 @@
 package seedu.address.model.client;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.commons.util.StringUtil.convertEmptyStringIfNull;
@@ -18,7 +19,7 @@ public class NextMeeting implements OptionalNonStringBasedField {
     public static final String TIME_MESSAGE_CONSTRAINTS = "Next meeting time should be in the 24-hour format, "
             + "where Hour and Minutes should be numerical values.";
     public static final String MESSAGE_INVALID_MEETING_STRING = "String representation of Next Meeting is not correct";
-    public static final String NO_NEXT_MEETING = "No meeting planned.";
+    public static final String NO_NEXT_MEETING = "No meeting planned";
     public static final NextMeeting NULL_MEETING = new NextMeeting(null, null, null,
         null, null);
 
@@ -91,6 +92,33 @@ public class NextMeeting implements OptionalNonStringBasedField {
     }
     public static boolean isValidNextMeeting(String test) {
         return test.matches(VALID_MEETING_STRING);
+    }
+
+    /**
+     * Returns the a boolean of whether this {@code NextMeeting} falls before
+     * the given {@code checkDate} and {@code checkTime}
+     */
+    public boolean isMeetingOver(LocalDate checkDate, LocalTime checkTime) {
+        if (date == null || endTime == null) {
+            return false;
+        }
+        return date.isBefore(checkDate) || date.isEqual(checkDate) && endTime.isBefore(checkTime);
+    }
+
+    /**
+     * Converts this {@code NextMeeting} to a {@code LastMet}
+     */
+    public LastMet convertToLastMet() {
+        requireNonNull(date);
+        return new LastMet(dateInString);
+    }
+
+    /**
+     * Returns a new Next Meeting with the same details
+     */
+    public NextMeeting copyNextMeeting() {
+        String newName = withWho != null ? withWho.fullName : "";
+        return new NextMeeting(dateInString, startTimeInString, endTimeInString, location, newName);
     }
 
     @Override

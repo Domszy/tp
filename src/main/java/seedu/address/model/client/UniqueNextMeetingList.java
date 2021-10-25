@@ -3,6 +3,7 @@ package seedu.address.model.client;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.model.client.exceptions.DuplicateNextMeetingException;
 import seedu.address.model.client.exceptions.MeetingNotFoundException;
 
@@ -29,7 +31,13 @@ public class UniqueNextMeetingList implements Iterable<NextMeeting> {
     private final ObservableList<NextMeeting> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
     private final SortedList<NextMeeting> internalSortedList = sortNextMeetings(internalList);
-
+    private final Comparator<NextMeeting> nextMeetingComparator = (currentMeeting, nextMeeting) -> {
+        return currentMeeting.date.compareTo(nextMeeting.date) != 0
+                ? currentMeeting.date.compareTo(nextMeeting.date)
+                : (currentMeeting.startTime.compareTo(nextMeeting.startTime) != 0
+                ? currentMeeting.startTime.compareTo(nextMeeting.startTime)
+                : (currentMeeting.endTime.compareTo(nextMeeting.endTime)));
+    };
 
     /**
      * Returns true if the list contains an equivalent meeting as the given argument.
@@ -37,6 +45,28 @@ public class UniqueNextMeetingList implements Iterable<NextMeeting> {
     public boolean contains(NextMeeting toCheck) {
         requireNonNull(toCheck);
         return internalList.stream().anyMatch(toCheck::equals);
+    }
+
+    /**
+     * Returns true if the list contains an equivalent meeting with the same client name as the given argument.
+     */
+    public boolean hasClient(Name toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(nextMeeting -> nextMeeting.getWithWho().equals(toCheck));
+    }
+
+    /**
+     * Returns true if the list contains an equivalent meeting with the matching client name as the given argument.
+     */
+    public boolean removeByName(Name toRemove) {
+        requireNonNull(toRemove);
+        NextMeeting tempNextMeeting = this.getNextMeeting(toRemove);
+        try {
+            this.remove(tempNextMeeting);
+        } catch (MeetingNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -84,8 +114,33 @@ public class UniqueNextMeetingList implements Iterable<NextMeeting> {
         if (!meetingsAreUnique(meetings)) {
             throw new DuplicateNextMeetingException();
         }
-
         internalList.setAll(meetings);
+    }
+
+    /**
+     * Replaces the contents of this list with {@code meetings}.
+     * {@code meetings} must not contain duplicate nextMeetings.
+     * @param clientNames
+     * @param editedClientDescriptor
+     */
+    public void editClientNextMeeting(List<Name> clientNames,
+        EditCommand.EditClientDescriptor editedClientDescriptor) {
+        requireNonNull(clientNames);
+        requireNonNull(editedClientDescriptor);
+
+        clientNames.stream().forEach(name -> {
+            //Removes old meeting
+            if (this.hasClient(name)) {
+                this.removeByName(name);
+            }
+            if (editedClientDescriptor.isNextMeetingEdited()) {
+                NextMeeting tempNextMeeting = editedClientDescriptor.getNextMeeting().get();
+                NextMeeting copyNextMeeting = tempNextMeeting.copyNextMeeting();
+                copyNextMeeting.setWithWho(name);
+                this.add(copyNextMeeting);
+            }
+        });
+        this.internalSortedList.setComparator(nextMeetingComparator);
     }
 
     /**
@@ -122,13 +177,7 @@ public class UniqueNextMeetingList implements Iterable<NextMeeting> {
 
         SortedList<NextMeeting> sortedMeetings = new SortedList<>(allMeetings);
 
-        sortedMeetings.setComparator((currentMeeting, nextMeeting) -> {
-            return currentMeeting.date.compareTo(nextMeeting.date) != 0
-                    ? currentMeeting.date.compareTo(nextMeeting.date)
-                    : (currentMeeting.startTime.compareTo(nextMeeting.startTime) != 0
-                    ? currentMeeting.startTime.compareTo(nextMeeting.startTime)
-                    : (currentMeeting.endTime.compareTo(nextMeeting.endTime)));
-        });
+        sortedMeetings.setComparator(nextMeetingComparator);
         return sortedMeetings;
     }
 

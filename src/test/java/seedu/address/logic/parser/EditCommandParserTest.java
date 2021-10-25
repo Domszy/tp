@@ -50,7 +50,7 @@ public class EditCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
 
-    private EditCommandParser parser = new EditCommandParser();
+    private final EditCommandParser parser = new EditCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
@@ -118,7 +118,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_someFieldsSpecified_success() {
         ClientId clientId = CLIENTID_FIRST_CLIENT;
-        String userInput = clientId.toString() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
+        String userInput = clientId + PHONE_DESC_BOB + EMAIL_DESC_AMY;
 
         EditClientDescriptor descriptor = new EditClientDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_AMY).build();
@@ -130,7 +130,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_cLientId_failure() {
         ClientId clientId = CLIENTID_FIRST_CLIENT;
-        String userInput = clientId.toString() + PHONE_DESC_BOB + EMAIL_DESC_AMY + CLIENTID_DESC_AMY;
+        String userInput = clientId + PHONE_DESC_BOB + EMAIL_DESC_AMY + CLIENTID_DESC_AMY;
 
         assertParseFailure(parser, userInput, EditCommand.MESSAGE_CHANGE_CLIENTID);
     }
@@ -139,31 +139,31 @@ public class EditCommandParserTest {
     public void parse_oneFieldSpecified_success() {
         // name
         ClientId clientId = CLIENTID_FIRST_CLIENT;
-        String userInput = clientId.toString() + NAME_DESC_AMY;
+        String userInput = clientId + NAME_DESC_AMY;
         EditClientDescriptor descriptor = new EditClientDescriptorBuilder().withName(VALID_NAME_AMY).build();
         EditCommand expectedCommand = new EditCommand(List.of(clientId), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // phone
-        userInput = clientId.toString() + PHONE_DESC_AMY;
+        userInput = clientId + PHONE_DESC_AMY;
         descriptor = new EditClientDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
         expectedCommand = new EditCommand(List.of(clientId), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // email
-        userInput = clientId.toString() + EMAIL_DESC_AMY;
+        userInput = clientId + EMAIL_DESC_AMY;
         descriptor = new EditClientDescriptorBuilder().withEmail(VALID_EMAIL_AMY).build();
         expectedCommand = new EditCommand(List.of(clientId), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // address
-        userInput = clientId.toString() + ADDRESS_DESC_AMY;
+        userInput = clientId + ADDRESS_DESC_AMY;
         descriptor = new EditClientDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
         expectedCommand = new EditCommand(List.of(clientId), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // tags
-        userInput = clientId.toString() + TAG_DESC_FRIEND;
+        userInput = clientId + TAG_DESC_FRIEND;
         descriptor = new EditClientDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
         expectedCommand = new EditCommand(List.of(clientId), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -172,7 +172,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
         ClientId clientId = CLIENTID_FIRST_CLIENT;
-        String userInput = clientId.toString() + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
+        String userInput = clientId + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
                 + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
                 + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
 
@@ -188,13 +188,13 @@ public class EditCommandParserTest {
     public void parse_invalidValueFollowedByValidValue_success() {
         // no other valid values specified
         ClientId clientId = CLIENTID_FIRST_CLIENT;
-        String userInput = clientId.toString() + INVALID_PHONE_DESC + PHONE_DESC_BOB;
+        String userInput = clientId + INVALID_PHONE_DESC + PHONE_DESC_BOB;
         EditClientDescriptor descriptor = new EditClientDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
         EditCommand expectedCommand = new EditCommand(List.of(clientId), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = clientId.toString() + EMAIL_DESC_BOB + INVALID_PHONE_DESC + ADDRESS_DESC_BOB
+        userInput = clientId + EMAIL_DESC_BOB + INVALID_PHONE_DESC + ADDRESS_DESC_BOB
                 + PHONE_DESC_BOB;
         descriptor = new EditClientDescriptorBuilder().withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).build();
@@ -205,7 +205,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_resetTags_success() {
         ClientId clientId = CLIENTID_THIRD_CLIENT;
-        String userInput = clientId.toString() + TAG_EMPTY;
+        String userInput = clientId + TAG_EMPTY;
 
         EditClientDescriptor descriptor = new EditClientDescriptorBuilder().withTags().build();
         EditCommand expectedCommand = new EditCommand(List.of(clientId), descriptor);

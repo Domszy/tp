@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,15 +13,40 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.client.Client;
-import seedu.address.model.client.NextMeeting;
-import seedu.address.model.client.UniqueNextMeetingList;
 import seedu.address.model.client.exceptions.DuplicateNextMeetingException;
 import seedu.address.model.client.exceptions.MeetingNotFoundException;
 
 public class UniqueNextMeetingListTest {
 
     private final UniqueNextMeetingList uniqueNextMeetingList = new UniqueNextMeetingList();
+
+    @Test
+    public void hasClient_nameInList_returnTrue() {
+        UniqueNextMeetingList tempUniqueNextMeetingList = new UniqueNextMeetingList();
+        NextMeeting temp = ALICE.getNextMeeting().copyNextMeeting();
+        temp.setWithWho(ALICE.getName());
+        tempUniqueNextMeetingList.add(temp);
+        assertTrue(tempUniqueNextMeetingList.hasClient(ALICE.getName()));
+    }
+
+    @Test
+    public void hasClient_nullName_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueNextMeetingList.contains(null));
+    }
+
+    @Test
+    public void removeByName_nameInList_returnTrue() {
+        NextMeeting temp = ALICE.getNextMeeting().copyNextMeeting();
+        temp.setWithWho(ALICE.getName());
+        uniqueNextMeetingList.add(temp);
+        uniqueNextMeetingList.removeByName(ALICE.getName());
+        assertEquals(uniqueNextMeetingList, new UniqueNextMeetingList());
+    }
+
+    @Test
+    public void removeByName_nullName_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueNextMeetingList.removeByName(null));
+    }
 
     @Test
     public void contains_nullNextMeeting_throwsNullPointerException() {
@@ -114,5 +139,4 @@ public class UniqueNextMeetingListTest {
         assertThrows(UnsupportedOperationException.class, ()
             -> uniqueNextMeetingList.asUnmodifiableObservableList().remove(0));
     }
-
 }

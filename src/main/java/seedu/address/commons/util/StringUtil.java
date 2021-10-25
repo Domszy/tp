@@ -24,6 +24,27 @@ public class StringUtil {
     public static final String CLIENTID_DELIMITER = ", ";
     public static final String JSON_FILE_PREFIX = ".json";
 
+
+    /**
+     * Returns true if the {@code string1} is equals to {@code string2}, ignoring case.
+     * <br>examples:<pre>
+     *       isEqualIgnoreCase("ABc def", "abc def") == true
+     *       isEqualIgnoreCase("ABc def", "ABC DEF") == true
+     *       isEqualIgnoreCase("ABc def", "ABc") == false //not equal
+     *       </pre>
+     *
+     * @param string1 cannot be null
+     * @param string2 cannot be null
+     */
+    public static boolean isEqualIgnoreCase(String string1, String string2) {
+        requireNonNull(string1);
+        requireNonNull(string2);
+
+        String preppedWord = string1;
+
+        return string1.toLowerCase().equals(string2.toLowerCase());
+    }
+
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      * Ignores case, but a full word match is required.
@@ -80,7 +101,7 @@ public class StringUtil {
         requireNonNull(t);
         StringWriter sw = new StringWriter();
         t.printStackTrace(new PrintWriter(sw));
-        return t.getMessage() + "\n" + sw.toString();
+        return t.getMessage() + "\n" + sw;
     }
 
     /**

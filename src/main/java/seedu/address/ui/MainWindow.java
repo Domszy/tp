@@ -4,8 +4,11 @@ import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
@@ -24,6 +27,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private Image leadsForceLogo = new Image(this.getClass().getResourceAsStream("/images/logo.png"));
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -36,9 +40,13 @@ public class MainWindow extends UiPart<Stage> {
     private SideBar sideBar;
     private HelpWindow helpWindow;
     private CommandBox commandBox;
+    private AddressBookListMenu addressBookListMenu;
 
     @FXML
     private StackPane commandBoxPlaceholder;
+
+    @FXML
+    private MenuBar menuBar;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -54,6 +62,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusBarPlaceholder;
+
+    @FXML
+    private ImageView displayLogo;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -71,6 +82,8 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
+
+        displayLogo.setImage(leadsForceLogo);
     }
 
     public Stage getPrimaryStage() {
@@ -129,6 +142,10 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         sideBar = new SideBar(logic.getClientToView(), logic.getSortedNextMeetingList());
         sideBarPlaceHolder.getChildren().add(sideBar.getRoot());
+
+        addressBookListMenu = new AddressBookListMenu(logic.getAddressBookList(),
+                logic.getAddressBookFilePathObject(), logic);
+        menuBar.getMenus().add(addressBookListMenu.getRoot());
     }
 
     /**
@@ -199,6 +216,7 @@ public class MainWindow extends UiPart<Stage> {
      * Switches the Address Book.
      */
     private void handleSwitchAddressBook() {
+        // TODO: either this.logic or logic
         this.logic.switchAddressBook();
     }
 

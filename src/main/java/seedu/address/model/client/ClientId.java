@@ -5,7 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 public class ClientId {
 
-    public static final String VALIDATION_REGEX = "\\d{1,}";
+    public static final String VALIDATION_REGEX = "\\d+";
     public static final String MESSAGE_CONSTRAINTS = "ClientId should only contain non-negative integers";
     public final String value;
 

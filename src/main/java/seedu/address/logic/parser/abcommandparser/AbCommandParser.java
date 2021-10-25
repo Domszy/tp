@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.abcommand.AbCommand;
 import seedu.address.logic.commands.abcommand.AbCreateCommand;
+import seedu.address.logic.commands.abcommand.AbDeleteCommand;
 import seedu.address.logic.commands.abcommand.AbListCommand;
 import seedu.address.logic.commands.abcommand.AbSwitchCommand;
 import seedu.address.logic.parser.Parser;
@@ -42,6 +43,9 @@ public class AbCommandParser implements Parser<AbCommand> {
 
         case AbCreateCommand.COMMAND_WORD:
             return new AbCreateCommandParser().parse(arguments, model);
+
+        case AbDeleteCommand.COMMAND_WORD:
+            return new AbDeleteCommandParser().parse(arguments, model);
 
         case AbListCommand.COMMAND_WORD:
             return new AbListCommand();

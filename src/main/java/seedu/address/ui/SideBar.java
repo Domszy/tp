@@ -15,7 +15,6 @@ public class SideBar extends UiPart<Region> {
     private static final String FXML = "SideBar.fxml";
 
     private ClientViewPanel clientViewPanel;
-
     private MeetingsListPanel meetingsListPanel;
 
     @FXML

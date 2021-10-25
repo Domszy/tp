@@ -23,7 +23,7 @@ public class AbCreateCommandParserTest {
     @Test
     public void parse_validArg_returnAbCreateCommand() {
         String input = "addressbook";
-        Path filePath = Path.of(FileUtil.convertToAddressBookPathString(input));
+        Path filePath = Path.of(FileUtil.convertToAddressBookPathString(input, Path.of("data")));
         AbCreateCommand expectedAbCreateCommand = new AbCreateCommand(input, filePath);
         assertParseSuccess(parser, " " + input + "  ", expectedAbCreateCommand);
     }

@@ -13,67 +13,72 @@
 <?import javafx.scene.layout.VBox?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
-    </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-      <padding>
-        <Insets bottom="5" left="15" right="5" top="5" />
-      </padding>
-      <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-         <Label fx:id="name" styleClass="cell_big_label" text="\$first">
-               <tooltip>
-                  <Tooltip text="Name" />
-               </tooltip>
-            </Label>
-      </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
-            <tooltip>
-               <Tooltip text="Phone" />
-            </tooltip>
-         </Label>
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address">
-            <tooltip>
-               <Tooltip text="Address" />
-            </tooltip>
-         </Label>
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email">
-            <tooltip>
-               <Tooltip text="Email" />
-            </tooltip></Label>
-      <Label fx:id="riskAppetite" styleClass="cell_small_label" text="\$riskAppetite">
-            <tooltip>
-                <Tooltip text="Risk Appetite" />
-            </tooltip></Label>
-      <Label fx:id="disposableIncome" styleClass="cell_small_label" text="\$disposableIncome">
-            <tooltip>
-                <Tooltip text="Disposable Income" />
-            </tooltip></Label>
-      <Label fx:id="currentPlan" styleClass="cell_small_label" text="\$currentPlan">
-            <tooltip>
-                <Tooltip text="Current Plan" />
-            </tooltip></Label>
-      <Label fx:id="lastMet" prefHeight="17.0" prefWidth="103.0" styleClass="cell_small_label" text="\$lastMet">
-            <tooltip>
-               <Tooltip text="Last Met" />
-            </tooltip></Label>
-    </VBox>
-      <rowConstraints>
-         <RowConstraints />
-      </rowConstraints>
-  </GridPane>
-   <AnchorPane styleClass="card_side_pane" prefHeight="200.0" prefWidth="200.0">
-      <children>
-         <Label layoutX="5.0" layoutY="11.0" text="Next Meeting:" />
-         <Label fx:id="nextMeeting" layoutX="5.0" layoutY="60.0" prefWidth="200.0" styleClass="cell_small_label" wrapText="true" />
-      </children>
-   </AnchorPane>
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+            <padding>
+                <Insets bottom="5" left="15" right="5" top="5" />
+            </padding>
+            <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                <Label fx:id="id" styleClass="cell_big_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="name" styleClass="cell_big_label" text="\$first">
+                    <tooltip>
+                        <Tooltip text="Name" />
+                    </tooltip>
+                </Label>
+            </HBox>
+            <FlowPane fx:id="tags" />
+              <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+                  <tooltip>
+                      <Tooltip text="Phone" />
+                  </tooltip>
+              </Label>
+              <Label fx:id="address" styleClass="cell_small_label" text="\$address">
+                  <tooltip>
+                      <Tooltip text="Address" />
+                  </tooltip>
+              </Label>
+              <Label fx:id="email" styleClass="cell_small_label" text="\$email">
+                  <tooltip>
+                      <Tooltip text="Email" />
+                  </tooltip>
+              </Label>
+              <Label fx:id="riskAppetite" styleClass="cell_small_label" text="\$riskAppetite">
+                  <tooltip>
+                      <Tooltip text="Risk Appetite" />
+                  </tooltip>
+              </Label>
+              <Label fx:id="disposableIncome" styleClass="cell_small_label" text="\$disposableIncome">
+                  <tooltip>
+                      <Tooltip text="Disposable Income" />
+                  </tooltip>
+              </Label>
+              <Label fx:id="currentPlan" styleClass="cell_small_label" text="\$currentPlan">
+                  <tooltip>
+                      <Tooltip text="Current Plan" />
+                  </tooltip>
+              </Label>
+              <Label fx:id="lastMet" prefHeight="17.0" prefWidth="103.0" styleClass="cell_small_label" text="\$lastMet">
+                  <tooltip>
+                      <Tooltip text="Last Met" />
+                  </tooltip>
+              </Label>
+        </VBox>
+        <rowConstraints>
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="card_side_pane">
+        <children>
+            <Label layoutX="5.0" layoutY="11.0" styleClass="cell_big_label" text="Next Meeting:" />
+            <Label fx:id="nextMeeting" layoutX="5.0" layoutY="60.0" prefWidth="200.0" styleClass="cell_small_label" wrapText="true" />
+        </children>
+    </AnchorPane>
 </HBox>

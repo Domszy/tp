@@ -47,6 +47,16 @@ public class LastMet implements OptionalNonStringBasedField {
         return StringUtil.isValidDate(test);
     }
 
+    /**
+     * Returns the more recent LastMet from comparing {@code this} and {@code other}
+     */
+    public LastMet getLaterLastMet(LastMet other) {
+        if (value == null) {
+            return other;
+        }
+        return this.value.isBefore(other.value) ? other : this;
+    }
+
     @Override
     public String toString() {
         if (value == null) {

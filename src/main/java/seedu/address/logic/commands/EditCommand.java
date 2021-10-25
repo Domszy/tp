@@ -130,10 +130,38 @@ public class EditCommand extends Command {
         CurrentPlan updatedCurrentPlan = editClientDescriptor.getCurrentPlan().orElse(clientToEdit.getCurrentPlan());
         LastMet updatedLastMet = editClientDescriptor.getLastMet().orElse(clientToEdit.getLastMet());
         NextMeeting updatedNextMeeting = editClientDescriptor.getNextMeeting().orElse(clientToEdit.getNextMeeting());
+        updatedNextMeeting.setWithWho(updatedName);
         Set<Tag> updatedTags = editClientDescriptor.getTags().orElse(clientToEdit.getTags());
 
         return new Client(oldClientId, updatedName, updatedPhone, updatedEmail, updatedAddress, updateRiskAppetite,
                 updatedDisposableIncome, updatedCurrentPlan, updatedLastMet, updatedNextMeeting, updatedTags);
+    }
+
+    /**
+     * Creates and returns a {@code Client} with the {@code LastMet} date being replaced by
+     * the {@code NextMeeting} date and {@code NextMeeting} being set to {@code NullMeeting}
+     */
+    public static Client createEditedMeetingOverClient(Client clientToEdit) {
+        assert clientToEdit != null;
+
+        ClientId oldClientId = clientToEdit.getClientId();
+        Name oldName = clientToEdit.getName();
+        Email oldEmail = clientToEdit.getEmail();
+        Phone oldPhone = clientToEdit.getPhone();
+        Address oldAddress = clientToEdit.getAddress();
+        RiskAppetite oldRiskAppetite = clientToEdit.getRiskAppetite();
+        DisposableIncome oldDisposableIncome = clientToEdit.getDisposableIncome();
+        CurrentPlan oldCurrentPlan = clientToEdit.getCurrentPlan();
+        Set<Tag> oldTags = clientToEdit.getTags();
+
+        LastMet updatedLastMet = clientToEdit.getLastMet().getLaterLastMet(
+            clientToEdit.getNextMeeting().convertToLastMet()
+        );
+        NextMeeting updatedNextMeeting = NextMeeting.NULL_MEETING;
+
+
+        return new Client(oldClientId, oldName, oldPhone, oldEmail, oldAddress, oldRiskAppetite,
+            oldDisposableIncome, oldCurrentPlan, updatedLastMet, updatedNextMeeting, oldTags);
     }
 
     @Override
@@ -198,6 +226,13 @@ public class EditCommand extends Command {
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, address, riskAppetite, disposableIncome,
                     currentPlan, lastMet, nextMeeting, tags);
+        }
+
+        /**
+         * Returns true if {@code nextMeeting} is edited
+         */
+        public boolean isNextMeetingEdited() {
+            return nextMeeting == null ? false : !nextMeeting.isNullMeeting();
         }
 
         public void setName(Name name) {
@@ -313,6 +348,7 @@ public class EditCommand extends Command {
                     && getCurrentPlan().equals(e.getCurrentPlan())
                     && getDisposableIncome().equals(e.getDisposableIncome())
                     && getRiskAppetite().equals(e.getRiskAppetite())
+                    && getNextMeeting().equals(e.getNextMeeting())
                     && getTags().equals(e.getTags());
         }
     }

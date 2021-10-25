@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.TextFlow?>
 
-<StackPane alignment="TOP_CENTER" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
-         <children>
-            <StackPane fx:id="clientViewPanelPlaceholder" prefHeight="150.0" prefWidth="200.0">
-               <VBox.margin>
-                  <Insets top="16.0" />
-               </VBox.margin></StackPane>
-            <Label layoutX="5.0" layoutY="11.0" text="Meetings:" />
-            <VBox fx:id="meetingsListPanel" minWidth="180" prefWidth="80.0" styleClass="pane-with-border"
+<StackPane alignment="TOP_CENTER" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/11"
+           xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox>
+            <TextFlow textAlignment="CENTER">
+                <children>
+                    <Label styleClass="label-header" text="Client Info"/>
+                </children>
+            </TextFlow>
+            <StackPane fx:id="clientViewPanelPlaceholder" styleClass="pane-with-border">
+                <padding>
+                    <Insets bottom="10" left="10" right="10" top="10"/>
+                </padding>
+            </StackPane>
+            <TextFlow textAlignment="CENTER">
+                <children>
+                    <Label styleClass="label-header" text="Meeting Schedule"/>
+                </children>
+            </TextFlow>
+            <VBox fx:id="nextMeetingList" minWidth="340" prefWidth="340" styleClass="pane-with-border"
                   VBox.vgrow="ALWAYS">
-               <padding>
-                  <Insets bottom="10" left="10" right="10" top="10"/>
-               </padding>
-               <StackPane fx:id="nextMeetingListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                <padding>
+                    <Insets bottom="10" left="10" right="10" top="10"/>
+                </padding>
+                <StackPane fx:id="nextMeetingListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
             </VBox>
-         </children>
-      </VBox>
-   </children>
+        </VBox>
+    </children>
 </StackPane>

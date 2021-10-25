@@ -85,6 +85,14 @@ public class AddressBookTest {
         assertThrows(UnsupportedOperationException.class, () -> addressBook.getClientList().remove(0));
     }
 
+    @Test
+    public void updateLastMetDate_updatesCorrectly() {
+        Client expectedAlice = new ClientBuilder(ALICE).withNextMeeting("No next meeting").build();
+        addressBook.addClient(ALICE);
+        addressBook.updateLastMetDate();
+        assertEquals(addressBook.getClient(new ClientId("0")), expectedAlice);
+    }
+
     /**
      * A stub ReadOnlyAddressBook whose clients list can violate interface constraints.
      */

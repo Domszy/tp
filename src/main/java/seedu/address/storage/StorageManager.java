@@ -79,7 +79,7 @@ public class StorageManager implements Storage {
     // ================ multiple AddressBook methods ==============================
 
     @Override
-    public void switchAddressBook(AddressBookStorage addressBookStorage) {
+    public void switchAddressBookStorage(AddressBookStorage addressBookStorage) {
         this.addressBookStorage = addressBookStorage;
     }
 }

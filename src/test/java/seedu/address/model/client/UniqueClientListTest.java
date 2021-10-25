@@ -178,4 +178,12 @@ public class UniqueClientListTest {
         assertThrows(UnsupportedOperationException.class, ()
             -> uniqueClientList.asUnmodifiableObservableList().remove(0));
     }
+
+    @Test
+    public void updateLastMetDate_updatesCorrectly() {
+        Client expectedAlice = new ClientBuilder(ALICE).withNextMeeting("No next meeting").build();
+        uniqueClientList.add(ALICE);
+        uniqueClientList.updateLastMetDate();
+        assertEquals(uniqueClientList.getClient(new ClientId("0")), expectedAlice);
+    }
 }

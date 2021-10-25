@@ -1,172 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- TODO: use CardPane -->
+
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="280.0" style="-fx-border-color: silver;" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox fx:id="clientInfoContainer" prefHeight="240.0" prefWidth="393.0" VBox.vgrow="ALWAYS">
-         <children>
-            <Label styleClass="label-view-header" text="Client Info">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="4.0" />
-               </VBox.margin>
-            </Label>
-            <HBox prefHeight="21.0" prefWidth="363.0">
-               <children>
-                  <Label styleClass="label-view" text="Name:" />
-                  <Label fx:id="clientName" styleClass="label-view">
-                     <HBox.margin>
-                        <Insets left="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="20.0" prefWidth="363.0">
-               <children>
-                  <Label styleClass="label-view" text="Client ID:" />
-                  <Label fx:id="clientId" styleClass="label-view">
-                     <HBox.margin>
-                        <Insets left="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="20.0" prefWidth="363.0">
-               <children>
-                  <Label fx:id="clientCreationDate" styleClass="label-view" text="Created At:" />
-                  <Label fx:id="clientCreatedAt" styleClass="label-view">
-                     <HBox.margin>
-                        <Insets left="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="20.0" prefWidth="363.0">
-               <children>
-                  <Label styleClass="label-view" text="Last Met:" />
-                  <Label fx:id="clientLastMet" styleClass="label-view">
-                     <HBox.margin>
-                        <Insets left="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="20.0" prefWidth="363.0" styleClass="label-view">
-               <children>
-                  <Label styleClass="label-view" text="Risk Appetite:" />
-                  <Label fx:id="clientRiskAppetite" styleClass="label-view">
-                     <HBox.margin>
-                        <Insets left="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="20.0" prefWidth="363.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <Label minHeight="-Infinity" minWidth="-Infinity" styleClass="label-view" text="Current Financial Plans:" />
-                  <Label fx:id="clientCurrentPlans" minHeight="-Infinity" styleClass="label-view" wrapText="true">
-                     <HBox.margin>
-                        <Insets left="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="20.0" prefWidth="363.0">
-               <children>
-                  <Label styleClass="label-view" text="Disposable Income:" />
-                  <Label fx:id="clientDisposableIncome" styleClass="label-view">
-                     <HBox.margin>
-                        <Insets left="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="20.0" prefWidth="363.0">
-               <children>
-                  <Label minHeight="-Infinity" minWidth="-Infinity" styleClass="label-view" text="Next Meeting:" />
-                  <Label minHeight="-Infinity" fx:id="nextMeeting" styleClass="label-view" wrapText="true">
-                     <HBox.margin>
-                        <Insets left="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-      </VBox>
-      <VBox fx:id="contactInfoContainer" prefHeight="244.0" prefWidth="517.0" VBox.vgrow="ALWAYS">
-         <children>
-            <Label styleClass="label-view-header" text="Contact Info">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="4.0" />
-               </VBox.margin>
-            </Label>
-            <HBox prefHeight="21.0" prefWidth="363.0">
-               <children>
-                  <Label styleClass="label-view" text="Email Address:" />
-                  <Label fx:id="clientEmail" styleClass="label-view">
-                     <HBox.margin>
-                        <Insets left="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="21.0" prefWidth="363.0">
-               <children>
-                  <Label styleClass="label-view" text="Contact Number:" />
-                  <Label fx:id="clientPhoneNumber" styleClass="label-view">
-                     <HBox.margin>
-                        <Insets left="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-         <VBox.margin>
-            <Insets top="20.0" />
-         </VBox.margin>
-      </VBox>
-   </children>
-   <padding>
-      <Insets bottom="4.0" right="8.0" top="4.0" />
-   </padding>
-</VBox>
+<StackPane id="clientCardPane" prefHeight="150.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11"
+           xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox fx:id="cardPane" prefHeight="200.0" prefWidth="100.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Name:"/>
+                    <Label fx:id="clientName" styleClass="card_big_label">
+                        <tooltip>
+                            <Tooltip text="Name"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Client ID:"/>
+                    <Label fx:id="clientId" styleClass="card_small_label">
+                        <tooltip>
+                            <Tooltip text="Client ID"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Contact Number:"/>
+                    <Label fx:id="clientPhoneNumber" styleClass="card_small_label">
+                        <tooltip>
+                            <Tooltip text="Contact Number"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Address:"/>
+                    <Label fx:id="clientAddress" styleClass="card_small_label">
+                        <tooltip>
+                            <Tooltip text="Address"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Email Address:"/>
+                    <Label fx:id="clientEmail" styleClass="card_small_label">
+                        <tooltip>
+                            <Tooltip text="Email Address"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Created At:"/>
+                    <Label fx:id="clientCreatedAt" styleClass="card_small_label">
+                        <tooltip>
+                            <Tooltip text="Created At"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Risk Appetite:"/>
+                    <Label fx:id="clientRiskAppetite" styleClass="card_small_label">
+                        <tooltip>
+                            <Tooltip text="Risk Appetite"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Disposable Income:"/>
+                    <Label fx:id="clientDisposableIncome" styleClass="card_small_label">
+                        <tooltip>
+                            <Tooltip text="Disposable Income"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Current Financial Plans:" textOverrun="CLIP"
+                           wrapText="true"/>
+                    <Label fx:id="clientCurrentPlans" styleClass="card_small_label">
+                        <tooltip>
+                            <Tooltip text="Current Financial Plans"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Last Met:"/>
+                    <Label fx:id="clientLastMet" styleClass="card_small_label">
+                        <tooltip>
+                            <Tooltip text="Last Met"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
+                    <Label styleClass="card_big_label" text="Next Meeting:"/>
+                    <Label fx:id="clientNextMeeting" styleClass="card_small_label">
+                        <tooltip>
+                            <Tooltip text="Next Meeting"/>
+                        </tooltip>
+                    </Label>
+                </HBox>
+            </children>
+        </VBox>
+        <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <center>
+                <Label fx:id="textOverlay" text="Enter `view CLIENT_ID` to start viewing"
+                       BorderPane.alignment="CENTER"/>
+            </center>
+        </BorderPane>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="15.0" top="10.0"/>
+    </padding>
+</StackPane>

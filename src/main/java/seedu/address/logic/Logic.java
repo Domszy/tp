@@ -79,8 +79,20 @@ public interface Logic {
     void switchAddressBook();
 
     /**
+     * Switches the AddressBook to that specified {@code Path filePath}
+     * in {@code addressBookFilePath} of {@code UserPrefs}
+     */
+    void switchAddressBook(Path filePath);
+
+    /**
      * Creates the AddressBook at the specified {@code Path filePath}
      * @throws CommandException If an error occurs during command execution.
      */
     void createAddressBook() throws CommandException;
+
+
+    /**
+     * Returns the list of all address book file path.
+     */
+    ObservableList<Path> getAddressBookList();
 }

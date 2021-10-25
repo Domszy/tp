@@ -13,7 +13,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_RISKAPPETITE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -68,28 +67,6 @@ public class PrefixMapper {
             EditClientDescriptor::setCurrentPlan;
     private static final BiConsumer<EditClientDescriptor, Set<Tag>> EDIT_SET_TAGS = EditClientDescriptor::setTags;
 
-    // EditClientDescriptor getter methods
-    private static final Function<EditClientDescriptor, Optional<Name>> EDIT_GET_NAME =
-            EditClientDescriptor::getName;
-    private static final Function<EditClientDescriptor, Optional<Phone>> EDIT_GET_PHONE =
-            EditClientDescriptor::getPhone;
-    private static final Function<EditClientDescriptor, Optional<Email>> EDIT_GET_EMAIL =
-            EditClientDescriptor::getEmail;
-    private static final Function<EditClientDescriptor, Optional<Address>> EDIT_GET_ADDRESS =
-            EditClientDescriptor::getAddress;
-    private static final Function<EditClientDescriptor, Optional<RiskAppetite>> EDIT_GET_RISKAPPETITE =
-            EditClientDescriptor::getRiskAppetite;
-    private static final Function<EditClientDescriptor, Optional<DisposableIncome>> EDIT_GET_DISPOSABLEINCOME =
-            EditClientDescriptor::getDisposableIncome;
-    private static final Function<EditClientDescriptor, Optional<LastMet>> EDIT_GET_LASTMET =
-            EditClientDescriptor::getLastMet;
-    private static final Function<EditClientDescriptor, Optional<NextMeeting>> EDIT_GET_NEXTMEETING =
-            EditClientDescriptor::getNextMeeting;
-    private static final Function<EditClientDescriptor, Optional<CurrentPlan>> EDIT_GET_CURRENTPLAN =
-            EditClientDescriptor::getCurrentPlan;
-    private static final Function<EditClientDescriptor, Optional<Set<Tag>>> EDIT_GET_TAGS =
-            EditClientDescriptor::getTags;
-
     // ParserUtil parser method
     private static final Function<String, ClientId> PARSE_CLIENTID =
             throwableFunctionWrapper(ParserUtil::parseClientId);
@@ -114,28 +91,28 @@ public class PrefixMapper {
 
     // PrefixMapperElement wrapping the different function together
     private static final PrefixMapperElement<ClientId> PME_CLIENTID = new PrefixMapperElement<>(GET_CLIENTID,
-            null, null, PARSE_CLIENTID, "Client Id");
+            null, PARSE_CLIENTID, "Client Id");
     private static final PrefixMapperElement<Name> PME_NAME = new PrefixMapperElement<>(GET_NAME,
-            EDIT_SET_NAME, EDIT_GET_NAME, PARSE_NAME, "Name");
+            EDIT_SET_NAME, PARSE_NAME, "Name");
     private static final PrefixMapperElement<Phone> PME_PHONE = new PrefixMapperElement<>(GET_PHONE,
-            EDIT_SET_PHONE, EDIT_GET_PHONE, PARSE_PHONE, "Phone");
+            EDIT_SET_PHONE, PARSE_PHONE, "Phone");
     private static final PrefixMapperElement<Email> PME_EMAIL = new PrefixMapperElement<>(GET_EMAIL,
-            EDIT_SET_EMAIL, EDIT_GET_EMAIL, PARSE_EMAIL, "Email");
+            EDIT_SET_EMAIL, PARSE_EMAIL, "Email");
     private static final PrefixMapperElement<Address> PME_ADDRESS = new PrefixMapperElement<>(GET_ADDRESS,
-            EDIT_SET_ADDRESS, EDIT_GET_ADDRESS, PARSE_ADDRESS, "Address");
+            EDIT_SET_ADDRESS, PARSE_ADDRESS, "Address");
     private static final PrefixMapperElement<RiskAppetite> PME_RISKAPPETITE = new PrefixMapperElement<>(
-            GET_RISKAPPETITE, EDIT_SET_RISKAPPETITE, EDIT_GET_RISKAPPETITE, PARSE_RISKAPPETITE, "Risk Appetite");
+            GET_RISKAPPETITE, EDIT_SET_RISKAPPETITE, PARSE_RISKAPPETITE, "Risk Appetite");
     private static final PrefixMapperElement<DisposableIncome> PME_DISPOSABLEINCOME = new PrefixMapperElement<>(
-            GET_DISPOSABLEINCOME, EDIT_SET_DISPOSABLEINCOME, EDIT_GET_DISPOSABLEINCOME,
+            GET_DISPOSABLEINCOME, EDIT_SET_DISPOSABLEINCOME,
             PARSE_DISPOSABLEINCOME, "Disposable Income");
     private static final PrefixMapperElement<LastMet> PME_LASTMET = new PrefixMapperElement<>(GET_LASTMET,
-            EDIT_SET_LASTMET, EDIT_GET_LASTMET, PARSE_LASTMET, "Last Met");
+            EDIT_SET_LASTMET, PARSE_LASTMET, "Last Met");
     private static final PrefixMapperElement<NextMeeting> PME_NEXTMEETING = new PrefixMapperElement<>(GET_NEXTMEETING,
-            EDIT_SET_NEXTMEETING, EDIT_GET_NEXTMEETING, PARSE_NEXTMEETING, "Next Meeting");
+            EDIT_SET_NEXTMEETING, PARSE_NEXTMEETING, "Next Meeting");
     private static final PrefixMapperElement<CurrentPlan> PME_CURRENTPLAN = new PrefixMapperElement<>(GET_CURRENTPLAN,
-            EDIT_SET_CURRENTPLAN, EDIT_GET_CURRENTPLAN, PARSE_CURRENTPLAN, "Current Plan");
+            EDIT_SET_CURRENTPLAN, PARSE_CURRENTPLAN, "Current Plan");
     private static final PrefixMapperElement<Set<Tag>> PME_TAG = new PrefixMapperElement<>(GET_TAGS, EDIT_SET_TAGS,
-            EDIT_GET_TAGS, null, "Tag");
+            null, "Tag");
 
     // Maps prefix with their respective functions
     private static final Map<Prefix, PrefixMapperElement<?>> PREFIX_MAP = Map.ofEntries(
@@ -156,18 +133,6 @@ public class PrefixMapper {
         return PREFIX_MAP.get(prefix).getAttributeFunction;
     }
 
-    public static BiConsumer<EditClientDescriptor, ?> getEditSetFunction(Prefix prefix) {
-        return PREFIX_MAP.get(prefix).editSetFunction;
-    }
-
-    public static Function<EditClientDescriptor, ? extends Optional<?>> getEditGetFunction(Prefix prefix) {
-        return PREFIX_MAP.get(prefix).editGetFunction;
-    }
-
-    public static Function<String, ?> getParseFunction(Prefix prefix) {
-        return PREFIX_MAP.get(prefix).parseFunction;
-    }
-
     public static String getName(Prefix prefix) {
         return PREFIX_MAP.get(prefix).name;
     }
@@ -183,16 +148,13 @@ public class PrefixMapper {
         private final Function<Client, T> getAttributeFunction;
 
         private final BiConsumer<EditClientDescriptor, T> editSetFunction;
-        private final Function<EditClientDescriptor, Optional<T>> editGetFunction;
         private final Function<String, T> parseFunction;
         private final String name;
 
         private PrefixMapperElement(Function<Client, T> getAttributeFunction,
-                                    BiConsumer<EditClientDescriptor, T> editSetFunction, Function<EditClientDescriptor,
-                Optional<T>> editGetFunction, Function<String, T> parseFunction, String name) {
+                BiConsumer<EditClientDescriptor, T> editSetFunction, Function<String, T> parseFunction, String name) {
             this.getAttributeFunction = getAttributeFunction;
             this.editSetFunction = editSetFunction;
-            this.editGetFunction = editGetFunction;
             this.parseFunction = parseFunction;
             this.name = name;
         }

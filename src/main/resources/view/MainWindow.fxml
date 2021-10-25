@@ -2,17 +2,22 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Scene?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.Scene?>
+<?import javafx.scene.text.TextFlow?>
 <?import javafx.stage.Stage?>
 
-<fx:root minHeight="600" minWidth="740.0" onCloseRequest="#handleExit" title="LeadsForce" type="javafx.stage.Stage"
+<fx:root minHeight="810.0" minWidth="1000.0" onCloseRequest="#handleExit" title="LeadsForce" type="javafx.stage.Stage"
          xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
     <icons>
         <Image url="@/images/address_book_32.png"/>
@@ -21,7 +26,7 @@
         <Scene>
             <stylesheets>
                 <URL value="@Fonts.css"/>
-                <URL value="@ColoredTheme.css"/>
+                <URL value="@BookTheme.css"/>
                 <URL value="@Extensions.css"/>
             </stylesheets>
 
@@ -36,35 +41,59 @@
                 </MenuBar>
                 <HBox prefHeight="100.0" prefWidth="200.0" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
                     <children>
+
                         <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                             <children>
+                                <TextFlow textAlignment="CENTER">
+                                    <children>
+                                        <BorderPane>
+                                            <center>
+                                                <ImageView fx:id="displayLogo" fitHeight="80.0" fitWidth="80.0"
+                                                           pickOnBounds="true" preserveRatio="true">
+                                                    <effect>
+                                                        <Glow level="0.80"/>
+                                                    </effect>
+                                                </ImageView>
+                                            </center>
+                                            <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                            <right>
+                                                <Label styleClass="label-header" text="LeadsForce"
+                                                       BorderPane.alignment="CENTER">
+                                                    <effect>
+                                                        <Glow level="0.5"/>
+                                                    </effect>
+                                                </Label>
+                                            </right>
+                                        </BorderPane>
+                                    </children>
+                                </TextFlow>
+
                                 <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border"
                                            VBox.vgrow="NEVER">
                                     <padding>
-                                        <Insets bottom="5" left="10" right="10" top="5"/>
+                                        <Insets bottom="5" left="10" right="10" top="5" />
                                     </padding>
                                 </StackPane>
-                                <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100"
-                                           prefHeight="100" styleClass="pane-with-border">
+                                <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border">
                                     <padding>
-                                        <Insets bottom="5" left="10" right="10" top="5"/>
+                                        <Insets bottom="5" left="10" right="10" top="5" />
                                     </padding>
                                 </StackPane>
-                                <VBox fx:id="clientList" minWidth="340" prefWidth="340" styleClass="pane-with-border"
-                                      VBox.vgrow="ALWAYS">
+                                <VBox fx:id="clientList" minWidth="340" prefWidth="340" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
                                     <padding>
-                                        <Insets bottom="10" left="10" right="10" top="10"/>
+                                        <Insets bottom="10" left="10" right="10" top="10" />
                                     </padding>
-                                    <StackPane fx:id="clientListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                                    <StackPane fx:id="clientListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                                 </VBox>
                             </children>
                         </VBox>
-                        <StackPane fx:id="sideBarPlaceHolder" prefHeight="500.0" prefWidth="280.0"
-                                   styleClass="pane-with-border" HBox.hgrow="ALWAYS"/>
+                        <StackPane fx:id="sideBarPlaceHolder" prefHeight="500.0" prefWidth="280.0" styleClass="pane-with-border" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
 
-                <StackPane fx:id="statusBarPlaceholder" VBox.vgrow="NEVER"/>
+                <StackPane fx:id="statusBarPlaceholder" VBox.vgrow="NEVER" />
             </VBox>
         </Scene>
     </scene>

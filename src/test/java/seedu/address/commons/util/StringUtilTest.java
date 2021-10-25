@@ -93,6 +93,42 @@ public class StringUtilTest {
         assertTrue(StringUtil.isNonNegativeInteger("10"));
     }
 
+    //---------------- Tests for isEqualIgnoreCase --------------------------------------
+
+    /*
+     * Invalid equivalence partitions for test: null
+     * Invalid equivalence partitions for string: null
+     * The 2 test cases below test one invalid input at a time.
+     */
+
+    @Test
+    public void isEqualIgnoreCase_nullString1_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> StringUtil.isEqualIgnoreCase(null, "a"));
+    }
+
+    @Test
+    public void isEqualIgnoreCase_nullString2_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> StringUtil.isEqualIgnoreCase("a", null));
+    }
+
+    @Test
+    public void isEqualIgnoreCase_validInputs_correctResult() {
+        assertFalse(StringUtil.isEqualIgnoreCase("", "aaa"));
+        assertFalse(StringUtil.isEqualIgnoreCase("abd", "g"));
+        assertFalse(StringUtil.isEqualIgnoreCase("abd", " a"));
+
+        assertTrue(StringUtil.isEqualIgnoreCase("abc", "abc"));
+        assertTrue(StringUtil.isEqualIgnoreCase(" ", " "));
+        assertTrue(StringUtil.isEqualIgnoreCase("", ""));
+
+        //match uppercase and lowercase
+        assertTrue(StringUtil.isEqualIgnoreCase("abC", "ABC"));
+        assertTrue(StringUtil.isEqualIgnoreCase("abfca", "abfCa"));
+
+        // match for word with spaces in between
+        assertTrue(StringUtil.isEqualIgnoreCase("b a a d", "b a a d"));
+    }
+
     //---------------- Tests for containsWordIgnoreCase --------------------------------------
 
     /*

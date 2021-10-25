@@ -23,7 +23,7 @@ public class AbSwitchCommandParserTest {
     @Test
     public void parse_validArg_returnAbSwitchCommand() {
         String input = "addressbook";
-        Path filePath = Path.of(FileUtil.convertToAddressBookPathString(input));
+        Path filePath = Path.of(FileUtil.convertToAddressBookPathString(input, Path.of("data")));
         AbSwitchCommand expectedAbSwitchCommand = new AbSwitchCommand(input, filePath);
         assertParseSuccess(parser, " " + input + "  ", expectedAbSwitchCommand);
     }

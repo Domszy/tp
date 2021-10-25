@@ -87,7 +87,7 @@ public class AbCreateCommandTest {
         AbCreateCommand abCreateCommand1 = new AbCreateCommand(newFilePathName, newFilePath);
         expectedModel.setAddressBookFilePath(newFilePath);
         CommandResult result = new CommandResult(
-            String.format(MESSAGE_CREATE_ADDRESSBOOK_SUCCESS, newFilePath), CREATE_ADDRESSBOOK);
+            String.format(MESSAGE_CREATE_ADDRESSBOOK_SUCCESS, newFilePathName), CREATE_ADDRESSBOOK);
         assertCommandSuccess(abCreateCommand1, model, result, expectedModel);
         logic.createAddressBook();
         assertEquals(logic.getAddressBook(), new AddressBook());
@@ -95,7 +95,7 @@ public class AbCreateCommandTest {
     }
 
     @Test
-    public void execute_duplicate_failure() throws CommandException {
+    public void execute_duplicate_failure() {
         AbCreateCommand abCreateCommand1 = new AbCreateCommand(addressBookFilePathName, addressBookFilePath);
         model.setAddressBookFilePath(addressBookFilePath);
         String result = String.format(MESSAGE_ADDRESSBOOK_EXISTS, addressBookFilePathName);
@@ -103,6 +103,6 @@ public class AbCreateCommandTest {
     }
 
     private Path getPath(String s) {
-        return Path.of(FileUtil.convertToAddressBookPathString(s));
+        return Path.of(FileUtil.convertToAddressBookPathString(s, this.model.getAddressBookDirectory()));
     }
 }

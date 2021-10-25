@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.commands.abcommand.AbCreateCommand;
+import seedu.address.logic.commands.abcommand.AbDeleteCommand;
 import seedu.address.logic.commands.abcommand.AbListCommand;
 import seedu.address.logic.commands.abcommand.AbSwitchCommand;
 import seedu.address.model.Model;
@@ -21,7 +22,7 @@ public class AbCommandParserTest {
     @Test
     public void parseCommand_abcreate() throws Exception {
         String input = "addressbook";
-        String filePathName = FileUtil.convertToAddressBookPathString(input);
+        String filePathName = FileUtil.convertToAddressBookPathString(input, model.getAddressBookDirectory());
         Path pathName = Path.of(filePathName);
         AbCreateCommand command = (AbCreateCommand) abCommandParser.parse(
                 AbCreateCommand.COMMAND_WORD + " " + input, model);
@@ -29,9 +30,19 @@ public class AbCommandParserTest {
     }
 
     @Test
+    public void parseCommand_abdelete() throws Exception {
+        String input = "addressbook";
+        String filePathName = FileUtil.convertToAddressBookPathString(input, model.getAddressBookDirectory());
+        Path pathName = Path.of(filePathName);
+        AbDeleteCommand command = (AbDeleteCommand) abCommandParser.parse(
+                AbDeleteCommand.COMMAND_WORD + " " + input, model);
+        assertEquals(new AbDeleteCommand(input, pathName), command);
+    }
+
+    @Test
     public void parseCommand_abswitch() throws Exception {
         String input = "addressbook";
-        String filePathName = FileUtil.convertToAddressBookPathString(input);
+        String filePathName = FileUtil.convertToAddressBookPathString(input, model.getAddressBookDirectory());
         Path pathName = Path.of(filePathName);
         AbSwitchCommand command = (AbSwitchCommand) abCommandParser.parse(
                 AbSwitchCommand.COMMAND_WORD + " " + input, model);

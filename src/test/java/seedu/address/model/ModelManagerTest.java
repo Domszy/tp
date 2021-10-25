@@ -105,11 +105,11 @@ public class ModelManagerTest {
         UserPrefs userPrefs = new UserPrefs();
         modelManager = new ModelManager(addressBook, userPrefs);
         modelManager.updateClientToView(new ClientHasId(CARL.getClientId()));
-        assertFalse(modelManager.isClientExistToView());
+        assertFalse(modelManager.isClientExistToView(CARL.getClientId()));
 
         // predicate returns 1 client in list -> true
         modelManager.updateClientToView(new ClientHasId(ALICE.getClientId()));
-        assertTrue(modelManager.isClientExistToView());
+        assertTrue(modelManager.isClientExistToView(ALICE.getClientId()));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class ModelManagerTest {
         UserPrefs userPrefs = new UserPrefs();
         modelManager = new ModelManager(addressBook, userPrefs);
         modelManager.updateClientToView(new ClientHasId(ALICE.getClientId()));
-        assertTrue(modelManager.isClientExistToView());
+        assertTrue(modelManager.isClientExistToView(ALICE.getClientId()));
         assertEquals(Arrays.asList(ALICE), modelManager.getClientToView());
         assertEquals(ALICE.getName().toString(), modelManager.getNameOfClientToView());
     }
@@ -129,7 +129,7 @@ public class ModelManagerTest {
         UserPrefs userPrefs = new UserPrefs();
         modelManager = new ModelManager(addressBook, userPrefs);
         modelManager.updateClientToView(new ClientHasId(CARL.getClientId()));
-        assertFalse(modelManager.isClientExistToView());
+        assertFalse(modelManager.isClientExistToView(CARL.getClientId()));
     }
 
     @Test

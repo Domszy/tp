@@ -31,10 +31,10 @@ public class ViewCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        model.updateClientToView(predicate);
-        if (!model.isClientExistToView()) {
+        if (!model.isClientExistToView(clientId)) {
             return new CommandResult(String.format(Messages.MESSAGE_NONEXISTENT_CLIENT_ID, clientId.toString()));
         }
+        model.updateClientToView(predicate);
         return new CommandResult(String.format(Messages.MESSAGE_VIEW_SUCCESS, model.getNameOfClientToView()));
     }
 

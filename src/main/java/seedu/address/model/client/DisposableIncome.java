@@ -6,7 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class DisposableIncome implements OptionalStringBasedField {
     public static final String MESSAGE_CONSTRAINTS =
             "Disposable Income numbers should be a positive integer only";
-    public static final String VALIDATION_REGEX = "\\d{1,}";
+    public static final String VALIDATION_REGEX = "\\d+";
     public final String value;
 
     /**

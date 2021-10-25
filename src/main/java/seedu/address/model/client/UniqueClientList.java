@@ -3,8 +3,10 @@ package seedu.address.model.client;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.EditCommand.createEditedClient;
+import static seedu.address.logic.commands.EditCommand.createEditedMeetingOverClient;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -149,6 +151,35 @@ public class UniqueClientList implements Iterable<Client> {
         clientFound.forEach(internalList::remove);
         return clientFound;
     }
+
+    public List<Name> getClientNames(List<ClientId> clientIds) {
+        requireNonNull(clientIds);
+        List<Name> clientNames = FXCollections.observableArrayList();
+        clientIds.stream().forEach(clientId -> {
+            if (this.hasClientId(clientId)) {
+                Client tempClient = this.getClient(clientId);
+                clientNames.add(tempClient.getName());
+            }
+        });
+        return clientNames;
+    }
+
+    /**
+     * Replaces the client in the list with {@code editedClient} if their NextMeeting date is over.
+     */
+    public void updateLastMetDate() {
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+
+        internalList.forEach(client -> {
+            if (client.getNextMeeting().isMeetingOver(currentDate, currentTime)) {
+                Client editedClient = createEditedMeetingOverClient(client);
+                int index = internalList.indexOf(client);
+                internalList.set(index, editedClient);
+            }
+        });
+    }
+
 
     public void setClients(UniqueClientList replacement) {
         requireNonNull(replacement);

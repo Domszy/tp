@@ -17,6 +17,16 @@ public class ClientCard extends UiPart<Region> {
 
     private static final String FXML = "ClientListCard.fxml";
 
+    // Taken from https://unicode-table.com/en/emoji/
+    private static final String EMAIL_ICON = "✉ ";
+    private static final String PHONE_ICON = "☎ ";
+    private static final String ADDRESS_ICON = "\uD83C\uDFE0 ";
+    private static final String RA_ICON = "\uD83D\uDCC8 ";
+    private static final String INCOME_ICON = "\uD83D\uDCB0 ";
+    private static final String PLAN_ICON = "\uD83C\uDFE6 ";
+    private static final String LASTMET_ICON = "\uD83E\uDD1D ";
+    private static final String NEXTMEETING_ICON = "\uD83D\uDC4B ";
+
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -57,20 +67,21 @@ public class ClientCard extends UiPart<Region> {
      */
     public ClientCard(Client client) {
         super(FXML);
+
         this.client = client;
         id.setText(client.getClientId().value + ". ");
         name.setText(client.getName().fullName);
-        email.setText(client.getEmail().value);
-        phone.setText(client.getPhone().value);
-        address.setText(client.getAddress().value);
-        riskAppetite.setText(client.getRiskAppetite().value);
-        disposableIncome.setText(client.getDisposableIncome().value);
-        currentPlan.setText(client.getCurrentPlan().toString());
-        lastMet.setText(client.getLastMet().toString());
-        nextMeeting.setText(client.getNextMeeting().toString());
+        email.setText(EMAIL_ICON + client.getEmail().value);
+        phone.setText(PHONE_ICON + client.getPhone().value);
+        address.setText(ADDRESS_ICON + client.getAddress().value);
+        riskAppetite.setText(RA_ICON + client.getRiskAppetite().value);
+        disposableIncome.setText(INCOME_ICON + client.getDisposableIncome().value);
+        currentPlan.setText(PLAN_ICON + client.getCurrentPlan().toString());
+        lastMet.setText(LASTMET_ICON + client.getLastMet().toString());
+        nextMeeting.setText(NEXTMEETING_ICON + client.getNextMeeting().toString());
         client.getTags().stream()
-                .sorted(Comparator.comparing(Tag::getName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.getName())));
+            .sorted(Comparator.comparing(Tag::getName))
+            .forEach(tag -> tags.getChildren().add(new Label(tag.getName())));
     }
 
     @Override
@@ -88,6 +99,6 @@ public class ClientCard extends UiPart<Region> {
         // state check
         ClientCard card = (ClientCard) other;
         return id.getText().equals(card.id.getText())
-                && client.equals(card.client);
+            && client.equals(card.client);
     }
 }

@@ -32,7 +32,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
     /**
      * Switches the given {@link ReadOnlyAddressBook}
      *
-     * @param addressBook the given AddressBook to switch to
+     * @param addressBook the given AddressBook storage to switch to
      */
-    void switchAddressBook(AddressBookStorage addressBook);
+    void switchAddressBookStorage(AddressBookStorage addressBook);
 }

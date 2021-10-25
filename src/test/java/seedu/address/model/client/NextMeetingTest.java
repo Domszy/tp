@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.junit.jupiter.api.Test;
 
 public class NextMeetingTest {
@@ -42,6 +45,38 @@ public class NextMeetingTest {
         // valid next meeting
         assertTrue(NextMeeting.isValidNextMeeting("24-09-2021 (10:00~12:00), Starbucks @ UTown"));
         assertTrue(NextMeeting.isValidNextMeeting("25-12-2021 (14:00~17:00), null"));
+    }
+
+    @Test
+    public void isMeetingOver() {
+        String date1 = "09-10-2021";
+        String date2 = "10-10-2021";
+        String date3 = "11-10-2021";
+        String time1 = "11:00";
+        String time2 = "13:00";
+        String location = "Zoom";
+        String name = "ben";
+
+        LocalDate checkDate = LocalDate.of(2021, 10, 10);
+        LocalTime checkTime = LocalTime.of(12, 0);
+
+        assertTrue(new NextMeeting(date1, time1, time1, location, name).isMeetingOver(checkDate, checkTime));
+        assertTrue(new NextMeeting(date2, time1, time1, location, name).isMeetingOver(checkDate, checkTime));
+        assertFalse(new NextMeeting(date2, time2, time2, location, name).isMeetingOver(checkDate, checkTime));
+        assertFalse(new NextMeeting(date3, time1, time1, location, name).isMeetingOver(checkDate, checkTime));
+    }
+
+    @Test
+    public void convertToLastMet() {
+        String date = "09-10-2021";
+        String time = "11:00";
+        String location = "Zoom";
+        String name = "ben";
+
+        LastMet expectedLastMet = new LastMet(date);
+        NextMeeting nextMeeting = new NextMeeting(date, time, time, location, name);
+
+        assertEquals(expectedLastMet, nextMeeting.convertToLastMet());
     }
 
     @Test

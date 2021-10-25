@@ -14,10 +14,10 @@ public class AbSwitchCommand extends AbCommand {
     public static final String COMMAND_WORD = "switch";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Switch between different address books\n"
-            + "Parameters: switch {name of the addressbook}\n"
-            + "Example: " + COMMAND_WORD + " addressbook2";
+            + "Parameters: " + AbCommand.COMMAND_WORD + " " + COMMAND_WORD + " {name of the addressbook}\n"
+            + "Example: " + AbCommand.COMMAND_WORD + " " + COMMAND_WORD + " addressbook2";
 
-    public static final String MESSAGE_ADDRESSBOOK_NOT_FOUND = "Address Book with this name not found: %1$s";
+    public static final String MESSAGE_ADDRESSBOOK_NOT_FOUND = "Address Book with this name not found: %s";
 
     private final String addressBookName;
     private final Path filePath;

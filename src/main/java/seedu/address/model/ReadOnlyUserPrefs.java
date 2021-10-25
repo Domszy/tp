@@ -15,4 +15,6 @@ public interface ReadOnlyUserPrefs {
     ObservableValue<Path> getAddressBookFilePathObject();
 
     Path getAddressBookFilePath();
+
+    Path getAddressBookDirectory();
 }

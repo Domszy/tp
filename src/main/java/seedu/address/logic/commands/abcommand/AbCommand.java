@@ -12,6 +12,8 @@ public abstract class AbCommand extends Command {
 
     public static final String MESSAGE_SWITCH_ADDRESSBOOK_SUCCESS = "Address Book switch to: %1$s";
     public static final String MESSAGE_CREATE_ADDRESSBOOK_SUCCESS = "Created Address Book with name: %1$s";
+    public static final String MESSAGE_DELETE_ADDRESSBOOK_SUCCESS = "Deleted Address Book with name: %1$s";
+    public static final String MESSAGE_DELETE_ADDRESSBOOK_FAILURE = "Failed to delete Address Book with name: %1$s";
     public static final String MESSAGE_ADDRESSBOOK_NOT_VALID = "This is not a valid Address Book name: %1$s";
 
 

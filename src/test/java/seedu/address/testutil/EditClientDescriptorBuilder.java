@@ -12,6 +12,7 @@ import seedu.address.model.client.DisposableIncome;
 import seedu.address.model.client.Email;
 import seedu.address.model.client.LastMet;
 import seedu.address.model.client.Name;
+import seedu.address.model.client.NextMeeting;
 import seedu.address.model.client.Phone;
 import seedu.address.model.client.RiskAppetite;
 import seedu.address.model.tag.Tag;
@@ -44,6 +45,7 @@ public class EditClientDescriptorBuilder {
         descriptor.setAddress(client.getAddress());
         descriptor.setRiskAppetite(client.getRiskAppetite());
         descriptor.setDisposableIncome(client.getDisposableIncome());
+        descriptor.setNextMeeting(client.getNextMeeting());
         descriptor.setTags(client.getTags());
     }
 
@@ -108,6 +110,14 @@ public class EditClientDescriptorBuilder {
      */
     public EditClientDescriptorBuilder withDisposableIncome(String disposableIncome) {
         descriptor.setDisposableIncome(new DisposableIncome(disposableIncome));
+        return this;
+    }
+
+    /**
+     * Sets the {@code NextMeeting} of the {@code EditClientDescriptor} that we are building.
+     */
+    public EditClientDescriptorBuilder withNextMeeting(String date, String startTime, String endTime, String location) {
+        descriptor.setNextMeeting(new NextMeeting(date, startTime, endTime, location, null));
         return this;
     }
 

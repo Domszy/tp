@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
@@ -10,6 +11,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.EditCommand.createEditedMeetingOverClient;
 import static seedu.address.testutil.TypicalClientId.CLIENTID_FIRST_CLIENT;
 import static seedu.address.testutil.TypicalClientId.CLIENTID_OUTOFBOUND;
 import static seedu.address.testutil.TypicalClientId.CLIENTID_SECOND_CLIENT;
@@ -144,6 +146,22 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model,
             String.format(Messages.MESSAGE_NONEXISTENT_CLIENT_ID, CLIENTID_OUTOFBOUND)
         );
+    }
+
+    @Test
+    public void createEditedMeetingOverClient_outdatedNextMeeting() {
+        Client myAlice = new ClientBuilder().withClientId("0").withName("Alice Pauline")
+            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+            .withPhone("94351253").withRiskAppetite("2").withDisposableIncome("200")
+            .withCurrentPlan("Prudential PRUShield").withLastMet("07-09-2021")
+            .withNextMeeting("24-09-2021 (10:00~12:00), Starbucks @ UTown")
+            .withTags("friends").build();
+        Client expectedAlice = new ClientBuilder().withClientId("0").withName("Alice Pauline")
+            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+            .withPhone("94351253").withRiskAppetite("2").withDisposableIncome("200")
+            .withCurrentPlan("Prudential PRUShield").withLastMet("24-09-2021")
+            .withTags("friends").build();
+        assertEquals(expectedAlice, createEditedMeetingOverClient(myAlice));
     }
 
     @Test

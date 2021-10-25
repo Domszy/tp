@@ -122,7 +122,32 @@ public class AddCommandTest {
         }
 
         @Override
+        public Path getAddressBookDirectory() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Path> getAddressBookList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setAddressBookFilePath(Path addressBookFilePath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addAddressBookList(Path filePath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteAddressBookList(Path filePath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public String getAddressBookListString() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -207,7 +232,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean isClientExistToView() {
+        public boolean isClientExistToView(ClientId clientId) {
             throw new AssertionError("This method should not be called.");
         }
 

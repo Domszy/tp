@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import static seedu.address.model.UserPrefs.DEFAULT_ADDRESSBOOK_DIRECTORY;
 import static seedu.address.model.UserPrefs.DEFAULT_ADDRESSBOOK_FILE;
 
 import java.nio.file.Path;
@@ -10,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 
@@ -19,17 +19,20 @@ import seedu.address.model.UserPrefs;
  */
 @JsonRootName(value = "userprefs")
 class JsonSerializableUserPrefs {
-    private final Path filepath;
     private final GuiSettings guiSettings;
+    private final Path filepath;
+    private final Path fileDirectory;
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given clients.
      */
     @JsonCreator
     public JsonSerializableUserPrefs(@JsonProperty("guiSettings") GuiSettings guiSettings,
-                                     @JsonProperty("addressBookFilePath") Path filepath) {
-        this.filepath = filepath;
+                                     @JsonProperty("addressBookFilePath") Path filepath,
+                                     @JsonProperty("addressBookFileDirectory") Path fileDirectory) {
         this.guiSettings = guiSettings;
+        this.filepath = filepath;
+        this.fileDirectory = fileDirectory;
     }
 
     /**
@@ -40,17 +43,18 @@ class JsonSerializableUserPrefs {
     public JsonSerializableUserPrefs(ReadOnlyUserPrefs source) {
         this.filepath = source.getAddressBookFilePath();
         this.guiSettings = source.getGuiSettings();
+        this.fileDirectory = source.getAddressBookDirectory();
     }
 
     /**
      * Converts this address book into the model's {@code AddressBook} object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated.
      */
     public UserPrefs toModelType() {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setAddressBookFilePath(Optional.ofNullable(this.filepath).orElse(DEFAULT_ADDRESSBOOK_FILE));
         userPrefs.setGuiSettings(Optional.ofNullable(this.guiSettings).orElseGet(GuiSettings::new));
+        userPrefs.setAddressBookDirectory(
+                Optional.ofNullable(this.fileDirectory).orElse(DEFAULT_ADDRESSBOOK_DIRECTORY));
         return userPrefs;
     }
 

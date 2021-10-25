@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DISPOSABLEINCOME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LASTMET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXTMEETING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RISKAPPETITE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -42,6 +43,7 @@ public class ClientUtil {
         sb.append(PREFIX_DISPOSABLEINCOME + client.getDisposableIncome().value + " ");
         sb.append(PREFIX_CURRENTPLAN + client.getCurrentPlan().value + " ");
         sb.append(PREFIX_LASTMET + client.getLastMet().dateInString + " ");
+        sb.append(PREFIX_NEXTMEETING + client.getNextMeeting().toString() + " ");
         client.getTags().stream().forEach(s -> sb.append(PREFIX_TAG + s.getName() + " "));
         return sb.toString();
     }
@@ -63,6 +65,8 @@ public class ClientUtil {
                 .append(currentPlan.value).append(" "));
         descriptor.getLastMet().ifPresent(lastMet -> sb.append(PREFIX_LASTMET)
                 .append(lastMet.dateInString).append(" "));
+        descriptor.getNextMeeting().ifPresent(nextMeeting -> sb.append(PREFIX_NEXTMEETING)
+                .append(nextMeeting.toString()).append(" "));
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();
             if (tags.isEmpty()) {

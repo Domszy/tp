@@ -94,6 +94,6 @@ public class CommandResult {
         /** The application is switching AddressBook **/
         SWITCH_ADDRESSBOOK,
         /** The application is creating AddressBook **/
-        CREATE_ADDRESSBOOK
+        CREATE_ADDRESSBOOK,
     }
 }

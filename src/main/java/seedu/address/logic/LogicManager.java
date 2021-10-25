@@ -103,6 +103,11 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ObservableList<Path> getAddressBookList() {
+        return model.getAddressBookList();
+    }
+
+    @Override
     public GuiSettings getGuiSettings() {
         return model.getGuiSettings();
     }
@@ -110,6 +115,12 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public void switchAddressBook(Path filePath) {
+        this.model.setAddressBookFilePath(filePath);
+        this.switchAddressBook();
     }
 
     @Override
@@ -129,16 +140,18 @@ public class LogicManager implements Logic {
         }
 
         this.model.setAddressBook(addressBook);
-        this.storage.switchAddressBook(addressBookStorage);
+        this.storage.switchAddressBookStorage(addressBookStorage);
     }
 
     @Override
     public void createAddressBook() throws CommandException {
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(getAddressBookFilePath());
+        Path filePath = getAddressBookFilePath();
+        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(filePath);
         ReadOnlyAddressBook addressBook = new AddressBook();
 
-        this.storage.switchAddressBook(addressBookStorage);
         this.model.setAddressBook(addressBook);
+        this.storage.switchAddressBookStorage(addressBookStorage);
+        this.model.addAddressBookList(filePath);
         saveAddressBook();
     }
 

@@ -1,5 +1,6 @@
 package seedu.address.model.client;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -34,5 +35,22 @@ public class LastMetTest {
         assertTrue(LastMet.isValidLastMet("20-12-2021"));
         assertTrue(LastMet.isValidLastMet("20-09-2021"));
         assertTrue(LastMet.isValidLastMet("30-12-2021"));
+    }
+
+    @Test
+    public void getLaterLastMet() {
+        // cases where the other LastMet is lastMetNull will not occur as NullMeeting will never be converted
+        // to LastMet
+        LastMet lastMetNull = new LastMet("");
+        LastMet lastMetA = new LastMet("23-10-2021");
+        LastMet lastMetB = new LastMet("13-10-2021");
+
+        // this is null
+        assertEquals(lastMetNull.getLaterLastMet(lastMetA), lastMetA);
+
+        // non-null lastMet
+        assertEquals(lastMetA.getLaterLastMet(lastMetB), lastMetA);
+        assertEquals(lastMetB.getLaterLastMet(lastMetA), lastMetA);
+        assertEquals(lastMetB.getLaterLastMet(lastMetB), lastMetB);
     }
 }

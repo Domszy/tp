@@ -25,6 +25,7 @@ Finding your next lead has never been easier.
     * [Clearing all entries: clear](#clearing-all-entries--clear)
     * [Exiting the program: exit](#exiting-the-program--exit)
     * [Create new address book: ab create](#create-new-address-book--ab-create)
+    * [Delete existing address book: ab delete](#delete-existing-address-book-ab-delete--ab-delete)
     * [Switch to different address book: ab switch](#switch-to-different-address-book--ab-switch)
     * [List all address book: ab list](#list-all-address-book--ab-list)
     * [Saving data](#saving-the-data)
@@ -73,7 +74,7 @@ Name (**Compulsory**) | String | n/
 Email (**Compulsory**)| String (email address)| e/
 Contact number | Integer (8 digits long)| p/
 Risk appetite | Integer from 1-5, <br>where 1 is very low risk tolerance and 5 is very high risk tolerance| r/
-Last met/contacted | Date | l/
+Last met | Date | l/
 Next Meeting | Composite (More information below table) | m/
 Current financial plans | List of Strings | c/
 Disposable Income | Integer | d/
@@ -94,6 +95,12 @@ where
 For example, a valid NextMeeting is:
 
 `m/25-12-2021 (00:00~23:59), Santa's Workshop`
+
+Furthermore, when the NextMeeting is over, the NextMeeting will automatically be set to null.
+This happens whenever the changes are made to the client list or when the address book is opened/loaded.
+
+### LastMet
+Similar to NextMeeting, the LastMet is automatically updated from a NextMeeting that is over.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -271,11 +278,24 @@ Format: `ab create {ADDRESSBOOK_NAME}`
 Examples:
 * 'ab create vip clients' will create a new address book named `vip clients`
 
+### Delete existing address book: ab delete : `ab delete`
+
+Delete an address book that currently exists.
+
+Format: `ab delete {ADDRESSBOOK_NAME}`
+
+* `{ADDRESSBOOK_NAME}` refers to the name of the address book to be deleted .
+* The current address book cannot be deleted, switch to another address book first before deleting the address book.
+
+Examples:
+* 'ab delete test' will delete the address book named `test`
+
+
 ### Switch to different address book : `ab switch`
 
 Switch to a different address book that currently exists.
 
-Format: `ab create {ADDRESSBOOK_NAME}`
+Format: `ab switch {ADDRESSBOOK_NAME}`
 
 * `{ADDRESSBOOK_NAME}` refers to the name of the address book to switched to .
 
@@ -326,6 +346,7 @@ Action | Format | Examples
 **Clear** | `clear` | - |
 **Exit** | `exit` | - |
 **Create Address Book** | `ab create {ADDRESSBOOK_NAME}` | ab create vip
+**Delete Address Book** | `ab delete {ADDRESSBOOK_NAME}` | ab delete book
 **Switch Address Book** | `ab switch {ADDRESSBOOK_NAME}` | ab switch another
 **List Address Book** | `ab list` | -
 

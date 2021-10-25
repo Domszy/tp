@@ -14,10 +14,10 @@ public class AbCreateCommand extends AbCommand {
     public static final String COMMAND_WORD = "create";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Create a new address books\n"
-            + "Parameters: create {name of the addressbook}\n"
-            + "Example: " + COMMAND_WORD + " addressbook2";
+            + "Parameters: " + AbCommand.COMMAND_WORD + " " + COMMAND_WORD + " {name of the addressbook}\n"
+            + "Example: " + AbCommand.COMMAND_WORD + " " + COMMAND_WORD + " addressbook2";
 
-    public static final String MESSAGE_ADDRESSBOOK_EXISTS = "Address Book with this name already exists: %1$s";
+    public static final String MESSAGE_ADDRESSBOOK_EXISTS = "Address Book with this name already exists: %s";
 
     private final String addressBookName;
     private final Path filePath;
@@ -40,7 +40,8 @@ public class AbCreateCommand extends AbCommand {
 
         model.setAddressBookFilePath(filePath);
 
-        return new CommandResult(String.format(MESSAGE_CREATE_ADDRESSBOOK_SUCCESS, filePath), CREATE_ADDRESSBOOK);
+        return new CommandResult(
+                String.format(MESSAGE_CREATE_ADDRESSBOOK_SUCCESS, addressBookName), CREATE_ADDRESSBOOK);
     }
 
     @Override
