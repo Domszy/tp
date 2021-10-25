@@ -37,7 +37,7 @@ Finding your next lead has never been easier.
 
 ## Quick start
 
-1. Ensure you have Java `11` or above installed in your Computer.
+1. Ensure you have Java `11` or above installed in your computer.
 
 2. Download the latest `leadsforce.jar` from [here](https://github.com/AY2122S1-CS2103T-T17-3/tp/releases).
 
@@ -69,26 +69,26 @@ Every client that is registered in LeadsForce have the following attributes that
 
 Client Attribute | Type of Attribute | Argument Tag
 -----------------|-----------------|-----------------
-Client ID (**unique**) | integer | i/. Assigned on creation of new contact
+Client ID (**Unique**) | Integer (assigned on creation of new contact) | i/
 Name (**Compulsory**) | String | n/
 Email (**Compulsory**)| String (email address)| e/
-Contact number | Integer (8 digits long)| p/
-Risk appetite | Integer from 1-5, <br>where 1 is very low risk tolerance and 5 is very high risk tolerance| r/
-Last met | Date | l/
-Next Meeting | Composite (More information below table) | m/
+Address | String | a/
 Current financial plans | List of Strings | c/
 Disposable Income | Integer | d/
-Address | String | a/
+Last met | Date | l/
+Next Meeting | Composite (More information below table) | m/
+Contact number | Integer (8 digits long)| p/
+Risk appetite | Integer from 1-5, <br>where 1 is very low risk tolerance and 5 is very high risk tolerance| r/
 Tag | String | t/
 
 ### NextMeeting
-NextMeeting entails the next meeting's date, startTime, endTime and location.
+NextMeeting entails the next meeting's *date*, *startTime*, *endTime* and *location*.
 A NextMeeting needs to be inputted in the following form:
 
-`m/dd-mm-yyyy (hh:mm~hh:mm), {non-empty location string)`
+`m/dd-MM-yyyy (hh:mm~hh:mm), {non-empty location string)`
 
 where
-* *date* is in the format `dd-mm-yyyy`
+* *date* is in the format `dd-MM-yyyy`
 * *startTime* and *endTime* are in `hh:mm` (24 hour format)
 * *location* is a non-empty string
 
@@ -127,7 +127,7 @@ Similar to NextMeeting, the LastMet is automatically updated from a NextMeeting 
 
 Adds a new client to the address book.
 
-Format: `add <name>/{CLIENT'S NAME} <email>/{EMAIL} <attribute>/{OTHER ATTRIBUTES} ...​`
+Format: `add n/{CLIENT'S NAME} e/{EMAIL} <attribute>/{OTHER ATTRIBUTES} ...​`
 
 * A client must have minimally the name and email tag filled during creation
 * Any other tags are optional
@@ -152,7 +152,7 @@ Update the information of existing users by using the “edit” command. This c
 attributes of a client, using the tag of the client’s attribute.
 
 * Multiple attributes could be changed with one command.
-* Multiple client can be edited at the same time with the provided attributes by indicating multiple client ids.
+* Multiple clients can be edited at the same time with the provided attributes by indicating their ids separated by a space.
 
 Format:
 `edit {CLIENT'S ID}... <attribute>/{CHANGED VALUE OF ATTRIBUTE}...`
@@ -169,7 +169,7 @@ Deletes an existing client from the address book using their client id.
 
 Format: `delete {CLIENT'S ID}...`
 
-* Multiple client can be deleted at the same time by indicating multiple client ids.
+* Multiple clients can be deleted at the same time by their ids separated by a space.
 
 Examples:
 * `delete 7` will deletes client with client id 7
@@ -202,8 +202,8 @@ Finds the meeting schedule that the user has on a specified date.
 
 Format: `schedule {DATE}`
 
-* `DATE` has to be in the format of Day-Month-Year, where Day, Month and Years are numerical values.
-* if the command doesn't have the `{date}`, all the meetings by the user will be displayed. 
+* `DATE` has to be in the format of dd-MM-yyyy, where Day(dd), Month(MM) and Years(yyyy) are numerical values.
+* if the `{date}` is not specified, all meetings will be displayed.
 
 Example: 
 * `schedule 22-09-2021` allows the user to view the schedule that the user has on the 22nd September 2021.
@@ -221,9 +221,9 @@ Format: `search {KEYWORD}... <attribute>/{ATTRIBUTE_KEYWORD}...`
 * If no `KEYWORD` is provided, search will be based on `<attribute>/{ATTRIBUTE_KEYWORD}` only.
 * The search is case-insensitive. e.g `keith` will match `Keith`.
 * The order of the keywords does not matter. e.g. `John Doe` will match `Doe John`.
-* Clients matching at least one keyword will be returned (i.e. `OR` search).
+* Clients matching at least one keyword will be returned).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
-* Only clients whose attribute matches with the attribute keyword will be returned (i.e. `AND` search), if attribute keyword is provided.
+* If attribute keyword is provided, only clients whose attribute matches with the attribute keyword will be returned.
   e.g. `Tom Tim e/@gmail.com` will return `Tom Lee e/Tom@gmail.com` and not `Tim Shum e/Tim@yahoo.com`.
 
 Examples:
@@ -243,9 +243,9 @@ Format: `filter {KEYWORD}... <attribute>/{ATTRIBUTE_KEYWORD}...`
 * `{ATTRIBUTE_KEYWORD}` refers to the keyword that is to be matched with the corresponding client attribute.
 * The filter is case-insensitive. e.g `keith` will match `Keith`.
 * The order of the keywords does not matter. e.g. `John Doe` will match `Doe John`.
-* Clients matching at least one keyword will be returned (i.e. `OR` filter).
+* Clients matching at least one keyword will be returned).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
-* Only clients whose attribute matches with the attribute keyword will be returned (i.e. `AND` search), if attribute keyword is provided.
+* If attribute keyword is provided, only clients whose attribute matches with the attribute keyword will be returned.
   e.g. `Tom Tim e/@gmail.com` will return `Tom Lee e/Tom@gmail.com` and not `Tim Shum e/Tim@yahoo.com`.
 
 Examples:
@@ -328,7 +328,7 @@ If your changes to the data file makes its format invalid, AddressBook will disc
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
+**Q**: How do I transfer my data to another computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous LeadsForce home folder.
 
 --------------------------------------------------------------------------------------------------------------------
