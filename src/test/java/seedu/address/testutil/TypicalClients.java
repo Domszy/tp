@@ -35,21 +35,21 @@ public class TypicalClients {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253").withRiskAppetite("2").withDisposableIncome("200")
             .withCurrentPlan("Prudential PRUShield").withLastMet("07-10-2021")
-            .withNextMeeting("24-09-2021 (10:00~12:00), Starbucks @ UTown")
+            .withNextMeeting("24-11-2021 (10:00~12:00), Starbucks @ UTown")
             .withTags("friends").build();
     public static final Client BENSON = new ClientBuilder().withClientId("1").withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com").withPhone("98765432")
             .withRiskAppetite("4").withDisposableIncome("300").withCurrentPlan("Prudential PROLife")
-            .withLastMet("08-10-2021").withNextMeeting("24-09-2021 (10:00~12:00), Starbucks @ UTown")
+            .withLastMet("08-10-2021").withNextMeeting("25-11-2021 (10:00~12:00), Starbucks @ UTown")
             .withTags("owesMoney", "friends").build();
     public static final Client CARL = new ClientBuilder().withClientId("2").withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").withRiskAppetite("3")
             .withDisposableIncome("100").withCurrentPlan("Aviva Shield").withLastMet("06-10-2021")
-            .withNextMeeting("24-09-2021 (10:00~12:00), Starbucks @ UTown").build();
+            .withNextMeeting("30-11-2021 (10:00~12:00), Starbucks @ UTown").build();
     public static final Client DANIEL = new ClientBuilder().withClientId("3").withName("Daniel Meier")
             .withPhone("87652533").withEmail("cornelia@example.com").withAddress("10th street").withRiskAppetite("1")
             .withDisposableIncome("50000").withCurrentPlan("Aviva Ace").withLastMet("02-10-2021")
-            .withNextMeeting("24-09-2021 (10:00~12:00), Starbucks @ UTown").withTags("friends").build();
+            .withNextMeeting("28-11-2021 (10:00~12:00), Starbucks @ UTown").withTags("friends").build();
     public static final Client ELLE = new ClientBuilder().withClientId("4").withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave").withRiskAppetite("1")
             .withDisposableIncome("4000").withCurrentPlan("AIA Gold")

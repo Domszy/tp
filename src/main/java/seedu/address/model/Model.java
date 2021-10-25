@@ -25,6 +25,11 @@ public interface Model {
     Predicate<Client> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
 
     /**
+     * {@code Predicate} that alwasys evaluates to true
+     */
+    Predicate<NextMeeting> PREDICATE_SHOW_ALL_MEETINGS = unused -> true;
+
+    /**
      * {@code Predicate} that always evaluate to true
      */
     Predicate<Tag> PREDICATE_SHOW_ALL_TAGS = unused -> true;
@@ -181,7 +186,14 @@ public interface Model {
     /**
      * Returns an unmodifiable view of the meetings for current user.
      */
-    ObservableList<NextMeeting> getSortedNextMeetingList();
+    ObservableList<NextMeeting> getFilteredNextMeetingList();
+
+    /**
+     * filters the the NextMeetingList by meetings that are on the
+     * same date as {@code scheduleDate}.
+     * @param scheduleDate
+     */
+    void filterSortedNextMeeting(LocalDate scheduleDate);
 
     /**
      * Updates the filter of the filtered client list to filter by the given {@code predicate}.

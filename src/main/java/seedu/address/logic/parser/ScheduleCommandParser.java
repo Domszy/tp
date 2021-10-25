@@ -30,10 +30,9 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, ALL_PREFIXES);
 
-        // Throws error if no date is given
+        // no date is given: it shows all meetings by the user
         if (argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ScheduleCommand.MESSAGE_INVALID_DATE_FAILURE));
+            return new ScheduleCommand(null);
         }
 
         // Throws error if invalid date is inputted
@@ -41,6 +40,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ScheduleCommand.MESSAGE_INVALID_DATE_FAILURE));
         }
+
         LocalDate givenDate = LocalDate.parse(argMultimap.getPreamble(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         return new ScheduleCommand(givenDate);
     }

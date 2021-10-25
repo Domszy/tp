@@ -25,9 +25,5 @@ class ScheduleCommandParserTest {
         //invalid date format
         assertParseFailure(parser, " 2021-09-31", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ScheduleCommand.MESSAGE_INVALID_DATE_FAILURE));
-
-        //empty input
-        assertParseFailure(parser, " ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ScheduleCommand.MESSAGE_INVALID_DATE_FAILURE));
     }
 }

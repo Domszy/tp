@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
@@ -26,6 +25,7 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_SCHEDULE_SUCCESS = "Found Schedule for %1$s";
     public static final String MESSAGE_INVALID_DATE_FAILURE = "Please input a date in the format of Day-Month-Year.";
     public static final String MESSAGE_NO_SCHEDULE_ON_DATE_SUCCESS = "No meetings on the day!";
+    public static final String MESSAGE_SHOW_ALL_MEETINGS = "Showing all meetings.";
 
     private final LocalDate scheduleDate;
 
@@ -37,6 +37,10 @@ public class ScheduleCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        if (scheduleDate == null) {
+            model.filterSortedNextMeeting(null);
+            return new CommandResult(String.format(MESSAGE_SHOW_ALL_MEETINGS));
+        }
         // there is no events schedule for the day
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
         List<Client> clientsWithMeetings = model.retrieveSchedule(scheduleDate);
@@ -45,7 +49,9 @@ public class ScheduleCommand extends Command {
             return new CommandResult(String.format(MESSAGE_NO_SCHEDULE_ON_DATE_SUCCESS));
         }
 
-        return new CommandResult(String.format(Messages.MESSAGE_SCHEDULE_SUCCESS, formatter.format(scheduleDate)));
+        model.filterSortedNextMeeting(scheduleDate);
+        return new CommandResult(String.format(ScheduleCommand.MESSAGE_SCHEDULE_SUCCESS,
+                formatter.format(scheduleDate)));
     }
 
     @Override

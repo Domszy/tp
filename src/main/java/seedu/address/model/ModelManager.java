@@ -35,6 +35,7 @@ public class ModelManager implements Model {
     private final FilteredList<Client> filteredClients;
     private final FilteredList<Client> clientToView;
     private final SortedList<NextMeeting> sortedNextMeetings;
+    private final FilteredList<NextMeeting> filteredNextMeetings;
     private final FilteredList<Tag> filteredTags;
     private final AddressBookList addressBookList;
 
@@ -55,6 +56,7 @@ public class ModelManager implements Model {
         filteredClients = new FilteredList<>(sortedClients);
 
         sortedNextMeetings = new SortedList<>(this.addressBook.getSortedNextMeetingsList());
+        filteredNextMeetings = new FilteredList<>(sortedNextMeetings.sorted());
         filteredTags = new FilteredList<>(this.addressBook.getTagList());
 
         clientToView = new FilteredList<>(this.addressBook.getClientList());
@@ -176,6 +178,15 @@ public class ModelManager implements Model {
         return addressBook.setClientByClientIds(clientIds, editedClientDescriptor);
     }
 
+    @Override
+    public void filterSortedNextMeeting(LocalDate scheduleDate) {
+        if (scheduleDate == null) {
+            filteredNextMeetings.setPredicate(PREDICATE_SHOW_ALL_MEETINGS);
+        } else {
+            filteredNextMeetings.setPredicate(meeting -> meeting.isSameDate(scheduleDate));
+        }
+    }
+
     public void addNextMeeting(NextMeeting nextMeeting) {
         addressBook.addNextMeeting(nextMeeting);
     }
@@ -222,8 +233,8 @@ public class ModelManager implements Model {
         return filteredClients;
     }
 
-    public ObservableList<NextMeeting> getSortedNextMeetingList() {
-        return sortedNextMeetings;
+    public ObservableList<NextMeeting> getFilteredNextMeetingList() {
+        return filteredNextMeetings;
     }
 
     @Override

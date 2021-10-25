@@ -88,8 +88,8 @@ public class LogicManager implements Logic {
         return model.getClientToView();
     }
 
-    public ObservableList<NextMeeting> getSortedNextMeetingList() {
-        return model.getSortedNextMeetingList();
+    public ObservableList<NextMeeting> getFilteredNextMeetingList() {
+        return model.getFilteredNextMeetingList();
     }
 
     @Override
