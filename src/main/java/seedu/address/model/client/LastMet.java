@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 import seedu.address.commons.util.StringUtil;
 
-public class LastMet implements OptionalNonStringBasedField {
+public class LastMet implements OptionalNonStringBasedField, IgnoreNullComparable<LastMet> {
     public static final String MESSAGE_CONSTRAINTS = "LastMet should be in the form of Day-Month-Year, "
             + "where Day, month and year should be numerical values.";
 
@@ -79,5 +79,23 @@ public class LastMet implements OptionalNonStringBasedField {
             return 0;
         }
         return value.hashCode();
+    }
+
+    @Override
+    public int compareWithDirection(LastMet o, SortDirection sortDirection) {
+        if (this.value == null && o.value == null) {
+            return 0;
+        }
+
+        if (o.value == null) {
+            return -1;
+        }
+
+        if (this.value == null) {
+            return 1;
+        }
+
+        int direction = sortDirection.isAscending() ? 1 : -1;
+        return this.value.compareTo(o.value) * direction;
     }
 }

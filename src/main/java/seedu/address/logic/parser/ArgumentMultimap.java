@@ -18,6 +18,9 @@ public class ArgumentMultimap {
     /** Prefixes mapped to their respective arguments**/
     private final Map<Prefix, List<String>> argMultimap = new HashMap<>();
 
+    /** List of Prefixes in the order of appearance**/
+    private final List<Prefix> prefixOrdering = new ArrayList<>();
+
     /**
      * Associates the specified argument value with {@code prefix} key in this map.
      * If the map previously contained a mapping for the key, the new value is appended to the list of existing values.
@@ -29,6 +32,11 @@ public class ArgumentMultimap {
         List<String> argValues = getAllValues(prefix);
         argValues.add(argValue);
         argMultimap.put(prefix, argValues);
+
+        if (prefix.equals(new Prefix(""))) {
+            return;
+        }
+        prefixOrdering.add(prefix);
     }
 
     /**
@@ -56,6 +64,13 @@ public class ArgumentMultimap {
      */
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
+    }
+
+    /**
+     * Returns the ordering that the prefix appears in.
+     */
+    public List<Prefix> getPrefixOrdering() {
+        return new ArrayList<>(this.prefixOrdering);
     }
 
     @Override

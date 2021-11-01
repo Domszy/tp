@@ -3,7 +3,7 @@ package seedu.address.model.client;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-public class RiskAppetite implements OptionalStringBasedField {
+public class RiskAppetite extends NumberComparable<RiskAppetite> implements OptionalStringBasedField {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Risk Appetite number should be a single digit integer between 1 and 5";

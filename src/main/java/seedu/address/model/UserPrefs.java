@@ -8,6 +8,8 @@ import java.util.Objects;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.storage.ThemeList;
+import seedu.address.ui.ThemeType;
 
 /**
  * Represents User's preferences.
@@ -20,6 +22,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     private Path addressBookDirectory = DEFAULT_ADDRESSBOOK_DIRECTORY;
     private final SimpleObjectProperty<Path> addressBookFilePath =
             new SimpleObjectProperty<>(DEFAULT_ADDRESSBOOK_FILE);
+    private final SimpleObjectProperty<ThemeType> theme = new SimpleObjectProperty<>(ThemeList.DEFAULT_THEME);
 
     /**
      * Creates a {@code UserPrefs} with default values.
@@ -42,8 +45,10 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         setGuiSettings(newUserPrefs.getGuiSettings());
         setAddressBookFilePath(newUserPrefs.getAddressBookFilePath());
         setAddressBookDirectory(newUserPrefs.getAddressBookDirectory());
+        setTheme(newUserPrefs.getThemeType());
     }
 
+    @Override
     public GuiSettings getGuiSettings() {
         return guiSettings;
     }
@@ -57,6 +62,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         return addressBookFilePath;
     }
 
+    @Override
     public Path getAddressBookFilePath() {
         return addressBookFilePath.get();
     }
@@ -66,6 +72,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         this.addressBookFilePath.set(addressBookFilePath);
     }
 
+    @Override
     public Path getAddressBookDirectory() {
         return addressBookDirectory;
     }
@@ -73,6 +80,15 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     public void setAddressBookDirectory(Path addressBookDirectory) {
         requireNonNull(addressBookDirectory);
         this.addressBookDirectory = addressBookDirectory;
+    }
+
+    @Override
+    public ThemeType getThemeType() {
+        return this.theme.get();
+    }
+
+    public void setTheme(ThemeType theme) {
+        this.theme.set(theme);
     }
 
     @Override

@@ -43,11 +43,13 @@ public class CommandTestUtil {
     public static final String VALID_RISKAPPETITE_BOB = "4";
     public static final String VALID_DISPOSABLEINCOME_AMY = "300";
     public static final String VALID_DISPOSABLEINCOME_BOB = "400";
-    public static final String VALID_NEXTMEETING_DATE_AMY = "24-09-2051";
-    public static final String VALID_NEXTMEETING_TIME_AMY = "12:00";
+    public static final String VALID_NEXTMEETING_DATE_AMY = "24-09-2022";
+    public static final String VALID_NEXTMEETING_STARTTIME_AMY = "12:00";
+    public static final String VALID_NEXTMEETING_ENDTIME_AMY = "13:00";
     public static final String VALID_NEXTMEETING_LOCATION_AMY = "Zoom";
-    public static final String VALID_NEXTMEETING_DATE_BOB = "24-09-2051";
-    public static final String VALID_NEXTMEETING_TIME_BOB = "12:00";
+    public static final String VALID_NEXTMEETING_DATE_BOB = "24-09-2022";
+    public static final String VALID_NEXTMEETING_STARTTIME_BOB = "12:00";
+    public static final String VALID_NEXTMEETING_ENDTIME_BOB = "13:00";
     public static final String VALID_NEXTMEETING_LOCATION_BOB = "Zoom";
     public static final String VALID_CURRENTPLAN_AMY = "Prudential PRUwealth";
     public static final String VALID_CURRENTPLAN_BOB = "Prudential PROwealth";
@@ -94,15 +96,15 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withRiskAppetite(VALID_RISKAPPETITE_AMY).withDisposableIncome(VALID_DISPOSABLEINCOME_AMY)
                 .withCurrentPlan(VALID_CURRENTPLAN_AMY).withLastMet(VALID_LASTMET_AMY)
-                .withNextMeeting(VALID_NEXTMEETING_DATE_AMY, VALID_NEXTMEETING_TIME_AMY, VALID_NEXTMEETING_TIME_AMY,
-                    VALID_NEXTMEETING_LOCATION_AMY)
+                .withNextMeeting(VALID_NEXTMEETING_DATE_AMY, VALID_NEXTMEETING_STARTTIME_AMY,
+                    VALID_NEXTMEETING_ENDTIME_AMY, VALID_NEXTMEETING_LOCATION_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditClientDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withRiskAppetite(VALID_RISKAPPETITE_BOB).withDisposableIncome(VALID_DISPOSABLEINCOME_BOB)
                 .withCurrentPlan(VALID_CURRENTPLAN_BOB).withLastMet(VALID_LASTMET_BOB)
-                .withNextMeeting(VALID_NEXTMEETING_DATE_BOB, VALID_NEXTMEETING_TIME_BOB, VALID_NEXTMEETING_TIME_BOB,
-                    VALID_NEXTMEETING_LOCATION_BOB)
+                .withNextMeeting(VALID_NEXTMEETING_DATE_BOB, VALID_NEXTMEETING_STARTTIME_BOB,
+                    VALID_NEXTMEETING_ENDTIME_BOB, VALID_NEXTMEETING_LOCATION_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 

@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.commons.util.StringUtil.transformEmptyRepresentation;
+
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
@@ -65,23 +67,23 @@ public class ClientCard extends UiPart<Region> {
     /**
      * Creates a {@code ClientCode}.
      */
-    public ClientCard(Client client) {
+    public ClientCard(Client client, CommandBox commandBox) {
         super(FXML);
 
         this.client = client;
-        id.setText(client.getClientId().value + ". ");
-        name.setText(client.getName().fullName);
-        email.setText(EMAIL_ICON + client.getEmail().value);
-        phone.setText(PHONE_ICON + client.getPhone().value);
-        address.setText(ADDRESS_ICON + client.getAddress().value);
-        riskAppetite.setText(RA_ICON + client.getRiskAppetite().value);
-        disposableIncome.setText(INCOME_ICON + client.getDisposableIncome().value);
-        currentPlan.setText(PLAN_ICON + client.getCurrentPlan().toString());
-        lastMet.setText(LASTMET_ICON + client.getLastMet().toString());
-        nextMeeting.setText(NEXTMEETING_ICON + client.getNextMeeting().toString());
+        id.setText(client.getClientId().value + ". "); // non-empty field
+        name.setText(client.getName().fullName); // non-empty field
+        email.setText(EMAIL_ICON + client.getEmail().value); // non-empty field
+        phone.setText(PHONE_ICON + transformEmptyRepresentation(client.getPhone().value));
+        address.setText(ADDRESS_ICON + transformEmptyRepresentation(client.getAddress().value));
+        riskAppetite.setText(RA_ICON + transformEmptyRepresentation(client.getRiskAppetite().value));
+        disposableIncome.setText(INCOME_ICON + transformEmptyRepresentation(client.getDisposableIncome().value));
+        currentPlan.setText(PLAN_ICON + transformEmptyRepresentation(client.getCurrentPlan().toString()));
+        lastMet.setText(LASTMET_ICON + transformEmptyRepresentation(client.getLastMet().toString()));
+        nextMeeting.setText(NEXTMEETING_ICON + client.getNextMeeting().toString()); // has empty representation
         client.getTags().stream()
-            .sorted(Comparator.comparing(Tag::getName))
-            .forEach(tag -> tags.getChildren().add(new Label(tag.getName())));
+                .sorted(Comparator.comparing(Tag::getName))
+                .forEach(tag -> tags.getChildren().add(new TagLabel(tag.getName(), tag, commandBox).getRoot()));
     }
 
     @Override
@@ -99,6 +101,6 @@ public class ClientCard extends UiPart<Region> {
         // state check
         ClientCard card = (ClientCard) other;
         return id.getText().equals(card.id.getText())
-            && client.equals(card.client);
+                && client.equals(card.client);
     }
 }

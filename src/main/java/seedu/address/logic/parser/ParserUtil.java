@@ -223,9 +223,7 @@ public class ParserUtil {
         if (model.hasTagName(tag)) {
             return model.getTag(tag);
         } else {
-            Tag newTag = new Tag(trimmedTag);
-            model.addTag(newTag);
-            return newTag;
+            return new Tag(trimmedTag);
         }
     }
 

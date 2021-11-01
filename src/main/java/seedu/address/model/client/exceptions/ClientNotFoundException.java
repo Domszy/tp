@@ -1,6 +1,6 @@
 package seedu.address.model.client.exceptions;
 
-import static seedu.address.commons.util.StringUtil.CLIENTID_DELIMITER;
+import static seedu.address.commons.util.StringUtil.COMMA_DELIMITER;
 import static seedu.address.commons.util.StringUtil.joinListToString;
 
 import java.util.List;
@@ -16,6 +16,6 @@ public class ClientNotFoundException extends RuntimeException {
     }
 
     public ClientNotFoundException(List<ClientId> notFound) {
-        super(joinListToString(notFound, CLIENTID_DELIMITER));
+        super(joinListToString(notFound, COMMA_DELIMITER));
     }
 }

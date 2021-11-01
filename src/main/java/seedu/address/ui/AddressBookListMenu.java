@@ -29,12 +29,12 @@ public class AddressBookListMenu extends UiPart<Menu> {
 
     /**
      * Creates a {@code AddressBookListMenu} with the give {@code Logic}.
-     * @param jsonFileList ObservableList containing the {@code Path} to all the Address Book Json file
      */
-    public AddressBookListMenu(ObservableList<Path> jsonFileList, ObservableValue<Path> currentFile, Logic logic) {
+    public AddressBookListMenu(Logic logic, ObservableValue<Path> currentFile) {
         super(FXML);
         this.menuItems = this.menu.getItems();
 
+        ObservableList<Path> jsonFileList = logic.getAddressBookList();
         Function<Path, MenuItem> menuItemFunction = path -> {
             String addressBookName;
             if (!FileUtil.isJsonFile(path)) {

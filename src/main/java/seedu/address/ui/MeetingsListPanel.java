@@ -8,9 +8,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.client.NextMeeting;
-
-
+import seedu.address.model.client.Client;
 
 /**
  * Panel containing the list of upcoming meetings.
@@ -20,12 +18,13 @@ public class MeetingsListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(MeetingsListPanel.class);
 
     @FXML
-    private ListView<NextMeeting> meetingsListView;
+    private ListView<Client> meetingsListView;
 
     /**
      * Creates a {@code MeetingsListPanel} with the given {@code ObservableList}.
+     * @param nextMeetingList
      */
-    public MeetingsListPanel(ObservableList<NextMeeting> nextMeetingList) {
+    public MeetingsListPanel(ObservableList<Client> nextMeetingList) {
         super(FXML);
         meetingsListView.setItems(nextMeetingList);
         meetingsListView.setCellFactory(listView -> new MeetingsListPanel.MeetingsListViewCell());
@@ -34,16 +33,18 @@ public class MeetingsListPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code NextMeeting} using a {@code NextMeetingCard}.
      */
-    class MeetingsListViewCell extends ListCell<NextMeeting> {
+    class MeetingsListViewCell extends ListCell<Client> {
         @Override
-        protected void updateItem(NextMeeting nextMeeting, boolean empty) {
-            super.updateItem(nextMeeting, empty);
+        protected void updateItem(Client client, boolean empty) {
+            super.updateItem(client, empty);
 
-            if (empty || nextMeeting == null) {
+            if (empty || client == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new NextMeetingCard(nextMeeting).getRoot());
+                if (client.hasNextMeeting()) {
+                    setGraphic(new NextMeetingCard(client.getNextMeeting()).getRoot());
+                }
             }
         }
     }

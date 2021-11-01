@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.ALL_PREFIXES;
 
@@ -26,21 +25,19 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      */
     @Override
     public ScheduleCommand parse(String args, Model model) throws ParseException {
-        requireNonNull(args);
+        if (args.isBlank()) {
+            return new ScheduleCommand(null);
+        }
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, ALL_PREFIXES);
-
-        // Throws error if no date is given
-        if (argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ScheduleCommand.MESSAGE_INVALID_DATE_FAILURE));
-        }
 
         // Throws error if invalid date is inputted
         if (!StringUtil.isValidDate(argMultimap.getPreamble())) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ScheduleCommand.MESSAGE_INVALID_DATE_FAILURE));
         }
+
         LocalDate givenDate = LocalDate.parse(argMultimap.getPreamble(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         return new ScheduleCommand(givenDate);
     }

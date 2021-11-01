@@ -22,6 +22,7 @@ import seedu.address.model.client.Client;
 import seedu.address.model.client.ClientId;
 import seedu.address.model.client.NextMeeting;
 import seedu.address.model.client.exceptions.DuplicateClientException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.ClientBuilder;
 
 public class AddressBookTest {
@@ -87,7 +88,7 @@ public class AddressBookTest {
 
     @Test
     public void updateLastMetDate_updatesCorrectly() {
-        Client expectedAlice = new ClientBuilder(ALICE).withNextMeeting("No next meeting").build();
+        Client expectedAlice = new ClientBuilder(ALICE).withNextMeeting(NextMeeting.NO_NEXT_MEETING).build();
         addressBook.addClient(ALICE);
         addressBook.updateLastMetDate();
         assertEquals(addressBook.getClient(new ClientId("0")), expectedAlice);
@@ -98,6 +99,7 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Client> clients = FXCollections.observableArrayList();
+        private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<NextMeeting> nextMeetings = FXCollections.observableArrayList();
         private String clientCounter = "0";
 
@@ -108,15 +110,6 @@ public class AddressBookTest {
         @Override
         public ObservableList<Client> getClientList() {
             return clients;
-        }
-
-        public Client getClient(ClientId clientId) {
-            return clients.get(0);
-        }
-
-        @Override
-        public ObservableList<NextMeeting> getNextMeetingsList() {
-            return nextMeetings;
         }
 
         @Override
@@ -130,8 +123,8 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<NextMeeting> getSortedNextMeetingsList() {
-            return nextMeetings;
+        public ObservableList<Tag> getTagList() {
+            return tags;
         }
 
         @Override
@@ -142,6 +135,10 @@ public class AddressBookTest {
             } catch (NumberFormatException e) {
                 this.clientCounter = "1";
             }
+        }
+
+        public Client getClient(ClientId clientId) {
+            return clients.get(0);
         }
     }
 }

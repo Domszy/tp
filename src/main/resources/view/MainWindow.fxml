@@ -2,6 +2,7 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Scene?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -13,30 +14,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.Scene?>
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.stage.Stage?>
 
-<fx:root minHeight="810.0" minWidth="1000.0" onCloseRequest="#handleExit" title="LeadsForce" type="javafx.stage.Stage"
-         xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="810.0" minWidth="1000.0" onCloseRequest="#handleExit" title="LeadsForce" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
     <icons>
-        <Image url="@/images/address_book_32.png"/>
+        <Image url="@/images/address_book_32.png" />
     </icons>
     <scene>
-        <Scene>
+        <Scene fx:id="scene">
             <stylesheets>
-                <URL value="@Fonts.css"/>
-                <URL value="@BookTheme.css"/>
-                <URL value="@Extensions.css"/>
+                <URL value="@Fonts.css" />
+                <URL value="@Extensions.css" />
             </stylesheets>
-
             <VBox>
                 <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
                     <Menu mnemonicParsing="false" text="File">
-                        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                     </Menu>
                     <Menu mnemonicParsing="false" text="Help">
-                        <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
+                        <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
                     </Menu>
                 </MenuBar>
                 <HBox prefHeight="100.0" prefWidth="200.0" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
@@ -48,30 +45,26 @@
                                     <children>
                                         <BorderPane>
                                             <center>
-                                                <ImageView fx:id="displayLogo" fitHeight="80.0" fitWidth="80.0"
-                                                           pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="displayLogo" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                                     <effect>
-                                                        <Glow level="0.80"/>
+                                                        <Glow level="0.80" />
                                                     </effect>
                                                 </ImageView>
                                             </center>
                                             <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </padding>
                                             <right>
-                                                <Label styleClass="label-header" text="LeadsForce"
-                                                       BorderPane.alignment="CENTER">
+                                                <Label styleClass="label-header" text="LeadsForce" BorderPane.alignment="CENTER">
                                                     <effect>
-                                                        <Glow level="0.5"/>
+                                                        <Glow level="0.5" />
                                                     </effect>
                                                 </Label>
                                             </right>
                                         </BorderPane>
                                     </children>
                                 </TextFlow>
-
-                                <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border"
-                                           VBox.vgrow="NEVER">
+                                <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
                                     <padding>
                                         <Insets bottom="5" left="10" right="10" top="5" />
                                     </padding>
@@ -81,6 +74,10 @@
                                         <Insets bottom="5" left="10" right="10" top="5" />
                                     </padding>
                                 </StackPane>
+                        <StackPane fx:id="tagsPanelPlaceholder" prefWidth="200.0">
+                           <padding>
+                              <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                           </padding></StackPane>
                                 <VBox fx:id="clientList" minWidth="340" prefWidth="340" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
                                     <padding>
                                         <Insets bottom="10" left="10" right="10" top="10" />

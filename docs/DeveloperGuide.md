@@ -15,6 +15,8 @@ By: `AY2122S1-CS2103T-T17-3`
 
 ## **1. Introduction**
 
+LeadsForce is a desktop app that is optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). Catered towards student financial advisors, LeadsForce makes the process of managing client information seamless! LeadsForce does this by helping the financial advisors store and retrieve client information effortlessly and seamlessly.
+
 LeadsForce's developer Guide is written for developers who wish to contribute to or extend our project. It is technical, and explains the inner workings of LeadsForce and how the different components of our application work together.
 
 **Reading this Developer Guide**
@@ -229,7 +231,7 @@ with any client's attribute or specifically with the specified attributes
 8. The `SearchCommand` wil then call the `updateFilteredClientList` method of the provided `Model` with it's `ClientContainsKeywordPredicate`.
 9. The `SearchCommand` will finally create a new `CommandResult` which will be returned to `LogicManager`.
 
-Below is sequence diagram for search clients.
+The following sequence diagram shows how the search operation works:
 
 <img src="images/tracing/SearchCommandSequenceDiagram.png" />
 
@@ -264,7 +266,7 @@ for multiple `filter` to be stacked, which allows for user to look for clients i
 8. The `FilterCommand` wil then call the `filterFilteredClientList` method of the provided `Model` with it's `ClientContainsKeywordPredicate`.
 9. The `FilterCommand` will finally create a new `CommandResult` which will be returned to `LogicManager`.
 
-Below is sequence diagram for filter clients.
+The following sequence diagram shows how the filter operation works:
 
 <img src="images/tracing/FilterCommandSequenceDiagram.png" />
 
@@ -290,7 +292,7 @@ LeadsForce allows users to view client info in the `ClientViewPanel` in the `Sid
 8. The `ViewCommand` wil then call the `updateClientToView` method of the provided `Model` with it's `ClientHasId`.
 9. The `ViewCommand` will finally create a new `CommandResult` which will be returned to `LogicManager` and the client's information with the given `ClientId` in the `ClientViewPanel`.
 
-Below is the sequence diagram for view clients.
+The following sequence diagram shows how the view operation works:
 
 <img src="images/ViewCommandSequenceDiagram.png" />
 
@@ -315,7 +317,7 @@ LeadsForce allows the user to `sort` clients according to client fields. LeadsFo
 8. The `SortCommand` wil then call the `sortFilteredClientList` method of the provided `Model` with it’s `SortByAttribute`.
 9. The `SortCommand` will finally create a new `CommandResult` which will be returned to `LogicManager`.
 
-Below is the sequence diagram for sort clients.
+The following sequence diagram shows how the sort operation works:
 
 <img src="images/SortCommandSequenceDiagram.png" />
 

@@ -13,7 +13,8 @@ public class ClearCommand extends Command {
     public static final String COMMAND_WORD = "clear";
     public static final String MESSAGE_CLEARED = "Address book has been cleared!";
     public static final String MESSAGE_NOT_CLEARED = "Address book has not been cleared!";
-    public static final String MESSAGE_CONFIRMATION_REQUEST = "Are you sure that you wish to clear the Address Book";
+    public static final String MESSAGE_CONFIRMATION_REQUEST = "Are you sure that you wish to clear the"
+            + " Address Book (yes/no)";
     public static final String MESSAGE_CONFIRMATION_FAIL = "Please input yes or no";
 
 

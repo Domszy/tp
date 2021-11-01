@@ -12,13 +12,15 @@ import static seedu.address.commons.util.StringUtil.parseToLocalTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class NextMeeting implements OptionalNonStringBasedField {
+public class NextMeeting implements OptionalNonStringBasedField, IgnoreNullComparable<NextMeeting> {
 
     public static final String DATE_MESSAGE_CONSTRAINTS = "Next meeting date should be in the form of Day-Month-Year, "
             + "where Day, month and year should be numerical values.";
     public static final String TIME_MESSAGE_CONSTRAINTS = "Next meeting time should be in the 24-hour format, "
             + "where Hour and Minutes should be numerical values.";
     public static final String MESSAGE_INVALID_MEETING_STRING = "String representation of Next Meeting is not correct";
+    public static final String MESSAGE_INVALID_TIME_DURATION = "End Time should be after Start Time";
+    public static final String MESSAGE_INVALID_MEETING_DATE_OVER = "NextMeeting should not be in the past";
     public static final String NO_NEXT_MEETING = "No meeting planned";
     public static final NextMeeting NULL_MEETING = new NextMeeting(null, null, null,
         null, null);
@@ -66,6 +68,14 @@ public class NextMeeting implements OptionalNonStringBasedField {
         this.date = parseToLocalDate(date);
         this.startTime = parseToLocalTime(startTime);
         this.endTime = parseToLocalTime(endTime);
+
+        if (!startTime.isEmpty() && !endTime.isEmpty()) {
+            checkArgument(this.endTime.isAfter(this.startTime), MESSAGE_INVALID_TIME_DURATION);
+        }
+
+        if (!date.isEmpty() && !startTime.isEmpty() && !endTime.isEmpty()) {
+            checkArgument(!isMeetingOver(LocalDate.now(), LocalTime.now()), MESSAGE_INVALID_MEETING_DATE_OVER);
+        }
     }
 
     public Name getWithWho() {
@@ -87,11 +97,17 @@ public class NextMeeting implements OptionalNonStringBasedField {
     public static NextMeeting getNullMeeting() {
         return NULL_MEETING;
     }
+
     public LocalDate getDate() {
         return date;
     }
+
     public static boolean isValidNextMeeting(String test) {
         return test.matches(VALID_MEETING_STRING);
+    }
+
+    public boolean isSameDay(LocalDate comparison) {
+        return comparison.equals(this.date);
     }
 
     /**
@@ -140,5 +156,32 @@ public class NextMeeting implements OptionalNonStringBasedField {
             && location.equals(((NextMeeting) other).location)
                 && ((withWho == null && ((NextMeeting) other).withWho == null)
                 || withWho.equals(((NextMeeting) other).withWho)));
+    }
+
+    @Override
+    public int compareWithDirection(NextMeeting o, SortDirection sortDirection) {
+        if (this.equals(NULL_MEETING) && o.equals(NULL_MEETING)) {
+            return 0;
+        }
+
+        if (o.equals(NULL_MEETING)) {
+            return -1;
+        }
+
+        if (this.equals(NULL_MEETING)) {
+            return 1;
+        }
+
+        NextMeeting x = sortDirection.isAscending() ? this : o;
+        NextMeeting y = sortDirection.isAscending() ? o : this;
+
+        int compareDate = x.date.compareTo(y.date);
+        if (compareDate != 0) {
+            return compareDate;
+        }
+        int compareStartTime = x.startTime.compareTo(y.startTime);
+        int compareEndTime = x.endTime.compareTo(y.endTime);
+
+        return compareStartTime != 0 ? compareStartTime : compareEndTime;
     }
 }

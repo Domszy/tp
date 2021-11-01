@@ -1,7 +1,7 @@
 package seedu.address.model.client;
 
 /**
- * Represents a optional client field whose stored value is not a string.
+ * Represents an optional client field whose stored value is not a string.
  */
 public interface OptionalNonStringBasedField extends Field {
 

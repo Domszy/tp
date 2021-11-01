@@ -13,7 +13,7 @@ public class FilterCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filter the currently displayed list of clients by"
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: [KEYWORD]... [ATTRIBUTE/ATTRIBUTE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + "e/example.com";
+            + "Example: " + COMMAND_WORD + " e/example.com";
 
     private final ClientContainsKeywordsPredicate predicate;
 

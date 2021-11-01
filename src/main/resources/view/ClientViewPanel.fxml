@@ -14,7 +14,7 @@
 <StackPane id="clientCardPane" prefHeight="150.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11"
            xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox fx:id="cardPane" prefHeight="200.0" prefWidth="100.0">
+        <VBox fx:id="cardPane" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
             <children>
                 <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
                     <Label styleClass="card_big_label" text="Name:"/>
@@ -57,14 +57,6 @@
                     </Label>
                 </HBox>
                 <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
-                    <Label styleClass="card_big_label" text="Created At:"/>
-                    <Label fx:id="clientCreatedAt" styleClass="card_small_label">
-                        <tooltip>
-                            <Tooltip text="Created At"/>
-                        </tooltip>
-                    </Label>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
                     <Label styleClass="card_big_label" text="Risk Appetite:"/>
                     <Label fx:id="clientRiskAppetite" styleClass="card_small_label">
                         <tooltip>
@@ -81,9 +73,9 @@
                     </Label>
                 </HBox>
                 <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
-                    <Label styleClass="card_big_label" text="Current Financial Plans:" textOverrun="CLIP"
-                           wrapText="true"/>
-                    <Label fx:id="clientCurrentPlans" styleClass="card_small_label">
+                    <Label minWidth="-Infinity" styleClass="card_big_label" text="Current Financial Plans:" />
+                    <Label minHeight="-Infinity" fx:id="clientCurrentPlans" styleClass="card_small_label"
+                           wrapText="true" >
                         <tooltip>
                             <Tooltip text="Current Financial Plans"/>
                         </tooltip>
@@ -98,8 +90,9 @@
                     </Label>
                 </HBox>
                 <HBox alignment="CENTER_LEFT" prefWidth="184.0" spacing="5">
-                    <Label styleClass="card_big_label" text="Next Meeting:"/>
-                    <Label fx:id="clientNextMeeting" styleClass="card_small_label">
+                    <Label minWidth="-Infinity" styleClass="card_big_label" text="Next Meeting:" />
+                    <Label minHeight="-Infinity" fx:id="clientNextMeeting" styleClass="card_small_label"
+                           wrapText="true" >
                         <tooltip>
                             <Tooltip text="Next Meeting"/>
                         </tooltip>

@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.client.Client;
+import seedu.address.model.tag.Tag;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -63,15 +65,20 @@ class JsonSerializableAddressBook {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
+        HashSet<Tag> addedTags = new HashSet<>();
         for (JsonAdaptedClient jsonAdaptedClient : clients) {
             Client client = jsonAdaptedClient.toModelType();
+            for (Tag tag : client.getTags()) {
+                if (addedTags.contains(tag)) {
+                    continue;
+                }
+                addressBook.addTag(tag);
+                addedTags.add(tag);
+            }
             if (addressBook.hasClient(client)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_CLIENT);
             }
             addressBook.addClient(client);
-            if (client.hasNextMeeting()) {
-                addressBook.addNextMeeting(client.getNextMeeting());
-            }
         }
         addressBook.setClientCounter(getClientCounter());
         return addressBook;

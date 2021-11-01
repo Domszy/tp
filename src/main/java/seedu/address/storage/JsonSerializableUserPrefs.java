@@ -13,15 +13,17 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.ThemeType;
 
 /**
  * An Immutable UserPrefs that is serializable to JSON format.
  */
-@JsonRootName(value = "userprefs")
+@JsonRootName(value = "userPrefs")
 class JsonSerializableUserPrefs {
     private final GuiSettings guiSettings;
     private final Path filepath;
     private final Path fileDirectory;
+    private final String themeName;
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given clients.
@@ -29,10 +31,12 @@ class JsonSerializableUserPrefs {
     @JsonCreator
     public JsonSerializableUserPrefs(@JsonProperty("guiSettings") GuiSettings guiSettings,
                                      @JsonProperty("addressBookFilePath") Path filepath,
-                                     @JsonProperty("addressBookFileDirectory") Path fileDirectory) {
+                                     @JsonProperty("addressBookFileDirectory") Path fileDirectory,
+                                     @JsonProperty("theme") String themeName) {
         this.guiSettings = guiSettings;
         this.filepath = filepath;
         this.fileDirectory = fileDirectory;
+        this.themeName = themeName;
     }
 
     /**
@@ -44,6 +48,7 @@ class JsonSerializableUserPrefs {
         this.filepath = source.getAddressBookFilePath();
         this.guiSettings = source.getGuiSettings();
         this.fileDirectory = source.getAddressBookDirectory();
+        this.themeName = source.getThemeType().toString();
     }
 
     /**
@@ -55,6 +60,7 @@ class JsonSerializableUserPrefs {
         userPrefs.setGuiSettings(Optional.ofNullable(this.guiSettings).orElseGet(GuiSettings::new));
         userPrefs.setAddressBookDirectory(
                 Optional.ofNullable(this.fileDirectory).orElse(DEFAULT_ADDRESSBOOK_DIRECTORY));
+        userPrefs.setTheme(Optional.ofNullable(this.themeName).flatMap(ThemeType::of).orElse(ThemeList.DEFAULT_THEME));
         return userPrefs;
     }
 

@@ -16,18 +16,20 @@ class ScheduleCommandParserTest {
 
     @Test
     public void parse_validDate_returnsScheduleCommand() {
-        LocalDate meetingDate = LocalDate.of(2021, 9, 10);
-        assertParseSuccess(parser, " 10-09-2021", new ScheduleCommand(meetingDate));
+        LocalDate meetingDate = LocalDate.of(2022, 9, 10);
+        assertParseSuccess(parser, " 10-09-2022", new ScheduleCommand(meetingDate));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
         //invalid date format
-        assertParseFailure(parser, " 2021-09-31", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+        assertParseFailure(parser, " 2022-09-31", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ScheduleCommand.MESSAGE_INVALID_DATE_FAILURE));
+    }
 
-        //empty input
-        assertParseFailure(parser, " ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ScheduleCommand.MESSAGE_INVALID_DATE_FAILURE));
+    @Test
+    public void parse_emptyString_throwsParseException() {
+        //empty string input
+        assertParseSuccess(parser, " ", new ScheduleCommand(null));
     }
 }

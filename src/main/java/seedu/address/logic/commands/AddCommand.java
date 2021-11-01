@@ -80,9 +80,6 @@ public class AddCommand extends Command {
         // TODO: model.incrementClientCounter should not be exposed, instead increment directly within addClient
         model.getAddressBook().incrementClientCounter();
 
-        if (client.hasNextMeeting()) {
-            model.addNextMeeting(client.getNextMeeting());
-        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, client));
     }
     /**

@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +43,7 @@ class JsonAdaptedClient {
     private final String lastMet;
     private final String nextMeeting;
     private final String currentPlan;
-    private final List<JsonAdaptedTag> tagged = new ArrayList<>();
+    private final Collection<JsonAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedClient} with the given client details.
@@ -100,7 +101,8 @@ class JsonAdaptedClient {
     public Client toModelType() throws IllegalValueException {
         final List<Tag> clientTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tagged) {
-            clientTags.add(tag.toModelType());
+            Tag clientTag = tag.toModelType();
+            clientTags.add(clientTag);
         }
 
         if (clientId == null) {

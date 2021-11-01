@@ -156,7 +156,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
 
         // different filteredList -> returns false
-        ArgumentMultimap aMM = ArgumentTokenizer.tokenize(ALICE.getName().fullName);
+        ArgumentMultimap aMM = ArgumentTokenizer.tokenize(BENSON.getName().fullName);
         modelManager.updateFilteredClientList(new ClientContainsKeywordsPredicate(aMM));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 

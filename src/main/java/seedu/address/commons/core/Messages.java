@@ -12,6 +12,6 @@ public class Messages {
     public static final String MESSAGE_CLIENTS_LISTED_OVERVIEW = "%1$d clients listed!";
     public static final String MESSAGE_VIEW_SUCCESS = "Viewing client: %1$s";
     public static final String MESSAGE_SORT_SUCCESS = "List sorted by %s";
-    public static final String MESSAGE_SCHEDULE_SUCCESS = "Schedule for %s";
+    public static final String MESSAGE_FIELDS_EMPTY = "Inputs for the following attributes are empty: %s";
 
 }

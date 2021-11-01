@@ -12,8 +12,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.EditCommand.EditClientDescriptor;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.ClientId;
-import seedu.address.model.client.NextMeeting;
 import seedu.address.model.tag.Tag;
+import seedu.address.ui.ThemeType;
 
 /**
  * The API of the Model component.
@@ -29,16 +29,15 @@ public interface Model {
      */
     Predicate<Tag> PREDICATE_SHOW_ALL_TAGS = unused -> true;
 
+    /**
+     * Returns the user prefs.
+     */
+    ReadOnlyUserPrefs getUserPrefs();
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
     void setUserPrefs(ReadOnlyUserPrefs userPrefs);
-
-    /**
-     * Returns the user prefs.
-     */
-    ReadOnlyUserPrefs getUserPrefs();
 
     /**
      * Returns the user prefs' GUI settings.
@@ -56,9 +55,29 @@ public interface Model {
     Path getAddressBookFilePath();
 
     /**
+     * Sets the user prefs' address book file path.
+     */
+    void setAddressBookFilePath(Path addressBookFilePath);
+
+    /**
      * Returns the list of all address book file path.
      */
     ObservableList<Path> getAddressBookList();
+
+    /**
+     * Returns the current filtered list of theme.
+     */
+    ObservableList<ThemeType> getThemeList();
+
+    /**
+     * Returns the current theme for the GUI.
+     */
+    ThemeType getTheme();
+
+    /**
+     * Sets the theme of the GUI.
+     */
+    void setTheme(ThemeType theme);
 
     /**
      * Returns the user prefs' address book file path wrapped object.
@@ -69,11 +88,6 @@ public interface Model {
      * Returns the user prefs' address book directory.
      */
     Path getAddressBookDirectory();
-
-    /**
-     * Sets the user prefs' address book file path.
-     */
-    void setAddressBookFilePath(Path addressBookFilePath);
 
     /**
      * Adds {@code filePath} to address books list
@@ -91,14 +105,14 @@ public interface Model {
     String getAddressBookListString();
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
-     */
-    void setAddressBook(ReadOnlyAddressBook addressBook);
-
-    /**
      * Returns the AddressBook
      */
     ReadOnlyAddressBook getAddressBook();
+
+    /**
+     * Replaces address book data with the data in {@code addressBook}.
+     */
+    void setAddressBook(ReadOnlyAddressBook addressBook);
 
     /**
      * Returns true if a client with the same identity as {@code client} exists in the address book.
@@ -113,15 +127,10 @@ public interface Model {
     /**
      * Deletes the client with the matching Client ID and Email and returns the deleted client
      */
-    List<Client> deleteClientByClientIds(List<ClientId> clientIds);
+    List<Client> removeAllClients(List<ClientId> clientIds);
 
     /**
-     * Deletes the meetings from the belonging to the deleted persons
-     */
-    void deleteMeetingsByClients(List<Client> toDelete);
-
-    /**
-     * Adds the given client..
+     * Adds the given client.
      * {@code client} must not already exist in the address book.
      */
     void addClient(Client client);
@@ -131,7 +140,7 @@ public interface Model {
      * {@code target} must exist in the address book.
      * The client identity of {@code editedClient} must not be the same as another existing client in the address book.
      */
-    List<Client> setClientByClientIds(List<ClientId> clientIds, EditClientDescriptor editedClientDescriptor);
+    List<Client> setAllClients(List<ClientId> clientIds, EditClientDescriptor editedClientDescriptor);
 
     /**
      * Returns client with corresponding clientId.
@@ -161,27 +170,23 @@ public interface Model {
     Tag getTag(String tagName);
 
     /**
-     * Updates the filter of the filtered tag list to filter by the given {@code predicate}.
-     *
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredTagList(Predicate<Tag> predicate);
-
-
-    /**
      * Returns an unmodifiable view of the filtered client list
      */
     ObservableList<Client> getFilteredClientList();
 
     /**
-     * Adds a meeting to the current meeting list
+     * Returns an unmodifiable view of the filtered tag list.
+     *
+     * @return
      */
-    void addNextMeeting(NextMeeting nextMeeting);
+    ObservableList<Tag> getFilteredTagList();
 
     /**
-     * Returns an unmodifiable view of the meetings for current user.
+     * Returns an unmodifiable view of the clients filtered by next meetings for current user.
      */
-    ObservableList<NextMeeting> getSortedNextMeetingList();
+    ObservableList<Client> getSortedNextMeetingList();
+
+    void filterSortedNextMeetingList(LocalDate date);
 
     /**
      * Updates the filter of the filtered client list to filter by the given {@code predicate}.
@@ -211,6 +216,7 @@ public interface Model {
 
     /**
      * Checks and returns if there is client with {@code clientId} to view
+     *
      * @param clientId
      */
     boolean isClientExistToView(ClientId clientId);

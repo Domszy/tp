@@ -2,7 +2,7 @@ package seedu.address.model.tag.exceptions;
 
 public class DuplicateTagException extends RuntimeException {
     public DuplicateTagException() {
-        super("Operation would result in duplicate clients");
+        super("Operation would result in duplicate tags");
     }
 }
 

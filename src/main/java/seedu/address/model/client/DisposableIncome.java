@@ -3,7 +3,7 @@ package seedu.address.model.client;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-public class DisposableIncome implements OptionalStringBasedField {
+public class DisposableIncome extends NumberComparable<DisposableIncome> implements OptionalStringBasedField {
     public static final String MESSAGE_CONSTRAINTS =
             "Disposable Income numbers should be a positive integer only";
     public static final String VALIDATION_REGEX = "\\d+";

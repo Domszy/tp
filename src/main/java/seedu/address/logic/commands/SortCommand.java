@@ -16,7 +16,7 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts leads according to "
             + "the specified attribute and in either an ascending or descending order\n"
-            + "Parameters: <attribute>/{ASC/DESC}\n"
+            + "Parameters: <attribute>/{ASC/DESC}...\n"
             + "Example: " + COMMAND_WORD + " ra/ asc";
 
     public static final String MESSAGE_INVALID_PREFIX = "Sorting based on %s is not supported";
@@ -34,7 +34,7 @@ public class SortCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.sortFilteredClientList(sorter);
-        return new CommandResult(String.format(Messages.MESSAGE_SORT_SUCCESS, sorter.getPrefixName()));
+        return new CommandResult(String.format(Messages.MESSAGE_SORT_SUCCESS, sorter.toString()));
     }
 
     @Override

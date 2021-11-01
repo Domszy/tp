@@ -21,7 +21,7 @@ public class StringUtil {
     public static final String TIME_VALIDATION_REGEX =
             "([01]?[0-9]|2[0-3]):[0-5][0-9]";
     public static final String CLIENT_DELIMITER = "\n";
-    public static final String CLIENTID_DELIMITER = ", ";
+    public static final String COMMA_DELIMITER = ", ";
     public static final String JSON_FILE_PREFIX = ".json";
 
 
@@ -225,5 +225,16 @@ public class StringUtil {
         }
 
         return word.substring(0, word.length() - suffix.length());
+    }
+
+    /**
+     * Converts an empty string or null to a dash ("-") for display in the GUI.
+     * Non-empty {@code str} are returned as normal.
+     */
+    public static String transformEmptyRepresentation(String str) {
+        if (str == null || str.trim().isEmpty()) {
+            return "-";
+        }
+        return str;
     }
 }

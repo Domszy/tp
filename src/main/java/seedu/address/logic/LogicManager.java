@@ -23,10 +23,11 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.client.Client;
-import seedu.address.model.client.NextMeeting;
+import seedu.address.model.tag.Tag;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.Storage;
+import seedu.address.ui.ThemeType;
 
 /**
  * The main LogicManager of the app.
@@ -84,12 +85,13 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Client> getClientToView() {
-        return model.getClientToView();
+    public ObservableList<Client> getSortedNextMeetingList() {
+        return model.getSortedNextMeetingList();
     }
 
-    public ObservableList<NextMeeting> getSortedNextMeetingList() {
-        return model.getSortedNextMeetingList();
+    @Override
+    public ObservableList<Client> getClientToView() {
+        return model.getClientToView();
     }
 
     @Override
@@ -103,11 +105,6 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Path> getAddressBookList() {
-        return model.getAddressBookList();
-    }
-
-    @Override
     public GuiSettings getGuiSettings() {
         return model.getGuiSettings();
     }
@@ -115,12 +112,6 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
-    }
-
-    @Override
-    public void switchAddressBook(Path filePath) {
-        this.model.setAddressBookFilePath(filePath);
-        this.switchAddressBook();
     }
 
     @Override
@@ -144,6 +135,12 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public void switchAddressBook(Path filePath) {
+        this.model.setAddressBookFilePath(filePath);
+        this.switchAddressBook();
+    }
+
+    @Override
     public void createAddressBook() throws CommandException {
         Path filePath = getAddressBookFilePath();
         AddressBookStorage addressBookStorage = new JsonAddressBookStorage(filePath);
@@ -155,6 +152,30 @@ public class LogicManager implements Logic {
         saveAddressBook();
     }
 
+    @Override
+    public ObservableList<Path> getAddressBookList() {
+        return model.getAddressBookList();
+    }
+
+    @Override
+    public ObservableList<ThemeType> getThemeList() {
+        return model.getThemeList();
+    }
+
+    @Override
+    public ThemeType getTheme() {
+        return model.getTheme();
+    }
+
+    @Override
+    public void setTheme(ThemeType theme) {
+        model.setTheme(theme);
+    }
+
+    @Override
+    public ObservableList<Tag> getFilteredTagList() {
+        return model.getFilteredTagList();
+    }
 
     /**
      * Saves the current Address Book.

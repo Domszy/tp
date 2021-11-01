@@ -63,25 +63,25 @@ public class UniqueClientListTest {
     @Test
     public void setClient_nullTargetClient_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueClientList
-            .setClientByClientIds(null, new EditClientDescriptorBuilder(AMY).build()));
+            .setAll(null, new EditClientDescriptorBuilder(AMY).build()));
     }
 
     @Test
     public void setClient_nullEditedClient_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueClientList
-            .setClientByClientIds(List.of(ALICE.getClientId()), null));
+            .setAll(List.of(ALICE.getClientId()), null));
     }
 
     @Test
     public void setClient_targetClientNotInList_throwsClientNotFoundException() {
         assertThrows(ClientNotFoundException.class, () -> uniqueClientList
-            .setClientByClientIds(List.of(ALICE.getClientId()), new EditClientDescriptorBuilder(AMY).build()));
+            .setAll(List.of(ALICE.getClientId()), new EditClientDescriptorBuilder(AMY).build()));
     }
 
     @Test
     public void setClient_editedClientIsSameClient_success() {
         uniqueClientList.add(ALICE);
-        uniqueClientList.setClientByClientIds(List.of(ALICE.getClientId()),
+        uniqueClientList.setAll(List.of(ALICE.getClientId()),
             new EditClientDescriptorBuilder(ALICE).build());
         UniqueClientList expectedUniqueClientList = new UniqueClientList();
         expectedUniqueClientList.add(ALICE);
@@ -93,7 +93,7 @@ public class UniqueClientListTest {
         uniqueClientList.add(ALICE);
         Client editedAlice = new ClientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
             .build();
-        uniqueClientList.setClientByClientIds(List.of(ALICE.getClientId()),
+        uniqueClientList.setAll(List.of(ALICE.getClientId()),
             new EditClientDescriptorBuilder(editedAlice).build());
         UniqueClientList expectedUniqueClientList = new UniqueClientList();
         expectedUniqueClientList.add(editedAlice);
@@ -103,9 +103,9 @@ public class UniqueClientListTest {
     @Test
     public void setClient_editedClientHasDifferentIdentity_success() {
         uniqueClientList.add(BOB);
-        uniqueClientList.setClientByClientIds(List.of(BOB.getClientId()),
+        uniqueClientList.setAll(List.of(BOB.getClientId()),
             new EditClientDescriptorBuilder(ALICE).build());
-        uniqueClientList.setClientByClientIds(List.of(BOB.getClientId()),
+        uniqueClientList.setAll(List.of(BOB.getClientId()),
             new EditClientDescriptorBuilder(BOB).build());
         UniqueClientList expectedUniqueClientList = new UniqueClientList();
         expectedUniqueClientList.add(BOB);
@@ -117,7 +117,7 @@ public class UniqueClientListTest {
         uniqueClientList.add(ALICE);
         uniqueClientList.add(BOB);
         assertThrows(DuplicateClientException.class, () -> uniqueClientList
-            .setClientByClientIds(List.of(ALICE.getClientId()), new EditClientDescriptorBuilder(BOB).build()));
+            .setAll(List.of(ALICE.getClientId()), new EditClientDescriptorBuilder(BOB).build()));
     }
 
     @Test
@@ -181,7 +181,7 @@ public class UniqueClientListTest {
 
     @Test
     public void updateLastMetDate_updatesCorrectly() {
-        Client expectedAlice = new ClientBuilder(ALICE).withNextMeeting("No next meeting").build();
+        Client expectedAlice = new ClientBuilder(ALICE).withNextMeeting(NextMeeting.NO_NEXT_MEETING).build();
         uniqueClientList.add(ALICE);
         uniqueClientList.updateLastMetDate();
         assertEquals(uniqueClientList.getClient(new ClientId("0")), expectedAlice);

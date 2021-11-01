@@ -7,7 +7,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents a Client's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
-public class Address implements OptionalStringBasedField {
+public class Address extends StringComparable<Address> implements OptionalStringBasedField {
 
     public static final String MESSAGE_CONSTRAINTS = "Addresses can take any values, and it can be blank";
 

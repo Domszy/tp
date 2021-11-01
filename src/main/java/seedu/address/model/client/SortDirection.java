@@ -58,5 +58,17 @@ public class SortDirection {
                 && direction.equals(((SortDirection) other).direction)); // state check
     }
 
+    @Override
+    public String toString() {
+        switch (this.direction) {
+        case "asc":
+            return "ascending";
 
+        case "dsc":
+            return "descending";
+
+        default:
+            return "";
+        }
+    }
 }

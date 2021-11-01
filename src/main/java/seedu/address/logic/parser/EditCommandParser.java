@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.mapper.PrefixMapper.parseAndEditSet;
+import static seedu.address.commons.mapper.PrefixMapper.parseAndEditSetFunction;
 import static seedu.address.logic.parser.CliSyntax.ALL_PREFIXES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENTID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -11,7 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.allPrefixLess;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -33,7 +33,6 @@ public class EditCommandParser implements Parser<EditCommand> {
      * and returns an EditCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
-     * @return
      */
     @Override
     public EditCommand parse(String args, Model model) throws ParseException {
@@ -41,7 +40,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         ArgumentMultimap argMultimap =
             ArgumentTokenizer.tokenize(args, ALL_PREFIXES);
 
-        List<ClientId> clientIds = new ArrayList<>();
+        Set<ClientId> clientIds = new HashSet<>();
         try {
             String[] clientIdInput = argMultimap.getPreamble().split(" ");
             for (String s : clientIdInput) {
@@ -60,7 +59,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         Prefix[] prefixes = allPrefixLess(PREFIX_CLIENTID, PREFIX_TAG);
         for (Prefix prefix : prefixes) {
             if (argMultimap.getValue(prefix).isPresent()) {
-                BiConsumer<EditClientDescriptor, String> parseEditSetFunction = parseAndEditSet(prefix);
+                BiConsumer<EditClientDescriptor, String> parseEditSetFunction = parseAndEditSetFunction(prefix);
                 String toParse = argMultimap.getValue(prefix).get();
                 parseEditSetFunction.accept(editClientDescriptor, toParse);
             }
@@ -72,7 +71,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(clientIds, editClientDescriptor);
+        return new EditCommand(new ArrayList<>(clientIds), editClientDescriptor);
     }
 
     /**
@@ -86,8 +85,10 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (tags.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet, model));
+
+        Collection<String> tagNames = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+
+        return Optional.of(ParserUtil.parseTags(tagNames, model));
     }
 
 }

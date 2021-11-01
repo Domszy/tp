@@ -456,4 +456,26 @@ public class StringUtilTest {
         String result = StringUtil.getStringWithoutSuffix(input, prefix);
         assertEquals(result, input);
     }
+
+    //---------------- Tests for transformEmptyRepresentation --------------------------------------
+
+    /**
+     * Equivalence Partitions: null, non-empty, empty
+     */
+
+    @Test
+    public void transformEmptyRepresentation_nullInput_returnEmptyRepresentation() {
+        assertEquals("-", StringUtil.transformEmptyRepresentation(null));
+    }
+
+    @Test
+    public void transformEmptyRepresentation_emptyString_returnEmptyRepresentation() {
+        assertEquals("-", StringUtil.transformEmptyRepresentation("")); // boundary value
+        assertEquals("-", StringUtil.transformEmptyRepresentation("   "));
+    }
+
+    @Test
+    public void transformEmptyRepresentation_nonEmptyString_returnInput() {
+        assertEquals("a", StringUtil.transformEmptyRepresentation("a"));
+    }
 }

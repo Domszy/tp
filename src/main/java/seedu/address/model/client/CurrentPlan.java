@@ -3,7 +3,7 @@ package seedu.address.model.client;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-public class CurrentPlan implements OptionalStringBasedField {
+public class CurrentPlan extends StringComparable<CurrentPlan> implements OptionalStringBasedField {
 
     public static final String MESSAGE_CONSTRAINTS = "Current plan can take any values, and it can be blank";
 

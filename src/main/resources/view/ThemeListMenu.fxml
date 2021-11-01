@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+
+<Menu fx:id="menu" mnemonicParsing="false" text="Theme" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" />

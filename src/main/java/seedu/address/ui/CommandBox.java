@@ -50,6 +50,13 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Sets the command text to the given {@code commandText}.
+     */
+    public void setCommand(String commandText) {
+        commandTextField.setText(commandText);
+    }
+
+    /**
      * Sets the command box style to use the default style.
      */
     private void setStyleToDefault() {

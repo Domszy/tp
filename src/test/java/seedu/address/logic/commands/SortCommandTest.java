@@ -69,7 +69,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_oneKeyword_listSortedAccordingToClientId() {
-        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Client Id");
+        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Client Id in descending");
         SortByAttribute sorter = new SortByAttribute(PREFIX_CLIENTID, SORT_DESCENDING);
         SortCommand command = new SortCommand(sorter);
         expectedModel.sortFilteredClientList(sorter);
@@ -79,7 +79,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_oneKeyword_listSortedAccordingToName() {
-        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Name");
+        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Name in ascending");
         SortByAttribute sorter = new SortByAttribute(PREFIX_NAME, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
         expectedModel.sortFilteredClientList(sorter);
@@ -89,7 +89,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_oneKeyword_listSortedAccordingToEmail() {
-        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Email");
+        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Email in ascending");
         SortByAttribute sorter = new SortByAttribute(PREFIX_EMAIL, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
         expectedModel.sortFilteredClientList(sorter);
@@ -99,7 +99,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_oneKeyword_listSortedAccordingToAddress() {
-        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Address");
+        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Address in descending");
         SortByAttribute sorter = new SortByAttribute(PREFIX_ADDRESS, SORT_DESCENDING);
         SortCommand command = new SortCommand(sorter);
         expectedModel.sortFilteredClientList(sorter);
@@ -109,7 +109,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_oneKeyword_listSortedAccordingToRiskAppetite() {
-        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Risk Appetite");
+        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Risk Appetite in ascending");
         SortByAttribute sorter = new SortByAttribute(PREFIX_RISKAPPETITE, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
         expectedModel.sortFilteredClientList(sorter);
@@ -119,7 +119,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_oneKeyword_listSortedAccordingToDisposableIncome() {
-        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Disposable Income");
+        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Disposable Income in ascending");
         SortByAttribute sorter = new SortByAttribute(PREFIX_DISPOSABLEINCOME, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
         expectedModel.sortFilteredClientList(sorter);
@@ -129,7 +129,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_oneKeyword_listSortedAccordingToCurrentPlan() {
-        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Current Plan");
+        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Current Plan in ascending");
         SortByAttribute sorter = new SortByAttribute(PREFIX_CURRENTPLAN, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
         expectedModel.sortFilteredClientList(sorter);
@@ -139,7 +139,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_oneKeyword_listSortedAccordingToLastMet() {
-        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Last Met");
+        String expectedMessage = String.format(Messages.MESSAGE_SORT_SUCCESS, "Last Met in ascending");
         SortByAttribute sorter = new SortByAttribute(PREFIX_LASTMET, SORT_ASCENDING);
         SortCommand command = new SortCommand(sorter);
         expectedModel.sortFilteredClientList(sorter);

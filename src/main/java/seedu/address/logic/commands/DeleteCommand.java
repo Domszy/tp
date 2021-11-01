@@ -20,16 +20,14 @@ import seedu.address.model.client.exceptions.ClientNotFoundException;
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the client identified by the client id used in the displayed client list.\n"
-            + "Parameters: "
-            + "CLIENT ID "
-            + "\n"
-            + "Example: " + COMMAND_WORD + " 1";
+        + ": Deletes the client identified by the client id used in the displayed client list.\n"
+        + "Parameters: "
+        + "CLIENT ID "
+        + "\n"
+        + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_CLIENT_SUCCESS = "Deleted Client: %1$s";
-
     private final List<ClientId> clientIds;
 
     public DeleteCommand(List<ClientId> clientIds) {
@@ -44,14 +42,11 @@ public class DeleteCommand extends Command {
 
         List<Client> clientToDelete;
         try {
-            clientToDelete = model.deleteClientByClientIds(distinctClientIds);
+            clientToDelete = model.removeAllClients(distinctClientIds);
         } catch (ClientNotFoundException e) {
             throw new CommandException(String.format(MESSAGE_NONEXISTENT_CLIENT_ID, e.getMessage()));
         }
 
-        if (clientToDelete.size() > 0) {
-            model.deleteMeetingsByClients(clientToDelete);
-        }
         String personString = StringUtil.joinListToString(clientToDelete, CLIENT_DELIMITER);
         return new CommandResult(String.format(MESSAGE_DELETE_CLIENT_SUCCESS, personString));
     }
@@ -59,7 +54,7 @@ public class DeleteCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteCommand // instanceof handles nulls
-                && clientIds.equals(((DeleteCommand) other).clientIds)); // state check
+            || (other instanceof DeleteCommand // instanceof handles nulls
+            && clientIds.equals(((DeleteCommand) other).clientIds)); // state check
     }
 }

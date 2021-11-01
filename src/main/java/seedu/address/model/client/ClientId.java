@@ -3,7 +3,7 @@ package seedu.address.model.client;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-public class ClientId {
+public class ClientId extends NumberComparable<ClientId> {
 
     public static final String VALIDATION_REGEX = "\\d+";
     public static final String MESSAGE_CONSTRAINTS = "ClientId should only contain non-negative integers";

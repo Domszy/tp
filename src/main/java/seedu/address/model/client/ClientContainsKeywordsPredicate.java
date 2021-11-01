@@ -2,14 +2,17 @@ package seedu.address.model.client;
 
 import static seedu.address.commons.mapper.PrefixMapper.getAttributeFunction;
 import static seedu.address.commons.util.StringUtil.containsStringIgnoreCase;
-import static seedu.address.logic.parser.CliSyntax.ALL_PREFIXES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.allPrefixLess;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import seedu.address.commons.mapper.PrefixMapper;
 import seedu.address.logic.parser.ArgumentMultimap;
+import seedu.address.model.tag.Tag;
 
 /**
  * Tests that a {@code Client}'s attributes matches any of the keywords given.
@@ -24,16 +27,21 @@ public class ClientContainsKeywordsPredicate implements Predicate<Client> {
     @Override
     public boolean test(Client client) {
         String[] generalKeywords = keywords.getPreamble().split(" ");
-        boolean checkGeneral = generalKeywords[0].isBlank() || Arrays.stream(generalKeywords).anyMatch(x ->
-                Arrays.stream(ALL_PREFIXES).anyMatch(prefix -> {
-                    Function<Client, String> getAttribute = getAttributeFunction(prefix).andThen(Object::toString);
-                    String clientAttribute = getAttribute.apply(client);
-                    return containsStringIgnoreCase(clientAttribute, x);
-                })
-        );
+        boolean checkGeneral = generalKeywords[0].isBlank() || Arrays.stream(generalKeywords).anyMatch(keyword -> {
+            boolean checkAttributesLessTag = Arrays.stream(allPrefixLess(PREFIX_TAG))
+                    .map(PrefixMapper::getAttributeFunction)
+                    .map(x -> x.apply(client))
+                    .map(Object::toString)
+                    .anyMatch(clientAttribute -> containsStringIgnoreCase(clientAttribute, keyword));
 
-        boolean checkAttributes = Arrays
-                .stream(ALL_PREFIXES)
+            boolean checkTags = client.getTags().stream()
+                    .map(Tag::getName)
+                    .anyMatch(tagName -> containsStringIgnoreCase(tagName, keyword));
+
+            return checkAttributesLessTag || checkTags;
+        });
+
+        boolean checkAttributes = Arrays.stream(allPrefixLess(PREFIX_TAG))
                 .map(prefix -> {
                     Function<Client, String> getAttribute = getAttributeFunction(prefix).andThen(Object::toString);
                     String clientAttribute = getAttribute.apply(client);
@@ -42,7 +50,13 @@ public class ClientContainsKeywordsPredicate implements Predicate<Client> {
                 })
                 .reduce(true, Boolean::logicalAnd);
 
-        return checkGeneral && checkAttributes;
+        boolean checkTags = keywords.getValue(PREFIX_TAG)
+                .map(tagKeyword -> client.getTags().stream()
+                        .map(Tag::getName)
+                        .anyMatch(tagName -> containsStringIgnoreCase(tagName, tagKeyword)))
+                .orElse(true);
+
+        return checkGeneral && checkAttributes && checkTags;
     }
 
     @Override

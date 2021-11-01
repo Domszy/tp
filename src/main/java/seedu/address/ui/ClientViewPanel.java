@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.commons.util.StringUtil.transformEmptyRepresentation;
+
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,9 +29,6 @@ public class ClientViewPanel extends UiPart<Region> {
 
     @FXML
     private Label clientCreationDate;
-
-    @FXML
-    private Label clientCreatedAt;
 
     @FXML
     private Label clientLastMet;
@@ -91,23 +90,22 @@ public class ClientViewPanel extends UiPart<Region> {
                 unlock();
             }
 
-            Client client = clientToView.get(0);
-            clientName.setText(client.getName().toString());
-            clientId.setText(client.getClientId().toString());
-            // TODO: implement created at
-            clientCreatedAt.setText("---");
-            clientLastMet.setText(client.getLastMet().toString());
-            clientRiskAppetite.setText(client.getRiskAppetite().toString());
-            clientCurrentPlans.setText(client.getCurrentPlan().toString());
-            clientDisposableIncome.setText(client.getDisposableIncome().toString());
-            clientNextMeeting.setText(client.getNextMeeting().toString());
-            clientEmail.setText(client.getEmail().toString());
-            clientPhoneNumber.setText(client.getPhone().toString());
+            Client client = clientToView.get(0); // non-empty field
+            clientName.setText(client.getName().toString()); // non-empty field
+            clientId.setText(transformEmptyRepresentation(client.getClientId().toString()));
+            clientLastMet.setText(transformEmptyRepresentation(client.getLastMet().toString()));
+            clientAddress.setText(transformEmptyRepresentation(client.getAddress().toString()));
+            clientRiskAppetite.setText(transformEmptyRepresentation(client.getRiskAppetite().toString()));
+            clientCurrentPlans.setText(transformEmptyRepresentation(client.getCurrentPlan().toString()));
+            clientDisposableIncome.setText(transformEmptyRepresentation(client.getDisposableIncome().toString()));
+            clientNextMeeting.setText(client.getNextMeeting().toString()); // has empty representation
+            clientEmail.setText(client.getEmail().toString()); //non-empty field
+            clientPhoneNumber.setText(transformEmptyRepresentation(client.getPhone().toString()));
         } else {
             clientName.setText(null);
             clientId.setText(null);
-            clientCreatedAt.setText(null);
             clientLastMet.setText(null);
+            clientAddress.setText(null);
             clientRiskAppetite.setText(null);
             clientCurrentPlans.setText(null);
             clientDisposableIncome.setText(null);
